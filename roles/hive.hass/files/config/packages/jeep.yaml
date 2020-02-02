@@ -1,0 +1,56 @@
+---
+# binary_sensor:
+#   - platform: template
+#     sensors:
+#       jeep_home_and_unlocked:
+#         friendly_name: "Jeep Parked and Unlocked"
+#         value_template: >-
+#           {{ is_state('lock.2018_jeep_wrangler_lock', 'unlocked')
+#               and is_state('group.vehicle_jeep', 'home') }}
+
+sensor:
+  - platform: template
+    sensors:
+      jeep_odometer:
+        friendly_name: "Jeep Odometer"
+        unit_of_measurement: 'km'
+        value_template: "{{ state_attr('sensor.2018_jeep_wrangler', 'odometer') }}"
+
+# automation:
+#   - id: replyAckJeep
+#     alias: "Telegram bot to ack the jeep being unlocked"
+#     hide_entity: true
+#     trigger:
+#       platform: event
+#       event_type: telegram_command
+#       event_data:
+#         command: "/ackJeep"
+#     action:
+#       - service: alert.turn_off
+#         entity_id: alert.jeep_unlocked
+
+#   - id: replyLockJeep
+#     alias: "Telegram bot to lock the jeep"
+#     hide_entity: true
+#     trigger:
+#       platform: event
+#       event_type: telegram_command
+#       event_data:
+#         command: "/lockJeep"
+#     action:
+#       - service: lock.lock
+#         entity_id: lock.2018_jeep_wrangler_lock
+
+# alert:
+#   jeep_unlocked:
+#     name: '{{now().strftime("%H:%M:%S %Y-%m-%d")}}: Jeep is parked and has been unlocked for {{ relative_time(states.binary_sensor.jeep_home_and_unlocked.last_changed) }}. /ackJeep /lockJeep'
+#     done_message: '{{now().strftime("%H:%M:%S %Y-%m-%d")}}: Jeep situation has been resolved.'
+#     entity_id: binary_sensor.jeep_home_and_unlocked
+#     state: "on"
+#     repeat:
+#       - 5
+#       - 30
+#     can_acknowledge: true
+#     skip_first: true
+#     notifiers:
+#       - telegram_household

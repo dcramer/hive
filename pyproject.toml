@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "hive"
+version = "0.1.0"
+description = ""
+authors = ["David Cramer <dcramer@gmail.com>"]
+license = "Apache-2.0"
+
+[tool.poetry.dependencies]
+python = "^3.7"
+ansible = "^2.9.2"
+jinja2 = "^2.10.3"
+PyYAML = "^5.2"
+cryptography = "^2.8"
+MarkupSafe = "^1.1.1"
+cffi = "^1.13.2"
+six = "^1.13.0"
+docker = "^4.1.0"
+black = "^19.10b0"
+flake8 = "^3.7.9"
+
+[build-system]
+requires = ["poetry>=1.0.0"]
+build-backend = "poetry.masonry.api"

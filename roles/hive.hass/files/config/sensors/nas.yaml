@@ -1,0 +1,14 @@
+# - name: Synology DSM
+#   platform: synologydsm
+#   host: !secret nas_host
+#   username: !secret nas_username
+#   password: !secret nas_password
+#   monitored_conditions:
+#     - cpu_total_load
+#     - memory_real_usage
+#     - network_up
+#     - network_down
+#     - volume_status
+#     - volume_percentage_used
+#     - volume_size_total
+#     - volume_size_used

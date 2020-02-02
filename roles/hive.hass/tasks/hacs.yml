@@ -1,0 +1,37 @@
+---
+- name: create hacs directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ hive_user }}"
+    group: "{{ hive_user }}"
+    mode: 0755
+  with_items:
+    - /docker/homeassistant/config/custom_components/hacs/
+
+- name: check for hacs archive
+  stat:
+    path: "/docker/homeassistant/cache/hacs-{{ hacs_version }}.zip"
+  register: hacs_archive_exist
+
+- name: fetch hacs archive
+  get_url:
+    url: "https://github.com/hacs/integration/releases/download/{{ hacs_version }}/hacs.zip"
+    dest: "/docker/homeassistant/cache/hacs-{{ hacs_version }}.zip"
+    mode: 0644
+  when: not hacs_archive_exist.stat.exists
+  register: hacs_archive_fetched
+
+- name: check for hacs component
+  stat:
+    path: "/docker/homeassistant/config/custom_components/hacs/__init__.py"
+  register: hacs_component
+
+- name: extract hacs archive
+  unarchive:
+    src: "/docker/homeassistant/cache/hacs-{{ hacs_version }}.zip"
+    dest: /docker/homeassistant/config/custom_components/hacs/
+    copy: no
+  when: hacs_archive_fetched is not skipped or not hacs_component.stat.exists
+  register: hacs_extracted
+  notify: restart homeassistant

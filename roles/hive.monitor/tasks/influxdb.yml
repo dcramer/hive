@@ -1,0 +1,37 @@
+---
+- name: create influxdb directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ hive_user }}"
+    group: "{{ hive_user }}"
+    mode: 0755
+  with_items:
+    - /docker/influxdb/
+
+- name: influxdb Docker Container
+  docker_container:
+    name: influxdb
+    image: influxdb:latest
+    hostname: influxdb
+    pull: true
+    ports:
+      - "{{ influxdb_port }}:8086/tcp"
+    volumes:
+      - /docker/influxdb:/var/lib/influxdb
+    restart_policy: unless-stopped
+    user: "{{ hive_uid | string }}"
+    env:
+      TZ: "{{ timezone }}"
+      PUID: "{{ hive_uid | string }}"
+      PGID: "{{ hive_gid | string }}"
+      INFLUXDB_DB: telegraf
+      INFLUXDB_USER: telegraf
+      INFLUXDB_USER_PASSWORD: telegraf
+
+- name: Add influxdb to network
+  docker_network:
+    name: hive
+    connected:
+      - influxdb
+    appends: yes

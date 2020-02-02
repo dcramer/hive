@@ -1,0 +1,46 @@
+---
+- name: create radarr directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ hive_user }}"
+    group: "{{ hive_user }}"
+    mode: 0755
+  with_items:
+    - /docker/radarr/config/
+    - /tmp/downloads/completed
+
+- name: create radarr config
+  template:
+    src: radarr-config.xml.j2
+    dest: /docker/radarr/config/config.xml
+    owner: "{{ hive_user }}"
+    group: "{{ hive_user }}"
+    mode: 0644
+  notify: restart radarr
+
+- name: radarr Docker Container
+  docker_container:
+    name: radarr
+    image: linuxserver/radarr
+    pull: true
+    volumes:
+      - /docker/radarr/config:/config
+      - /tmp/downloads/completed:/downloads
+      - /docker/shared:/shared
+      - "/etc/localtime:/etc/localtime:ro"
+      - "{{ nas_mount_folder }}/Movies:/movies"
+    ports:
+      - "{{ radarr_webui_port }}:7878/tcp"
+    env:
+      TZ: "{{ timezone }}"
+      PUID: "{{ hive_uid | string }}"
+      PGID: "{{ hive_gid | string }}"
+    restart_policy: unless-stopped
+
+- name: Add radarr to network
+  docker_network:
+    name: hive
+    connected:
+      - radarr
+    appends: yes

@@ -1,0 +1,20 @@
+---
+- name: node-red Docker Container
+  docker_container:
+    name: nodered
+    image: nodered/node-red
+    pull: true
+    hostname: nodered
+    restart_policy: unless-stopped
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /docker/shared:/shared
+    ports:
+      - "1880:1880/tcp"
+
+- name: Add homeassistant to network
+  docker_network:
+    name: hive
+    connected:
+      - nodered
+    appends: yes

@@ -1,0 +1,3 @@
+---
+- name: restart mosquitto
+  shell: docker restart mosquitto

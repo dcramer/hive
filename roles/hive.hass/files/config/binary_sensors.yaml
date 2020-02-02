@@ -1,0 +1,32 @@
+# - platform: mqtt
+#   state_topic: "dummy/floorplan/sensor"
+#   name: Floorplan
+
+- platform: template
+  sensors:
+    garage_storage_closed_and_unlocked:
+      friendly_name: "Garage Storage Closed and Unlocked"
+      value_template: >-
+        {{ is_state('lock.garage_storage_deadbolt', 'unlocked')
+            and is_state('binary_sensor.garage_storage_door', 'off') }}
+
+    all_home:
+      friendly_name: "All Home"
+      delay_off: 1
+      value_template: >-
+        {{ is_state('person.david', 'home')
+            and is_state('person.sukhpreet', 'home') }}
+
+    any_home:
+      friendly_name: "Any Home"
+      delay_off: 1
+      value_template: >-
+        {{ is_state('person.david', 'home')
+            or is_state('person.sukhpreet', 'home') }}
+
+    disarmed_and_away:
+      friendly_name: "Alarm disarmed and household away"
+      delay_on: 1
+      value_template: >-
+        {{ is_state('alarm_control_panel.home', 'disarmed')
+            and is_state('binary_sensor.any_home', 'off') }}

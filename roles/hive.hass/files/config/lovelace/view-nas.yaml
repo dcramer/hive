@@ -1,0 +1,55 @@
+title: NAS
+id: nas
+path: nas
+icon: mdi:nas
+cards:
+  - type: entities
+    title: Network
+    show_header_toggle: false
+    entities:
+      - sensor.speedtest_download
+      - sensor.speedtest_upload
+
+  - type: entities
+    title: NAS
+    entities:
+      - entity: sensor.synology_dsm_cpu_load_total
+      - entity: sensor.synology_dsm_network_up
+      - entity: sensor.synology_dsm_status_volume_1
+      - entity: sensor.synology_dsm_volume_used_volume_1
+      - entity: sensor.synology_dsm_status_volume_2
+      - entity: sensor.synology_dsm_volume_used_volume_2
+    show_header_toggle: false
+
+  - type: custom:mini-graph-card
+    entities:
+      - sensor.speedtest_download
+    hours_to_show: 48
+  - type: custom:mini-graph-card
+    entities:
+      - sensor.speedtest_upload
+    hours_to_show: 48
+
+  - type: custom:mini-graph-card
+    entities:
+      - sensor.synology_dsm_cpu_load_total
+    hours_to_show: 48
+
+  - type: custom:mini-graph-card
+    entities:
+      - sensor.synology_dsm_network_up
+    hours_to_show: 48
+
+  - type: custom:mini-graph-card
+    entities:
+      - sensor.synology_dsm_volume_used_volume_1
+    hours_to_show: 48
+    lower_bound: 0
+    upper_bound: 100
+
+  - type: custom:mini-graph-card
+    entities:
+      - sensor.synology_dsm_volume_used_volume_2
+    hours_to_show: 48
+    lower_bound: 0
+    upper_bound: 100

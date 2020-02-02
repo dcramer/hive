@@ -1,0 +1,119 @@
+#!/usr/bin/env python
+
+import argparse
+import json
+
+from urllib.request import urlopen
+
+
+"""
+{
+    "next_event": {
+        "zone": {
+            "priority": 0,
+            "show_when_empty": 0,
+            "is_empty": 0,
+            "colour_name": "recology-sunset-garbage-tuesday",
+            "pdf_uri": {},
+            "line_colour": "rgba(0,221,0,255)",
+            "id": 2522,
+            "title": "Garbage Tuesday",
+            "link_text": {},
+            "poly_colour": "rgba(0,221,0,153)",
+            "service_id": 265,
+            "has_geom": 0,
+            "loc_title": {
+                "en": "Garbage Tuesday"
+            },
+            "description": {},
+            "link_uri": {},
+            "has_unapproved_future_events": 0,
+            "opts": {},
+            "name": "recology-1051-garbage-tuesday",
+            "has_parcels": 1
+        },
+        "day": "2019-12-31",
+        "flags": [{
+            "voice_message": null,
+            "plain_text_message": null,
+            "backgroundColor": "#000000",
+            "id": 277,
+            "subject": "Trash",
+            "html_message": "Use the black trash cart to collect items that cannot be reused, recycled or composted.",
+            "short_text_message": null,
+            "event_type": "pickup",
+            "area_name": "recology-1051",
+            "borderColor": "#000000",
+            "icon_uri_fragment": "garbage",
+            "icon": "garbage",
+            "sort_order": 0,
+            "name": "garbage",
+            "opts": {},
+            "service_name": "waste",
+            "color": "#000000",
+            "is_week_long": 0
+        }, {
+            "textColor": "#FFFFFF",
+            "voice_message": null,
+            "html_message": "Use the blue recycling cart to collect acceptable metals, plastics, glass and paper. Please empty food and beverage containers.",
+            "subject": "Recycling",
+            "plain_text_message": null,
+            "backgroundColor": "#008ebf",
+            "id": 276,
+            "icon_uri_fragment": "0,142,191/recycle",
+            "icon": "recycle:rgb(0,142,191)",
+            "borderColor": "#008EBF",
+            "event_type": "pickup",
+            "short_text_message": null,
+            "area_name": "recology-1051",
+            "is_week_long": 0,
+            "service_name": "waste",
+            "color": "#008ebf",
+            "sort_order": 0,
+            "name": "recycling",
+            "opts": {}
+        }, {
+            "voice_message": null,
+            "subject": "Compost",
+            "html_message": "Use the green compost cart to collect food scraps, soiled paper, and plants.",
+            "id": 280,
+            "plain_text_message": null,
+            "backgroundColor": "#78cc3e",
+            "borderColor": "#78CC3E",
+            "icon": "apple_core:rgb(120,204,62)",
+            "icon_uri_fragment": "120,204,62/apple_core",
+            "area_name": "recology-1051",
+            "event_type": "pickup",
+            "short_text_message": null,
+            "color": "#78cc3e",
+            "service_name": "waste",
+            "is_week_long": 0,
+            "opts": {},
+            "sort_order": 0,
+            "name": "organics"
+        }],
+        "custom_message": ""
+    }
+}
+"""
+
+
+def main(url):
+    with urlopen(url) as fp:
+        result = json.load(fp)
+
+    flags = [f["name"] for f in result["next_event"]["flags"]]
+    next_day = result["next_event"]["day"]
+
+    data = {
+        "next_date": next_day,
+        "flags": flags,
+    }
+    print(json.dumps(data, indent=2))
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Fetch status from SF Recology.")
+    parser.add_argument("url", metavar="URL")
+    args = parser.parse_args()
+    main(args.url)

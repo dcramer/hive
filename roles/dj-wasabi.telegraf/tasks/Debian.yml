@@ -1,0 +1,93 @@
+---
+
+- name: "Debian | Set name if state == latest"
+  set_fact:
+    telegraf_agent_package: telegraf={{ telegraf_agent_version }}-{{ telegraf_agent_version_patch }}
+  when:
+    - telegraf_agent_package_state != "latest"
+
+- name: "Debian | Set telegraf_agent_package_arch"
+  set_fact:
+    telegraf_agent_package_arch: "{{ ansible_architecture }}"
+
+- name: "Debian | Set telegraf_agent_package_arch specific for x86_64"
+  set_fact:
+    telegraf_agent_package_arch: "amd64"
+  when:
+    - ansible_architecture == "x86_64"
+
+- name: "Debian | Ensure the system can use the HTTPS transport for APT"
+  stat:
+    path: /usr/lib/apt/methods/https
+  register: apt_https_transport
+
+- name: "Debian | Install APT HTTPS transport"
+  apt:
+    name: "apt-transport-https"
+    state: present
+  register: are_telegraf_dependencies_packages_installed
+  until: are_telegraf_dependencies_packages_installed is succeeded
+  when:
+    - not apt_https_transport.stat.exists
+  become: yes
+
+- name: "Debian | Download Telegraf apt key"
+  apt_key:
+    url: "https://repos.influxdata.com/influxdb.key"
+    id: 2582E0C5
+    state: present
+  register: are_telegraf_dependencies_keys_installed
+  until: are_telegraf_dependencies_keys_installed is succeeded
+  become: yes
+  when:
+    - telegraf_agent_package_method == "repo"
+
+- name: "Debian | Add Telegraf repository (using LSB)"
+  apt_repository:
+    repo: "deb https://repos.influxdata.com/{{ ansible_distribution|lower }} {{ ansible_lsb.codename }} stable"
+    filename: "telegraf"
+    state: present
+  become: yes
+  when:
+    - telegraf_agent_package_method == "repo"
+    - ansible_lsb is defined
+    - ansible_lsb.codename is defined
+
+- name: "Debian | Add Telegraf repository"
+  apt_repository:
+    repo: "deb https://repos.influxdata.com/{{ ansible_distribution|lower }} {{ ansible_distribution_release }} stable"
+    filename: "telegraf"
+    state: present
+  become: yes
+  when:
+    - telegraf_agent_package_method == "repo"
+    - ansible_lsb is not defined or ansible_lsb.codename is not defined
+
+- name: "Debian | Download Telegraf package (online)"
+  get_url:
+    url: https://dl.influxdata.com/telegraf/releases/telegraf_{{ telegraf_agent_version }}-{{ telegraf_agent_version_patch }}_{{ telegraf_agent_package_arch }}.deb
+    dest: "{{ telegraf_agent_package }}"
+  when:
+    - telegraf_agent_package_method == "online"
+
+- name: "Debian | Install Telegraf package"
+  apt:
+    name: "{{ telegraf_agent_package }}"
+    state: "{{ telegraf_agent_package_state }}"
+  register: is_telegraf_package_installed
+  until: is_telegraf_package_installed is succeeded
+  notify: "Restart Telegraf"
+  become: yes
+  when:
+    - telegraf_agent_package_method == "repo"
+
+- name: "Debian | Install Telegraf package"
+  apt:
+    deb: "{{ telegraf_agent_package }}"
+    state: "present"
+  register: is_telegraf_package_installed
+  until: is_telegraf_package_installed is succeeded
+  notify: "Restart Telegraf"
+  become: yes
+  when:
+    - telegraf_agent_package_method != "repo"

@@ -1,0 +1,42 @@
+---
+- name: create filebeat directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ hive_user }}"
+    group: "{{ hive_user }}"
+    mode: 0755
+  with_items:
+    - /docker/filebeat
+    - /docker/filebeat/config
+
+- name: create filebeat configuration
+  template:
+    src: "filebeat.yml.j2"
+    dest: "/docker/filebeat/config/filebeat.yml"
+    owner: "root"
+    group: "root"
+    mode: 0644
+  notify: restart filebeat
+
+- name: filebeat Docker Container
+  docker_container:
+    name: filebeat
+    image: "docker.elastic.co/beats/filebeat:{{ filebeat_version }}"
+    pull: true
+    restart_policy: unless-stopped
+    env:
+      setup.kibana.host: "kibana:{{ kibana_port }}"
+      output.elasticsearch.hosts: '["elasticsearch:9200"]'
+    volumes:
+      - "/docker/filebeat/config/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro"
+      - "/var/lib/docker/containers:/var/lib/docker/containers:ro"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    user: "root"
+
+- name: Add filebeat to network
+  docker_network:
+    name: hive
+    connected:
+      - filebeat
+    appends: yes

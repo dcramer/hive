@@ -1,0 +1,32 @@
+#!/bin/bash -eu
+
+DATE=$(date +'%Y-%m-%d')
+
+DEST="/tmp/backup-${DATE}.tar.gz"
+
+tar -cpzf "$DEST" \
+    --exclude=elasticsearch \
+    --exclude=mariadb \
+    --exclude=*/logs/* \
+    --exclude=*/cache/* \
+    --exclude=plex/transcode \
+    --exclude=plex/config/Library/Application\ Support/Plex\ Media\ Server/Cache \
+    --exclude=plex/config/Library/Application\ Support/Plex\ Media\ Server/Logs \
+    --exclude=plex/config/Library/Application\ Support/Plex\ Media\ Server/Media \
+    --exclude=plex/config/Library/Application\ Support/Plex\ Media\ Server/Metadata \
+    --exclude=plex/config/Library/Application\ Support/Plex\ Media\ Server/Plug-in\ Support \
+    --exclude=radarr/config/MediaCover \
+    --exclude=sonarr/config/MediaCover \
+    --warning=no-file-changed /docker
+
+gpg -o "${DEST}.gpg" \
+    --passphrase-file /etc/backup-passwd \
+    --pinentry-mode=loopback \
+    --batch yes \
+    --symmetric "${DEST}"
+
+gsutil \
+    -o GSUtil:parallel_composite_upload_threshold=150M\
+    cp "${DEST}.gpg" gs://{{ backup_bucket_name }}
+
+rm "${DEST}"

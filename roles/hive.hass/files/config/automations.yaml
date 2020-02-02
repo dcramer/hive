@@ -1,0 +1,141 @@
+- alias: "Set theme at startup"
+  trigger:
+    platform: homeassistant
+    event: start
+  action:
+    service: frontend.set_theme
+    data:
+      name: synthwave
+
+# - alias: "Set theme for day and night"
+#   trigger:
+#     - platform: homeassistant
+#       event: start
+#     - platform: state
+#       entity_id: sun.sun
+#       to: above_horizon
+#     - platform: state
+#       entity_id: sun.sun
+#       to: below_horizon
+#   action:
+#     - service_template: frontend.set_theme
+#       data_template:
+#         name: >
+#           {% if states.sun.sun.state == "above_horizon" %}
+#             Google - Light
+#           {% else %}
+#             Google - Dark
+#           {% endif %}
+
+# {'message_id': 171, 'date': 1578624944, 'chat': {'id': -313131514, 'type': 'group', 'title': 'Home', 'all_members_are_administrators': True}, 'entities': [], 'caption_entities': [], 'photo': [], 'new_chat_members': [{'id': 850525420, 'first_name': 'Red Queen', 'is_bot': True, 'username': 'Hive4332Bot'}], 'new_chat_photo': [], 'delete_chat_photo': False, 'group_chat_created': False, 'supergroup_chat_created': False, 'channel_chat_created': False, 'from': {'id': 958786881, 'first_name': 'David', 'is_bot': False, 'last_name': 'Cramer', 'language_code': 'en'}}
+
+- alias: "Telegram bot that reply pong to ping"
+  hide_entity: true
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: "/ping"
+  action:
+    - service: telegram_bot.send_message
+      data_template:
+        target: "{{ trigger.event.data.chat_id }}"
+        message: "pong"
+
+- id: replyAckGarage
+  alias: "Telegram bot to ack the garage door being open"
+  hide_entity: true
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: "/ackGarage"
+  action:
+    - service: alert.turn_off
+      entity_id: alert.garage_door_open
+
+- id: replyCloseGarage
+  alias: "Telegram bot to close the garage door"
+  hide_entity: true
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: "/closeGarage"
+  action:
+    - service: cover.close_cover
+      entity_id: cover.garage_door
+
+- id: replyAckStorage
+  alias: "Telegram bot to ack the garage storage being unlocked"
+  hide_entity: true
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: "/ackStorage"
+  action:
+    - service: alert.turn_off
+      entity_id: alert.garage_door_unlocked
+
+- id: replyLockStorage
+  alias: "Telegram bot to lock the garage storage"
+  hide_entity: true
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: "/lockStorage"
+  action:
+    - service: lock.lock
+      entity_id: lock.garage_storage_deadbolt
+
+- id: replyArmAway
+  alias: "Telegram bot to arm the alarm in away mode"
+  hide_entity: true
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: "/armAway"
+  action:
+    - service: alarm_control_panel.alarm_arm_away
+      entity_id: alarm_control_panel.home
+
+- id: replyDisarm
+  alias: "Telegram bot to disarmarm the alarm"
+  hide_entity: true
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: "/disarm"
+  action:
+    - service: alarm_control_panel.alarm_disarm
+      entity_id: alarm_control_panel.home
+    - service: notify.telegram_household
+      data:
+        message: "The alarm has been disarmed via telegram"
+
+- id: replyAckAlarm
+  alias: "Telegram bot to ack the alarm being unarmed"
+  hide_entity: true
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: "/ackAlarm"
+  action:
+    - service: alert.turn_off
+      entity_id: alert.alarm_not_armed
+
+- alias: "Sync Tasmota states on start-up - autodiscovery"
+  initial_state: true
+  trigger:
+    platform: homeassistant
+    event: start
+  action:
+    - service: mqtt.publish
+      data:
+        topic: "cmnd/tasmotas/state"
+        payload: ""

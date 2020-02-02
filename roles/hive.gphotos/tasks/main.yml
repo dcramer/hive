@@ -1,0 +1,33 @@
+---
+- name: create gphotos-sync directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ hive_user }}"
+    group: "{{ hive_user }}"
+    mode: 0755
+  with_items:
+    - /docker/gphotos/config/
+
+- name: gphotos-sync Docker Container
+  docker_image:
+    name: gilesknap/gphotos-sync
+
+- name: create client_secret.json
+  copy:
+    content: "{{ gphotos_client_id_json }}"
+    dest: "/docker/gphotos/config/client_secret.json"
+    owner: root
+    group: root
+    mode: 0600
+
+- name: install gphotos-sync cronjob
+  cron:
+    name: "archive google photos"
+    minute: "0"
+    job: >
+      docker run
+      -t
+      -v "{{ nas_mount_folder }}/Photos:/storage"
+      -v "/docker/gphotos/config/:/config"
+      gilesknap/gphotos-sync /storage

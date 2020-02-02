@@ -1,0 +1,11 @@
+- platform: tensorflow
+  confidence: 75
+  scan_interval: 10000
+  source:
+    - entity_id: camera.garage
+  file_out:
+    - "/downloads/cameras/{{ camera_entity.split('.')[1] }}_latest.jpg"
+  model:
+    graph: /config/tensorflow/model/frozen_inference_graph.pb
+    categories:
+      - person

@@ -1,0 +1,96 @@
+path: default_view
+title: Home
+icon: mdi:home
+cards:
+  - type: custom:auto-entities
+    show_empty: false
+    card:
+      type: glance
+      title: Low Battery Devices
+    filter:
+      include:
+        - entity_id: "*battery_level*"
+          state: "< 25"
+        - attributes:
+            battery: "< 25"
+        - attributes:
+            battery_level: "< 25"
+      exclude:
+        - entity_id: "*battery_level*"
+          state: "< 0"
+        - attributes:
+            battery: "< 0"
+        - attributes:
+            battery_level: "< 0"
+
+  - type: custom:auto-entities
+    show_empty: false
+    card:
+      type: glance
+      title: Open Doors
+    filter:
+      include:
+        - entity_id: "binary_sensor.*door*"
+          state: "on"
+        - entity_id: "cover.garage"
+          state: "on"
+
+  - type: glance
+    entities:
+      - person.david
+      - person.sukhpreet
+
+  - type: "custom:nextbus-card"
+    entities:
+      - sensor.sf_muni_j
+      - sensor.sf_muni_48
+    name: Public Transit
+    show_header_toggle: false
+
+  # - type: alarm-panel
+  #   entity: alarm_control_panel.home
+
+  - type: custom:recology-card
+    entity: sensor.recology
+
+  - type: vertical-stack
+    cards:
+      - type: picture-entity
+        entity: camera.front_door_exterior
+      - type: picture-entity
+        entity: camera.garage_exterior
+
+  # - type: vertical-stack
+  #   cards:
+  #     # - type: weather-forecast
+  #     #   entity: weather.main_floor
+  #     - type: horizontal-stack
+  #       cards:
+  #         - type: glance
+  #           entities:
+  #             - sensor.main_floor_temperature
+  #             - sensor.office_temperature
+  #             - sensor.master_bedroom_temperature
+  #             - sensor.bedroom_temperature
+  #     - type: thermostat
+  #       entity: climate.main_floor
+  #     - type: custom:mini-graph-card
+  #       entities:
+  #         - sensor.main_floor_temperature
+  #       hours_to_show: 48
+  #       lower_bound: 32
+  #       upper_bound: 100
+
+  - type: entities
+    title: Network
+    show_header_toggle: false
+    entities:
+      - sensor.speedtest_download
+      - sensor.speedtest_upload
+
+  - type: custom:group-card
+    card:
+      type: entities
+      title: "Pi Hole Status"
+      show_header_toggle: false
+    group: group.pi_hole

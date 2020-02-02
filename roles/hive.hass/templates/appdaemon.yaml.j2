@@ -1,0 +1,16 @@
+# log:
+#   accessfile: /logs/access.log
+#   errorfile: /logs/error.log
+#   logfile: /logs/appdaemon.log
+#   log_generations: 3
+#   log_size: 1000000
+appdaemon:
+  threads: 10
+  plugins:
+    HASS:
+      type: hass
+      ha_url: "http://192.168.1.25:8123"
+      token: !secret appdaemon_token
+
+hadashboard:
+  dash_url: "http://192.168.1.25:5050"

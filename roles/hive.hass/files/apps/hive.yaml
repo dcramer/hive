@@ -1,0 +1,46 @@
+power_usage_washer:
+  module: power_usage
+  class: PowerUsageAlert
+  entity_id: sensor.washer_power
+  delay: 3
+  input_boolean: input_boolean.washer
+  notify:
+    - telegram_household
+  sonos:
+    - media_player.office
+    - media_player.kitchen
+  done_message: "The wash machine has finished"
+
+power_usage_dryer:
+  module: power_usage
+  class: PowerUsageAlert
+  entity_id: sensor.dryer_power
+  delay: 3
+  input_boolean: input_boolean.dryer
+  notify:
+    - telegram_household
+  sonos:
+    - media_player.office
+    - media_player.kitchen
+  done_message: "The dryer has finished"
+
+# garage_door_alert:
+#   module: hive
+#   class: BinarySensorAlert
+#   entity_id: cover.garage_door
+#   # should account for camera lag
+#   delay: 3
+#   input_boolean: input_boolean.garage_door
+#   state: open
+#   message: '{{now().strftime("%H:%M:%S %Y-%m-%d")}}: Garage door open for {{ relative_time(states.cover.garage_door.last_changed) }}. /ackGarage /closeGarage'
+#   done_message: '{{now().strftime("%H:%M:%S %Y-%m-%d")}}: Garage has been closed.'
+#   camera: camera.garage
+#   camera_output: "/downloads/camera/garage_{alert_id}.jpg"
+#   repeat:
+#     - 5
+#     - 30
+#   can_acknowledge: true
+#   skip_first: true
+#   telegram:
+#     - !secret telegram_chat_id_david
+#     - !secret telegram_chat_id_sukhpreet

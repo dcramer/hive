@@ -1,0 +1,27 @@
+- name: Home
+  latitude: !secret lat
+  longitude: !secret lng
+  radius: 200
+  icon: mdi:home
+  passive: false
+
+- name: Sukhpreet's Parents
+  latitude: !secret skparents_lat
+  longitude: !secret skparents_lng
+  radius: 200
+  icon: mdi:home
+  passive: false
+
+- name: Embarcadero Station
+  latitude: 37.792935
+  longitude: -122.398902
+  radius: 200
+  icon: mdi:tram
+  passive: false
+
+- name: Sentry SFO
+  latitude: 37.78405
+  longitude: -122.3995809
+  radius: 200
+  icon: mdi:briefcase
+  passive: false

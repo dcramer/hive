@@ -1,0 +1,7 @@
+roles.retry
+ansible-passwd
+.venv
+.DS_Store
+node_modules
+
+roles/hive.media/

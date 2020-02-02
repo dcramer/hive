@@ -1,0 +1,20 @@
+<service-group>
+  <name>Home Assistant Bridge</name>
+  <service>
+    <type>_hap._tcp</type>
+    <port>{{ homekit_port }}</port>
+    <txt-record>md=HA Bridge</txt-record>         <!-- friendly name                 -->
+
+    <!-- the following appear to be mandatory -->
+    <txt-record>pv=1.0</txt-record>               <!-- HAP version                   -->
+    <txt-record>id={{ homekit_mac }}</txt-record> <!-- MAC (from `.homekit.state`)   -->
+    <txt-record>c#=2</txt-record>                 <!-- config version                -->
+
+    <!-- the following appear to be optional -->
+    <txt-record>s#=1</txt-record>                 <!-- accessory state               -->
+    <txt-record>ff=0</txt-record>                 <!-- unimportant                   -->
+    <txt-record>ci=2</txt-record>                 <!-- accessory category (2=bridge) -->
+    <txt-record>sf=1</txt-record>                 <!-- 0=not paired, 1=paired        -->
+    <txt-record>sh=UaTxqQ==</txt-record>          <!-- setup hash (used for pairing) -->
+  </service>
+</service-group>

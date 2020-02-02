@@ -1,0 +1,6 @@
+---
+- name: restart grafana
+  shell: docker restart grafana
+
+- name: restart influxdb
+  shell: docker restart influxdb

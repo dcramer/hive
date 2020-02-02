@@ -1,0 +1,16 @@
+title: Guest Bedroom
+id: guest-bedroom
+path: guest-bedroom
+icon: mdi:bed-queen
+cards:
+  - type: sensor
+    entity: sensor.bedroom_temperature
+    graph: line
+    detail: 1
+    hours_to_show: 48
+  - type: custom:group-card
+    card:
+      type: entities
+      title: "Lights"
+      show_header_toggle: true
+    group: group.guest_bedroom_lights

@@ -1,0 +1,10 @@
+#!/bin/bash -e
+
+IP=$(dig +short myip.opendns.com @resolver1.opendns.com)
+
+curl  -H "Authorization: Bearer $DNSIMPLE_TOKEN" \
+      -H 'Accept: application/json' \
+      -H 'Content-Type: application/json' \
+      -X PATCH \
+      -d "{\"content\": \"$IP\"}" \
+      https://api.dnsimple.com/v2/65508/zones/cra.mr/records/12005476

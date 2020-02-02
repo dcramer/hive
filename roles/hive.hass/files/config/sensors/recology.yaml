@@ -1,0 +1,7 @@
+- name: Recology
+  platform: command_line
+  command: "/config/www/bin/recology-update {{ states('input_text.recology_api_url') }}"
+  scan_interval: 86400
+  json_attributes:
+    - next_date
+    - flags

@@ -1,0 +1,9 @@
+name: '{{now().strftime("%H:%M:%S %Y-%m-%d")}}: Garage exterior door opened.'
+entity_id: binary_sensor.garage_exterior_door
+state: "on"
+repeat:
+  - 5
+  - 15
+can_acknowledge: true
+notifiers:
+  - telegram_household

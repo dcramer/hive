@@ -1,0 +1,11 @@
+# This file describes the network interfaces available on your system
+# For more information, see netplan(5).
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    eno2:
+      dhcp4: yes
+      routes:
+        - to: 176.16.1.0/24
+          via: 192.168.1.1

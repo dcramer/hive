@@ -1,0 +1,240 @@
+default_config:
+
+homeassistant:
+  name: Home
+  latitude: !secret lat
+  longitude: !secret lng
+  elevation: 92
+  temperature_unit: F
+  time_zone: America/Los_Angeles
+  unit_system: imperial
+  packages: !include_dir_named packages/
+  customize: !include customize.yaml
+  whitelist_external_dirs:
+    - /downloads
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include_dir_named scripts/
+frontend: !include frontend.yaml
+http: !include http.yaml
+recorder: !include recorder.yaml
+camera: !include_dir_list cameras/
+person: !include persons.yaml
+sensor: !include_dir_merge_list sensors/
+switch: !include switches.yaml
+zone: !include zones.yaml
+alert: !include_dir_named alerts/
+
+lovelace:
+  mode: yaml
+
+updater:
+  reporting: true
+  include_used_components: true
+
+downloader:
+  download_dir: /downloads
+
+cloud:
+  google_actions:
+    filter:
+      include_entities:
+        - fan.master_bedroom
+        - lock.garage_storage_deadbolt
+        - camera.garage
+        - cover.garage_door
+        - input_boolean.dryer
+        - input_boolean.washer
+        - switch.pi_hole
+      include_domains:
+        - light
+        # - fan
+        # - lock
+        # - camera
+      # exclude_entities:
+      #   - lock.2018_jeep_wrangler_lock
+    entity_config:
+      fan.master_bedroom:
+        room: master bedroom
+      lock.garage_storage_deadbolt:
+        room: garage
+      camera.garage:
+        room: garage
+      cover.garage_door:
+        room: garage
+      input_boolean.dryer:
+        room: garage
+      input_boolean.washer:
+        room: garage
+      light.master_bedroom_bedroom_center_cans:
+        room: master bedroom
+      light.master_bedroom_bedroom_side_cans:
+        room: master bedroom
+      light.master_bedroom_bedroom_sitting_cans:
+        room: master bedroom
+      light.master_bedroom_master_bed_hallway_cans:
+        room: master bedroom
+
+
+
+zwave:
+  usb_path: /dev/ttyACM0
+  # usb_path: /dev/ttyUSB1
+  network_key: "0x50, 0x78, 0x13, 0x63, 0x55, 0x17, 0x65, 0xAB, 0xC9, 0x54, 0x9C, 0xDB, 0x1B, 0xED, 0x0F, 0x86"
+
+zigbee:
+  device: /dev/ttyUSB1
+
+stream:
+
+weather:
+  - platform: darksky
+    api_key: !secret darksky_key
+    mode: daily
+    name: "San Francisco, CA"
+
+plex:
+  host: !secret plex_host
+  port: !secret plex_webui_port
+  token: !secret plex_token
+
+ecobee:
+  api_key: !secret ecobee_key
+
+geofency:
+
+speedtestdotnet:
+  monitored_conditions:
+    - download
+    - upload
+
+tts:
+  - platform: google_translate
+    service_name: google_say
+    cache: true
+    cache_dir: /tts-cache
+    time_memory: 300
+
+simplisafe:
+  accounts:
+    - username: !secret simplisafe_username
+      password: !secret simplisafe_password
+      code: !secret simplisafe_code
+
+cover:
+  - platform: myq
+    username: !secret myq_username
+    password: !secret myq_password
+
+influxdb:
+  host: influxdb
+  port: !secret influxdb_port
+  database: hass
+
+image_processing: !include image_processing.yaml
+
+panel_custom: !include panel_custom.yaml
+
+binary_sensor: !include binary_sensors.yaml
+
+# Device Tracking
+
+unifi:
+  controllers:
+    - host: !secret unifi_host
+      site: "Default"
+      dont_track_wired_clients: true
+      dont_track_devices: true
+
+device_tracker:
+  - platform: tile
+    username: !secret tile_username
+    password: !secret tile_password
+
+mopar:
+  username: !secret mopar_username
+  password: !secret mopar_password
+  pin: !secret mopar_pin
+
+dyson:
+  username: !secret dyson_username
+  password: !secret dyson_password
+  language: US
+  devices:
+    - device_id: !secret dyson_fan_id
+      device_ip: !secret dyson_fan_host
+
+input_text:
+  recology_api_url:
+    initial: !secret recology_api_url
+
+telegram_bot:
+  - platform: polling
+    api_key: !secret telegram_token
+    allowed_chat_ids:
+      - !secret telegram_chat_id_david
+      - !secret telegram_chat_id_sukhpreet
+      - !secret telegram_group_id_home
+
+notify:
+  - name: telegram_david
+    platform: telegram
+    chat_id: !secret telegram_chat_id_david
+  - name: telegram_sukhpreet
+    platform: telegram
+    chat_id: !secret telegram_chat_id_sukhpreet
+  # https://stackoverflow.com/questions/45414021/get-telegram-channel-group-id/45577773#45577773
+  - name: telegram_household
+    platform: telegram
+    chat_id: !secret telegram_group_id_home
+  # - name: garage_alert
+  #   platform: group
+  #   services:
+  #     - service: camera.snapshot
+  #       data:
+  #         entity_id: camera.garage
+  #         filename: "/downloads/cameras/garage_latest.jpg"
+  #     - service: notify.telegram_david
+
+# custom components
+# "Restart HA one time before adding it to config."
+# radarr_upcoming_media:
+# sonarr_upcoming_media:
+hacs:
+  token: !secret hacs_github_token
+
+media_player:
+  - platform: spotify
+    client_id: !secret spotify_client_id
+    client_secret: !secret spotify_client_secret
+
+sonos:
+  media_player:
+    hosts:
+      - 192.168.1.58
+      - 192.168.1.59
+
+# appdaemon:
+
+# hadashboard:
+#   dash_url: http://192.168.1.25:5050
+
+mqtt:
+  broker: 192.168.1.25
+  port: 1883
+  client_id: home-assistant-1
+  keepalive: 60
+  protocol: 3.1
+  birth_message:
+    topic: tele/hass1/LWT
+    payload: Online
+    qos: 1
+    retain: false
+  will_message:
+    topic: tele/hass1/LWT
+    payload: Offline
+    qos: 1
+    retain: false
+  # discovery: true
+  # discovery_prefix: homeassistant

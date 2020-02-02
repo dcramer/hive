@@ -1,0 +1,8 @@
+- platform: nextbus
+  agency: sf-muni
+  route: J
+  stop: 3996
+- platform: nextbus
+  agency: sf-muni
+  route: 48
+  stop: 4443

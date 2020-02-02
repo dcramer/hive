@@ -1,0 +1,32 @@
+---
+# tasks file for ansible-telegraf
+
+- name: "Install on RedHat"
+  include_tasks: "RedHat.yml"
+  when:
+    - ansible_os_family == "RedHat" and not telegraf_agent_docker
+
+- name: "Install on Debian"
+  include_tasks: "Debian.yml"
+  when:
+    - ansible_os_family == "Debian" and not telegraf_agent_docker
+  tags:
+    - telegraf
+    - packages
+
+- name: "Install on Suse"
+  include_tasks: "Suse.yml"
+  when: ansible_os_family == "Suse" and not telegraf_agent_docker
+
+- include_tasks: "docker.yml"
+  when: telegraf_agent_docker
+
+- name: "Configure Telegraf"
+  include_tasks: "configure_linux.yml"
+  when:
+    - ansible_os_family != "Windows"
+
+- name: "Install / Configure telegraf on Windows"
+  include_tasks: "configure_windows.yml"
+  when:
+    - ansible_os_family == "Windows" and not telegraf_agent_docker

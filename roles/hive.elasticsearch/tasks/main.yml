@@ -1,0 +1,43 @@
+---
+- name: create elasticsearch directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ hive_user }}"
+    group: "{{ hive_user }}"
+    mode: 0755
+  with_items:
+    - /docker/elasticsearch
+    - /docker/elasticsearch/data
+
+# - name: copy configuration
+#   copy:
+#     src: "mosquitto.conf"
+#     dest: "/docker/mqtt/config/mosquitto.conf"
+#   notify: restart mosquitto
+
+- name: elasticsearch Docker Container
+  docker_container:
+    name: elasticsearch
+    image: "docker.elastic.co/elasticsearch/elasticsearch:{{ es_version }}"
+    pull: true
+    restart_policy: unless-stopped
+    volumes:
+      - /docker/elasticsearch/data:/usr/share/elasticsearch/data
+    env:
+      discovery.type: single-node
+    # ulimits:
+    #   memlock:
+    #     soft: -1
+    #     hard: -1
+    ports:
+      - "9200:9200/tcp"
+      - "9300:9300/tcp"
+    user: "{{ hive_uid }}"
+
+- name: Add elasticsearch to network
+  docker_network:
+    name: hive
+    connected:
+      - elasticsearch
+    appends: yes

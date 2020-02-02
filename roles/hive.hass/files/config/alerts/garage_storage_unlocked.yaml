@@ -1,0 +1,11 @@
+name: '{{now().strftime("%H:%M:%S %Y-%m-%d")}}: Garage storage unlocked for {{ relative_time(states.binary_sensor.garage_storage_closed_and_unlocked.last_changed) }}. /ackStorage /lockStorage'
+done_message: '{{now().strftime("%H:%M:%S %Y-%m-%d")}}: Garage storage has been locked.'
+entity_id: binary_sensor.garage_storage_closed_and_unlocked
+state: "on"
+repeat:
+  - 5
+  - 30
+can_acknowledge: true
+skip_first: true
+notifiers:
+  - telegram_household

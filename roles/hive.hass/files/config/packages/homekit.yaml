@@ -1,0 +1,33 @@
+---
+homekit:
+  auto_start: false
+  # advertise_ip: 192.168.1.25
+  port: !secret homekit_port
+  filter:
+    include_domains:
+      - alarm_control_panel
+      - light
+      - media_player
+  entity_config:
+    alarm_control_panel.home:
+      code: !secret simplisafe_code
+    media_player.office:
+      feature_list:
+        - feature: play_pause
+        - feature: toggle_mute
+
+automation:
+  - alias: "Start HomeKit"
+    trigger:
+      - platform: homeassistant
+        event: start
+    action:
+      - wait_template: >-
+          {% if not states.media_player.office %}
+            false
+          {% else %}
+            true
+          {% endif %}
+        timeout: 00:15 # Waits 15 minutes
+        continue_on_timeout: false
+      - service: homekit.start

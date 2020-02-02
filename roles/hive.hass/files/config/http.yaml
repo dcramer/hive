@@ -1,0 +1,6 @@
+---
+# ssl_certificate: !secret ssl_certificate
+# ssl_key: !secret ssl_key
+base_url: http://rex:8123
+ip_ban_enabled: false
+login_attempts_threshold: 2

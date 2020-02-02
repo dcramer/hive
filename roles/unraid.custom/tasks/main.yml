@@ -1,0 +1,28 @@
+---
+- name: create directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0700
+  with_items:
+    - /boot/config-user
+    - /boot/config-user/ssh
+
+- name: Add dcramer authorized keys
+  authorized_key:
+    user: root
+    key: "{{ item }}"
+    state: present
+    manage_dir: false
+    path: /boot/config-user/ssh/authorized_keys
+  with_file:
+    - dcramer.key.pub
+    - dcramer-windows.key.pub
+
+- name: create /boot/config/go
+  template:
+    src: go.j2
+    dest: /boot/config/go
+    owner: root
+    group: root
+    mode: 0600

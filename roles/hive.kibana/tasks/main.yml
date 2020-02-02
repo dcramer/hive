@@ -1,0 +1,39 @@
+---
+- name: create kibana directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ hive_user }}"
+    group: "{{ hive_user }}"
+    mode: 0755
+  with_items:
+    - /docker/kibana
+    - /docker/kibana/config
+
+- name: create kibana configuration
+  template:
+    src: "kibana.yml.j2"
+    dest: "/docker/kibana/config/kibana.yml"
+    owner: "{{ hive_user }}"
+    group: "{{ hive_user }}"
+    mode: 0644
+  notify: restart kibana
+
+- name: kibana Docker Container
+  docker_container:
+    name: kibana
+    image: "docker.elastic.co/kibana/kibana:{{ kibana_version }}"
+    pull: true
+    restart_policy: unless-stopped
+    volumes:
+      - /docker/kibana/config:/usr/share/kibana/config
+    ports:
+      - "{{ kibana_port }}:5601/tcp"
+    user: "{{ hive_uid }}"
+
+- name: Add kibana to network
+  docker_network:
+    name: hive
+    connected:
+      - kibana
+    appends: yes

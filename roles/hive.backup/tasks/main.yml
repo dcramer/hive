@@ -1,0 +1,63 @@
+---
+
+- name: "Ensure the system can use the HTTPS transport for APT"
+  stat:
+    path: /usr/lib/apt/methods/https
+  register: apt_https_transport
+
+- name: "Install APT HTTPS transport"
+  apt:
+    name: "apt-transport-https"
+    state: present
+  register: are_gcp_dependencies_packages_installed
+  until: are_gcp_dependencies_packages_installed is succeeded
+  when:
+    - not apt_https_transport.stat.exists
+  become: yes
+
+- name: "Add google-cloud apt key"
+  apt_key:
+    url: "https://packages.cloud.google.com/apt/doc/apt-key.gpg"
+    # id: 2582E0C5
+    state: present
+  register: are_gcp_dependencies_keys_installed
+  until: are_gcp_dependencies_keys_installed is succeeded
+  become: yes
+
+- name: "Add google-cloud repository"
+  apt_repository:
+    repo: "deb https://packages.cloud.google.com/apt cloud-sdk main"
+    filename: "google-cloud"
+    state: present
+  become: yes
+
+- name: "Install google-cloud-sdk"
+  apt:
+    name: "google-cloud-sdk"
+    state: present
+  register: is_gcp_package_installed
+  until: is_gcp_package_installed is succeeded
+  become: yes
+
+- name: create backup-passwd
+  copy:
+    content: "{{ backup_password }}"
+    dest: "/etc/backup-passwd"
+    owner: root
+    group: root
+    mode: 0600
+
+- name: create backup.sh
+  template:
+    src: "backup.j2"
+    dest: "/docker/backup"
+    owner: root
+    group: root
+    mode: 0700
+
+- name: install nightly backup cron
+  cron:
+    name: "nightly backup"
+    minute: "5"
+    job: >
+      /docker/backup.sh

@@ -1,0 +1,22 @@
+path: security
+title: Security
+icon: "mdi:cctv"
+cards:
+  - type: picture-entity
+    entity: camera.front_door_exterior
+    name: Front Door - Exterior
+    camera_view: live
+    show_name: false
+    show_state: false
+  - type: picture-entity
+    entity: camera.garage_exterior
+    name: Garage - Exterior
+    camera_view: live
+    show_name: false
+    show_state: false
+  - type: picture-entity
+    entity: camera.garage
+    name: Garage
+    camera_view: live
+    show_name: false
+    show_state: false

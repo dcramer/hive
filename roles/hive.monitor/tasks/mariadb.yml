@@ -1,0 +1,33 @@
+---
+- name: create mariadb directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ hive_user }}"
+    group: "{{ hive_user }}"
+    mode: 0755
+  with_items:
+    - /docker/mariadb/
+
+- name: mariadb Docker Container
+  docker_container:
+    name: mariadb
+    image: linuxserver/mariadb
+    pull: true
+    volumes:
+      - /docker/mariadb:/config
+    ports:
+      - "{{ mariadb_port }}:3306/tcp"
+    env:
+      TZ: "{{ timezone }}"
+      PUID: "{{ hive_uid | string }}"
+      PGID: "{{ hive_gid | string }}"
+      MYSQL_ROOT_PASSWORD: "{{ mariadb_root_password }}"
+    restart_policy: unless-stopped
+
+- name: Add mariadb to network
+  docker_network:
+    name: hive
+    connected:
+      - mariadb
+    appends: yes

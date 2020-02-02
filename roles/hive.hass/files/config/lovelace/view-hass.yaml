@@ -1,0 +1,41 @@
+title: Home Assistant
+id: hass
+path: hass
+icon: mdi:home-assistant
+cards:
+  - type: custom:auto-entities
+    show_empty: true
+    card:
+      type: glance
+      title: Batteries
+    filter:
+      include:
+        - entity_id: "*battery_level*"
+          state: ">= 25"
+        - attributes:
+            battery: ">= 0"
+        - attributes:
+            battery_level: ">= 0"
+
+  - type: custom:mini-graph-card
+    entities:
+      - sensor.load_1m
+      - sensor.load_5m
+      - sensor.load_15m
+    hours_to_show: 24
+    lower_bound: 0
+    upper_bound: 16
+
+  - type: custom:mini-graph-card
+    entities:
+      - sensor.memory_use_percent
+    hours_to_show: 24
+    lower_bound: 0
+    upper_bound: 100
+
+  - type: custom:mini-graph-card
+    entities:
+      - sensor.disk_use_percent
+    hours_to_show: 24
+    lower_bound: 0
+    upper_bound: 100

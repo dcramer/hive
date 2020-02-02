@@ -1,0 +1,28 @@
+---
+- name: Create dcramer
+  user:
+    name: dcramer
+    password: "$6$KA408Tw4W$oFao4jRqgZmyjxsRWxkbxhpZ0Nk2CIhu6PLXXcNOV3YKgBvASC0uEGeuEYUHy6odG09UNPWtL0I.d9eBKI/aa0"
+    groups:
+      - sudo
+      - adm
+    shell: /bin/bash
+    state: present
+    home: /home/dcramer
+
+- name: Add dcramer authorized keys
+  authorized_key:
+    user: dcramer
+    key: "{{ item }}"
+    state: present
+  with_file:
+    - dcramer.key.pub
+    - dcramer-windows.key.pub
+
+- name: Allow dcramer passwordless sudo
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: "^dcramer"
+    line: "dcramer ALL=(ALL) NOPASSWD: ALL"
+    validate: visudo -cf %s

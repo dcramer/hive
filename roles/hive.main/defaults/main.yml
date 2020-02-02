@@ -1,0 +1,4 @@
+---
+mariadb_port: 3306
+
+heimdall_port: 80

@@ -1,0 +1,12 @@
+title: Commute
+id: commute
+path: commute
+icon: mdi:train-car
+panel: true
+cards:
+  - type: entities
+    entities:
+      - entity: sensor.sf_muni_j
+      - entity: sensor.sf_muni_48
+    title: Public Transit
+    show_header_toggle: false

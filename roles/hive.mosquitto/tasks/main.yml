@@ -1,0 +1,45 @@
+---
+- name: create mosquitto directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ hive_user }}"
+    group: "{{ hive_user }}"
+    mode: 0755
+  with_items:
+    - /docker/mqtt
+    - /docker/mqtt/config
+    - /docker/mqtt/config/conf.d
+    - /docker/mqtt/log
+    - /docker/mqtt/data
+
+- name: copy configuration
+  copy:
+    src: "mosquitto.conf"
+    dest: "/docker/mqtt/config/mosquitto.conf"
+  notify: restart mosquitto
+
+- name: mosquitto Docker Container
+  docker_container:
+    name: mosquitto
+    image: toke/mosquitto
+    pull: true
+    restart_policy: unless-stopped
+    volumes:
+      - /docker/mqtt/config:/mqtt/config:ro
+      - /docker/mqtt/log:/mqtt/log
+      - /docker/mqtt/data/:/mqtt/data/
+    ports:
+      - "1883:1883/tcp"
+      - "9001:9001/tcp"
+    user: "{{ hive_uid }}"
+    network_mode: host
+    labels:
+      co.elastic.logs/fileset.stdout: access
+      co.elastic.logs/fileset.stderr: error
+# - name: Add mosquitto to network
+#   docker_network:
+#     name: hive
+#     connected:
+#       - mosquitto
+#     appends: yes

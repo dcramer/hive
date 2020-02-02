@@ -1,0 +1,157 @@
+alarm_control_panel.home:
+  friendly_name: "Alarm System"
+binary_sensor.floorplan:
+  custom_ui_state_card: state-card-floorplan
+  config: !include floorplan.yaml
+cover.garage_door:
+  icon: mdi:garage
+climate.main_floor:
+  friendly_name: Hallway
+device_tracker.davids_iphone:
+  friendly_name: David's iPhone
+  entity_picture: /local/images/david.jpg
+device_tracker.sk_iphone:
+  friendly_name: Sukhpreet's iPhone
+  entity_picture: /local/images/sukhpreet.jpg
+device_tracker.myq_d9a:
+  friendly_name: Garage Door
+device_tracker.tile_6e91fa2b18fd7cac:
+  friendly_name: David's Wallet
+  entity_picture: /local/images/david.jpg
+device_tracker.tile_92efad04d7066fc3:
+  friendly_name: David's Keys
+  entity_picture: /local/images/david.jpg
+device_tracker.tile_532871522e89b1a4:
+  friendly_name: Sukhpreet's Keys
+  entity_picture: /local/images/sukhpreet.jpg
+device_tracker.tile_81c227517c644619:
+  friendly_name: Jeep
+  icon: mdi:jeepney
+  entity_picture: /local/images/jeep.jpg
+device_tracker.tile_933e5816f1492a8c:
+  friendly_name: Jeep Keys
+device_tracker.tile_40cb15f07e482b63:
+  friendly_name: BMW Keys
+device_tracker.tile_p_8b507ab4dec15d32c4a49e5abebf3f97:
+  friendly_name: David's iPhone (Tile)
+  entity_picture: /local/images/david.jpg
+device_tracker.tile_p_696975757e9c41a67980c33870618b2b:
+  friendly_name: Sukhpreet's iPhone (Tile)
+  entity_picture: /local/images/sukhpreet.jpg
+alarm_control_panel.home:
+  friendly_name: Alarm System
+person.david:
+  entity_picture: /local/images/david.jpg
+person.sukhpreet:
+  entity_picture: /local/images/sukhpreet.jpg
+sensor.synology_dsm_status_volume_1:
+  friendly_name: "RAID10 Status"
+sensor.synology_dsm_volume_used_volume_1:
+  friendly_name: "RAID10 Usage"
+sensor.synology_dsm_total_size_volume_1:
+  friendly_name: "Raid10 Size"
+sensor.synology_dsm_used_space_volume_1:
+  friendly_name: "Raid10 Usage"
+sensor.synology_dsm_status_volume_2:
+  friendly_name: "SHR Status"
+sensor.synology_dsm_volume_used_volume_2:
+  friendly_name: "SHR Usage"
+sensor.synology_dsm_total_size_volume_2:
+  friendly_name: "SHR Size"
+sensor.synology_dsm_used_space_volume_2:
+  friendly_name: "SHR Usage"
+sensor.synology_dsm_cpu_load_total:
+  friendly_name: "NAS CPU Load"
+sensor.synology_dsm_network_up:
+  friendly_name: "NAS Network Upload"
+sensor.synology_dsm_network_down:
+  friendly_name: "NAS Network Donwload"
+
+sensor.recology_recycling:
+  friendly_name: "Recycling"
+  icon: mdi:recycle
+sensor.recology_garbage:
+  friendly_name: "Garbage"
+  icon: mdi:trash-can
+sensor.recology_compost:
+  friendly_name: "Compost"
+  icon: mdi:food-apple
+zone.sentry_sfo:
+  entity_picture: /local/images/sentry.png
+fan.master_bedroom:
+  friendly_name: "Dyson Fan"
+
+zwave.garage_storage_deadbolt:
+  friendly_name: "Garage Storage Deadbolt"
+lock.garage_storage_deadbolt:
+  friendly_name: "Garage Storage Deadbolt"
+sensor.garage_storage_deadbolt_battery_level:
+  friendly_name: "Garage Storage Deadbolt Battery Level"
+sensor.garage_storage_deadbolt_access_control:
+  friendly_name: "Garage Storage Deadbolt Access Control"
+sensor.garage_storage_deadbolt_alarm_level:
+  friendly_name: "Garage Storage Deadbolt Alarm Level"
+sensor.garage_storage_deadbolt_alarm_type:
+  friendly_name: "Garage Storage Deadbolt Alarm Type"
+sensor.garage_storage_deadbolt_power_management:
+  friendly_name: "Garage Storage Deadbolt Power Management"
+sensor.garage_storage_deadbolt_sourcenodeid:
+  friendly_name: "Garage Storage Deadbolt Source Node ID"
+
+zwave.garage_storage_door:
+  friendly_name: "Garage Storage Door"
+sensor.garage_storage_door_battery_level:
+  friendly_name: "Garage Storage Door Battery Level"
+binary_sensor.garage_storage_door:
+  friendly_name: "Garage Storage Door"
+  device_class: door
+sensor.garage_storage_door_sourcenodeid:
+  friendly_name: "Garage Storage Door Source Node ID"
+sensor.garage_storage_door_alarm_type:
+  friendly_name: "Garage Storage Door Alarm Type"
+sensor.garage_storage_door_alarm_level:
+  friendly_name: "Garage Storage Door Alarm Level"
+sensor.garage_storage_door_access_control:
+  friendly_name: "Garage Storage Door Access Control"
+
+zwave.garage_exterior_door:
+  friendly_name: "Garage Exterior Door"
+sensor.garage_exterior_door_battery_level:
+  friendly_name: "Garage Exterior Door Battery Level"
+sensor.garage_exterior_door_access_control:
+  friendly_name: "Garage Exterior Door Access Control"
+sensor.garage_exterior_door_alarm_level:
+  friendly_name: "Garage Exterior Door Alarm Level"
+sensor.garage_exterior_door_alarm_type:
+  friendly_name: "Garage Exterior Door Alarm Type"
+sensor.garage_exterior_door_sourcenodeid:
+  friendly_name: "Garage Exterior Door Source Node ID"
+sensor.garage_exterior_door_burglar:
+  friendly_name: "Garage Exterior Door Burglar"
+sensor.garage_exterior_door_battery_level:
+  friendly_name: "Garage Exterior Door Battery Level"
+binary_sensor.garage_exterior_door:
+  friendly_name: "Garage Exterior Door"
+  device_class: door
+
+zwave.repeater_hallway:
+  friendly_name: "Hallway ZWave Repeater"
+
+zwave.z_stick:
+  friendly_name: "ZStick"
+
+zwave.home_energy_meter:
+  friendly_name: "Home Energy Meter"
+sensor.home_energy_meter_power_total:
+  friendly_name: "Home Power - Total"
+  icon: mdi:flash
+sensor.home_energy_meter_power_clamp1:
+  friendly_name: "Home Power - Clamp 1"
+  icon: mdi:flash
+sensor.home_energy_meter_power_clamp2:
+  friendly_name: "Home Power - Clamp 2"
+  icon: mdi:flash
+
+switch.pi_hole:
+  friendly_name: "Pi Hole"
+  icon: mdi:pi-hole

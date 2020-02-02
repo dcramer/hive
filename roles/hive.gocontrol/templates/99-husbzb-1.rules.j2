@@ -1,0 +1,2 @@
+SUBSYSTEM=="tty", ATTRS{idVendor}=="{{ gocontrol_vendorid }}", ATTRS{idProduct}=="{{ gocontrol_productid }}", ATTRS{serial}=="{{ gocontrol_serial }}", ENV{ID_USB_INTERFACE_NUM}=="00", SYMLINK+="zwave"
+SUBSYSTEM=="tty", ATTRS{idVendor}=="{{ gocontrol_vendorid }}", ATTRS{idProduct}=="{{ gocontrol_productid }}", ATTRS{serial}=="{{ gocontrol_serial }}", ENV{ID_USB_INTERFACE_NUM}=="01", SYMLINK+="zigbee"

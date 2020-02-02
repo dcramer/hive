@@ -1,0 +1,3 @@
+---
+- name: update device rules
+  shell: udevadm trigger

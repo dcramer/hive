@@ -1,0 +1,95 @@
+---
+# https://gist.github.com/hunterjm/6f9332f92b60c3d5e448ad936d7353c3
+- name: create tensorflow directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ hive_user }}"
+    group: "{{ hive_user }}"
+    mode: 0755
+  with_items:
+    - /docker/homeassistant/cache/protobuf
+    - /docker/homeassistant/config/tensorflow
+    - /docker/homeassistant/config/tensorflow/object_detection
+    - /docker/homeassistant/config/tensorflow/model/
+
+- git:
+    repo: "https://github.com/tensorflow/models.git"
+    dest: /docker/homeassistant/cache/tensorflow-models
+    depth: 1
+    update: no
+  register: tensorflow_models_git
+
+- name: check for protobuf
+  stat:
+    path: "/docker/homeassistant/cache/protoc-{{ protobuf_version }}-linux-x86_64.tar.gz"
+  register: protobuf_exist
+
+- name: fetch protobuf
+  get_url:
+    url: "https://github.com/google/protobuf/releases/download/v{{ protobuf_version }}/protoc-{{ protobuf_version }}-linux-x86_64.zip"
+    dest: "/docker/homeassistant/cache/protoc-{{ protobuf_version }}-linux-x86_64.tar.gz"
+    mode: 0644
+  when: not protobuf_exist.stat.exists
+  register: protobuf_updated
+
+- name: extract protobuf
+  unarchive:
+    src: "/docker/homeassistant/cache/protoc-{{ protobuf_version }}-linux-x86_64.tar.gz"
+    dest: /docker/homeassistant/cache/protobuf/
+    copy: no
+  when: protobuf_updated is not skipped
+  register: protobuf_extracted
+
+- name: build tensorflow models
+  shell:
+    cmd: "/docker/homeassistant/cache/protobuf/bin/protoc object_detection/protos/*.proto --python_out=."
+    chdir: /docker/homeassistant/cache/tensorflow-models/research
+  when: tensorflow_models_git is not skipped
+  register: tensorflow_models_build
+
+- name: create tensorflow object_detection module
+  copy:
+    content: ""
+    dest: /docker/homeassistant/config/tensorflow/object_detection/__init__.py
+    owner: "{{ hive_user }}"
+    group: "{{ hive_user }}"
+    mode: 0644
+
+- name: copy tensorflow models
+  copy:
+    remote_src: yes
+    src: "{{ item }}"
+    dest: /docker/homeassistant/config/tensorflow/object_detection
+    owner: "{{ hive_user }}"
+    group: "{{ hive_user }}"
+    mode: 0644
+  with_items:
+    - /docker/homeassistant/cache/tensorflow-models/research/object_detection/data
+    - /docker/homeassistant/cache/tensorflow-models/research/object_detection/utils
+    - /docker/homeassistant/cache/tensorflow-models/research/object_detection/protos
+  when: tensorflow_models_git is not skipped
+  register: tensorflow_models_build
+
+- name: check for tensorflow training data
+  stat:
+    path: "/docker/homeassistant/cache/{{ tensorflow_training_data }}.tar.gz"
+  register: tensorflow_tdata_exist
+
+- name: fetch tensorflow training data
+  get_url:
+    url: "http://download.tensorflow.org/models/object_detection/{{ tensorflow_training_data }}.tar.gz"
+    dest: "/docker/homeassistant/cache/{{ tensorflow_training_data }}.tar.gz"
+    mode: 0644
+  when: not tensorflow_tdata_exist.stat.exists
+  register: tensorflow_tdata_updated
+
+- name: extract tensorflow training data
+  unarchive:
+    src: "/docker/homeassistant/cache/{{ tensorflow_training_data }}.tar.gz"
+    dest: /docker/homeassistant/config/tensorflow/model/
+    copy: no
+    mode: 0644
+    extra_opts: [--strip-components=1]
+  when: tensorflow_tdata_updated is not skipped
+  register: tensor_tdata_extracted

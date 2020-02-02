@@ -1,0 +1,42 @@
+garage:
+  name: Garage
+  entities:
+    - camera.garage
+climate:
+  name: Climate
+  entities:
+    - sensor.main_floor_temperature
+    - sensor.office_temperature
+    - sensor.master_bedroom_temperature
+    - sensor.bedroom_temperature
+person_david:
+  name: David
+  entities:
+    - person.david
+    - device_tracker.tile_92efad04d7066fc3
+    - device_tracker.davids_iphone
+    - device_tracker.tile_6e91fa2b18fd7cac
+person_sukhpreet:
+  name: Sukhpreet
+  entities:
+    - person.sukhpreet
+    - device_tracker.sk_iphone
+vehicle_jeep:
+  name: Jeep
+  icon: mdi:jeepney
+  entities:
+    - device_tracker.tile_81c227517c644619
+vehicles:
+  name: Vehicles
+  entities:
+    - device_tracker.tile_81c227517c644619
+media_upstairs:
+  name: Upstairs Media
+  entities:
+    - media_player.kitchen
+    - media_player.office
+all_media:
+  name: All Media
+  entities:
+    - media_player.kitchen
+    - media_player.office

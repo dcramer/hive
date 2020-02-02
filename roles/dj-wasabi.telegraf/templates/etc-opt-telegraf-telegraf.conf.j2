@@ -1,0 +1,71 @@
+### MANAGED BY {{ role_path|basename }} ANSIBLE ROLE ###
+
+[tags]
+{% if telegraf_global_tags is defined and telegraf_global_tags is iterable %}
+{% for item in telegraf_global_tags %}
+    {{ item.tag_name }} = "{{ item.tag_value }}"
+{% endfor %}
+{% endif %}
+
+{% if telegraf_agent_aws_tags == true and ec2_tags is defined and ec2_tags != None %}
+{% for key, value in ec2_tags.tags.iteritems()%}
+   {{telegraf_agent_aws_tags_prefix}}{{ key }} = "{{ value }}"
+{% endfor %}
+{% endif %}
+
+# Configuration for telegraf itself
+[agent]
+    interval = "{{ telegraf_agent_interval }}s"
+    debug = {{ telegraf_agent_debug | lower }}
+    hostname = "{{ ansible_fqdn }}"
+
+# Configuration for influxdb server to send metrics to
+[outputs]
+{% if telegraf_agent_output is defined and telegraf_agent_output is iterable %}
+{% for item in telegraf_agent_output %}
+[outputs.{{ item.type }}]
+{% for items in item.config %}
+    {{ items }}
+{% endfor %}
+{% if item.tagpass is defined and item.tagpass is iterable %}
+[outputs.{{ item.type }}.tagpass]
+{% for items in item.tagpass %}
+    {{ items }}
+{% endfor %}
+{% endif %}
+{% if item.tagdrop is defined and item.tagdrop is iterable %}
+[outputs.{{ item.type }}.tagdrop]
+{% for items in item.tagdrop %}
+    {{ items }}
+{% endfor %}
+{% endif %}
+{% endfor %}
+{% endif %}
+
+# PLUGINS
+{% if telegraf_plugins_default is defined and telegraf_plugins_default is iterable %}
+{% for item in telegraf_plugins_default %}
+[{{ item.plugin }}]
+{% if item.interval is defined %}
+    interval = "{{ item.interval }}s"
+{% endif %}
+{% if item.config is defined and item.config is iterable %}
+{% for items in item.config %}
+    {{ items }}
+{% endfor %}
+{% endif %}
+{% if item.tagpass is defined and item.tagpass is iterable %}
+[inputs.{{ item.plugin }}.tagpass]
+{% for items in item.tagpass %}
+    {{ items }}
+{% endfor %}
+{% endif %}
+{% if item.tagdrop is defined and item.tagdrop is iterable %}
+[inputs.{{ item.plugin }}.tagdrop]
+{% for items in item.tagdrop %}
+    {{ items }}
+{% endfor %}
+{% endif %}
+
+{% endfor %}
+{% endif %}

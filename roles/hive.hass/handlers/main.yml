@@ -1,0 +1,11 @@
+---
+- name: restart homeassistant
+  shell: docker restart homeassistant
+
+- name: restart appdaemon
+  shell: docker restart appdaemon
+
+- name: restart avahi
+  service:
+    name: avahi-daemon
+    state: restarted

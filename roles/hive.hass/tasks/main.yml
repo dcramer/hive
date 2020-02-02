@@ -1,0 +1,108 @@
+---
+- name: Install hass.io dependencies
+  apt:
+    state: present
+    name:
+      - avahi-daemon
+      - dbus
+
+- name: create homeassistant directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ hive_user }}"
+    group: "{{ hive_user }}"
+    mode: 0755
+  with_items:
+    - /docker/homeassistant
+    - /docker/homeassistant/cache
+    - /docker/homeassistant/config
+    - /docker/homeassistant/config/tensorflow
+    - /docker/homeassistant/config/www
+    - /tmp/downloads/cameras
+
+- name: create secrets
+  template:
+    src: "{{ item }}.j2"
+    dest: "/docker/homeassistant/config/{{ item }}"
+    owner: "{{ hive_user }}"
+    group: "{{ hive_user }}"
+    mode: 0644
+  with_items:
+    - secrets.yaml
+  notify: restart homeassistant
+
+- name: copy configuration
+  copy:
+    src: "config/"
+    dest: "/docker/homeassistant/config/"
+  notify: restart homeassistant
+
+- name: copy static media
+  copy:
+    src: "local/"
+    dest: "/docker/homeassistant/config/www/"
+  notify: restart homeassistant
+
+- name: update command helpers
+  shell: chmod +x /docker/homeassistant/config/www/bin/*
+
+- name: create avahi service
+  template:
+    src: "homeassistant.service.j2"
+    dest: "/etc/avahi/services/homeassistant.service"
+  notify: restart avahi
+
+# - import_tasks: nodered.yml
+- import_tasks: lovelace.yml
+  tags:
+    - hass-ui
+# - import_tasks: tensorflow.yml
+#   tags:
+#     - tensorflow
+- import_tasks: hacs.yml
+  tags:
+    - hacs
+- import_tasks: appdaemon.yml
+  tags:
+    - appdaemon
+
+- name: homeassistant Docker Container
+  docker_container:
+    name: homeassistant
+    image: homeassistant/home-assistant
+    pull: true
+    hostname: homeassistant
+    restart_policy: unless-stopped
+    devices:
+      - /dev/ttyUSB0:/dev/ttyUSB0
+      - /dev/ttyUSB1:/dev/ttyUSB1
+      - /dev/ttyACM0:/dev/ttyACM0
+      - /dev/ttyACM1:/dev/ttyACM1
+      - /dev/zwave:/dev/zwave
+      - /dev/zigbee:/dev/zigbee
+    volumes:
+      - /docker/homeassistant/config:/config
+      - /etc/localtime:/etc/localtime:ro
+      - /docker/shared:/shared
+      - /tmp/downloads:/downloads
+      - /tmp/tts-cache:/tts-cache
+    ports:
+      - "{{ homeassistant_webui_port }}:8123/tcp"
+      - "51827:51827/tcp"
+    privileged: true
+    labels:
+      # co.elastic.logs/module: apache2
+      co.elastic.logs/fileset.stdout: access
+      co.elastic.logs/fileset.stderr: error
+    env:
+      TZ: "{{ timezone }}"
+      PUID: "{{ hive_uid | string }}"
+      PGID: "{{ hive_gid | string }}"
+
+- name: Add homeassistant to network
+  docker_network:
+    name: hive
+    connected:
+      - homeassistant
+    appends: yes

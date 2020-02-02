@@ -1,0 +1,38 @@
+---
+# description: RedHat specific installation
+
+- name: "RedHat | Set name if state == latest"
+  set_fact:
+    telegraf_agent_package: telegraf-{{ telegraf_agent_version }}
+  when:
+    - telegraf_agent_package_state != "latest"
+
+- name: Use RHEL 7 packages for Fedora
+  set_fact:
+    telegraf_redhat_releasever: 7
+  when: ansible_distribution == "Fedora"
+
+- name: "RedHat | Add yum repository"
+  yum_repository:
+    name: influxdb
+    description: InfluxDB Repository - RHEL $releasever
+    baseurl: "{{ telegraf_yum_baseurl[ansible_distribution|lower] | default(telegraf_yum_baseurl['default']) }}"
+    gpgcheck: yes
+    gpgkey: https://repos.influxdata.com/influxdb.key
+  when:
+    - telegraf_agent_package_method == "repo"
+
+- name: "RedHat | Download Telegraf package (online)"
+  get_url:
+    url: https://dl.influxdata.com/telegraf/releases/telegraf-{{ telegraf_agent_version }}-{{ telegraf_agent_version_patch }}.{{ ansible_architecture }}.rpm
+    dest: "{{ telegraf_agent_package }}"
+  when:
+    - telegraf_agent_package_method == "online"
+
+- name: "RedHat | Install Telegraf package"
+  package:
+    name: "{{ telegraf_agent_package }}"
+    state: "{{ telegraf_agent_package_state }}"
+  register: is_telegraf_package_installed
+  until: is_telegraf_package_installed is succeeded
+  notify: "Restart Telegraf"

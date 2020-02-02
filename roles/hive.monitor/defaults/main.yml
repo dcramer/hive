@@ -1,0 +1,6 @@
+---
+portainer_webui_port: 9000
+
+grafana_port: 3000
+
+influxdb_port: 8086

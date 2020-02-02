@@ -1,0 +1,38 @@
+---
+- name: Check current filebot version.
+  command: filebot -version
+  register: filebot_current_version
+  changed_when: false
+  failed_when: false
+
+- name: "Download FileBot package"
+  get_url:
+    url: https://get.filebot.net/filebot/FileBot_{{ filebot_version }}/FileBot_{{ filebot_version }}_amd64.deb
+    dest: "/tmp/filebot.deb"
+  when: >
+    filebot_current_version.stdout is defined
+    and filebot_version not in filebot_current_version.stdout
+  register: filebot_download
+
+- name: "Install FileBot package"
+  apt:
+    deb: "/tmp/filebot.deb"
+    state: "present"
+  when: filebot_download is not skipped
+  register: is_filebot_package_installed
+  until: is_filebot_package_installed is succeeded
+  become: yes
+
+- name: "Copy FileBot license"
+  copy:
+    content: "{{ filebot_license }}"
+    dest: "/etc/filebot.psm"
+  register: is_filebot_license_available
+  become: yes
+# TODO: they dont like when you constantly run this command..
+# - name: "Install FileBot license"
+#   shell: "filebot --license /etc/filebot.psm"
+#   args:
+#     executable: /bin/bash
+#   register: is_filebot_license_installed
+#   when: is_filebot_license_available is succeeded

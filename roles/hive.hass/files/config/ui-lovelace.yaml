@@ -1,0 +1,17 @@
+title: "Home"
+resources: !include lovelace/resources.yaml
+views:
+  - !include lovelace/view-overview.yaml
+  - !include lovelace/view-master-bedroom.yaml
+  - !include lovelace/view-guest-bedroom.yaml
+  - !include lovelace/view-office.yaml
+  - !include lovelace/view-kitchen.yaml
+  - !include lovelace/view-dining.yaml
+  - !include lovelace/view-lounge.yaml
+  - !include lovelace/view-backyard.yaml
+  - !include lovelace/view-garage.yaml
+  - !include lovelace/view-security.yaml
+  # - !include lovelace/view-media.yaml
+  - !include lovelace/view-map.yaml
+  - !include lovelace/view-nas.yaml
+  - !include lovelace/view-hass.yaml

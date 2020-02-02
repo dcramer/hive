@@ -1,0 +1,83 @@
+upstream plex {
+	server localhost:32400;
+}
+
+server {
+	listen 80 default_server;
+	listen [::]:80 default_server;
+
+	server_name _;
+
+	location / {
+		# If a request to / comes in, 301 redirect to the main plex page,
+		# but only if it doesn't contain the X-Plex-Device-Name header or query argument.
+		# This fixes a bug where you get permission issues when accessing the web dashboard.
+		set $test "";
+
+		if ($http_x_plex_device_name = '') {
+		set $test A;
+		}
+		if ($arg_X-Plex-Device-Name = '') {
+		set $test "${test}B";
+		}
+		if ($test = AB) {
+		rewrite ^/$ http://$http_host/web/index.html;
+		}
+
+		proxy_redirect off;
+		proxy_buffering off;
+
+		# Spoof the request as coming from ourselves since otherwise Plex will block access, e.g. logging:
+		# "Request came in with unrecognized domain / IP 'tv.example.com' in header Referer; treating as non-local"
+		proxy_set_header        Host                      $server_addr;
+		proxy_set_header        Referer                   $server_addr;
+		proxy_set_header        Origin                    $server_addr;
+
+		proxy_set_header        X-Real-IP                 $remote_addr;
+		proxy_set_header        X-Forwarded-For           $proxy_add_x_forwarded_for;
+		proxy_set_header        X-Plex-Client-Identifier  $http_x_plex_client_identifier;
+		proxy_set_header        Cookie                    $http_cookie;
+
+		## Required for Websockets
+		proxy_http_version      1.1;
+		proxy_set_header        Upgrade                   $http_upgrade;
+		proxy_set_header        Connection                "upgrade";
+		proxy_read_timeout      36000s;                   # Timeout after 10 hours
+
+		proxy_next_upstream     error timeout invalid_header http_500 http_502 http_503 http_504;
+
+		proxy_pass http://plex;
+	}
+
+	location /to/htpc {
+		return 302 $scheme://$host:8085;
+	}
+
+	location /to/deluge {
+		return 302 $scheme://$host:8112;
+	}
+
+	location /to/radarr {
+		return 302 $scheme://$host:7878;
+	}
+
+	location /to/sabnzbd {
+		return 302 $scheme://$host:8080;
+	}
+
+	location /to/sonarr {
+		return 302 $scheme://$host:8989;
+	}
+
+	location /to/transmission {
+		return 302 $scheme://$host:9091;
+	}
+
+	location /to/couchpotato {
+		return 302 $scheme://$host:5050;
+	}
+
+	location /to/netdata {
+		return 302 $scheme://$host:19999;
+	}
+}

@@ -1,0 +1,39 @@
+---
+- name: create registry directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ hive_user }}"
+    group: "{{ hive_user }}"
+    mode: 0755
+  with_items:
+    - /docker/registry
+
+- name: registry Docker Container
+  docker_container:
+    name: registry
+    image: "registry:2"
+    pull: true
+    restart_policy: always
+    ports:
+      - 5000:5000/tcp
+    # env:
+    #   setup.kibana.host: "kibana:{{ kibana_port }}"
+    #   output.elasticsearch.hosts: '["elasticsearch:9200"]'
+    # volumes:
+    #   - "/docker/filebeat/config/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro"
+    #   - "/var/lib/docker/containers:/var/lib/docker/containers:ro"
+    #   - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    # user: "root"
+
+- name: update mirrored images
+  shell: "docker pull {{ item }} && docker tag {{ item }} localhost:5000/{{ item }} && docker push localhost:5000/{{ item }}"
+  with_items:
+    - "python:3"
+
+# - name: Add filebeat to network
+#   docker_network:
+#     name: hive
+#     connected:
+#       - filebeat
+#     appends: yes

@@ -1,0 +1,65 @@
+#!/usr/bin/env python
+
+import argparse
+import json
+
+from collections import defaultdict
+from urllib.request import urlopen
+from xml.etree import ElementTree as ElementTree
+
+
+"""
+http://webservices.nextbus.com/service/publicXMLFeed?command=agencyList
+
+http://webservices.nextbus.com/service/publicXMLFeed?command=routeList&a=sf-muni
+
+http://webservices.nextbus.com/service/publicXMLFeed?command=routeConfig&a=sf-muni&r=J
+
+http://webservices.nextbus.com/service/publicXMLFeed?command=predictions&a=sf-muni&r=J&s=3995
+
+
+<?xml version="1.0" encoding="utf-8" ?>
+<body copyright="All data copyright San Francisco Muni 2019.">
+<predictions agencyTitle="San Francisco Muni" routeTitle="J-Church" routeTag="J" stopTitle="Church St &amp; 24th St" stopTag="3995">
+  <direction title="Outbound to Balboa Park">
+  <prediction epochTime="1577475491599" seconds="42" minutes="0" isDeparture="false" dirTag="J____O_F00" vehicle="2040" block="9309" tripTag="9001921" />
+  <prediction epochTime="1577476107862" seconds="658" minutes="10" isDeparture="false" dirTag="J____O_F00" vehicle="2065" block="9302" tripTag="9001922" />
+  <prediction epochTime="1577476628116" seconds="1178" minutes="19" isDeparture="false" dirTag="J____O_F00" vehicle="2053" block="9310" tripTag="9001923" />
+  <prediction epochTime="1577477382350" seconds="1933" minutes="32" isDeparture="false" affectedByLayover="true" dirTag="J____O_F00" vehicle="2037" block="9305" tripTag="9001924" />
+  <prediction epochTime="1577478630886" seconds="3181" minutes="53" isDeparture="false" affectedByLayover="true" dirTag="J____O_F00" vehicle="2055" block="9304" tripTag="9001925" />
+  </direction>
+</predictions>
+</body>
+"""
+
+
+def main(path):
+    agency = "sf-muni"
+    routes = [["sf-muni", "J", "3996"]]
+
+    # embarcadero
+    # outbound_stop = 7217
+    # montgomery
+    # outbound_stop = 6994
+
+    predictions = defaultdict(list)
+    for agency, route, stop in routes:
+        with urlopen(
+            f"http://webservices.nextbus.com/service/publicXMLFeed?command=predictions&a={agency}&r={route}&s={stop}"
+        ) as fp:
+            result = fp.read()
+        tree = ElementTree.fromstring(result)
+        for prediction in tree.iter("prediction"):
+            predictions[route].append({"eta": int(prediction.get("epochTime")) / 1000})
+
+    with open(path, "w") as fp:
+        json.dump(predictions, fp, indent=2)
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Fetch status from NextBus.")
+    parser.add_argument(
+        "--path", metavar="PATH", nargs="?", default="/data/nextbus-status.json"
+    )
+    args = parser.parse_args()
+    main(args.path)

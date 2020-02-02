@@ -1,0 +1,35 @@
+---
+- name: Create pax user
+  user:
+    name: "{{ hive_user }}"
+    password: "*"
+    shell: /bin/bash
+    state: present
+    home: /docker
+
+- name: Add netplan configuration
+  template:
+    src: 01-netcfg.yaml.j2
+    dest: /etc/netplan/01-netcfg.yaml
+    owner: root
+    group: root
+    mode: 0644
+  notify: apply netplan
+
+- name: install apt cleanup cron
+  cron:
+    name: "purge old packages"
+    minute: "*/30"
+    job: "sudo apt-get --purge autoremove --yes"
+
+- import_tasks: docker.yml
+  tags:
+    - docker
+
+- import_tasks: mariadb.yml
+  tags:
+    - mariadb
+
+- import_tasks: heimdall.yml
+  tags:
+    - heimdall

@@ -1,0 +1,71 @@
+---
+- name: create grafana directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ hive_user }}"
+    group: "{{ hive_user }}"
+    mode: 0755
+  with_items:
+    - /docker/grafana/
+    - /docker/grafana/config/
+    - /docker/grafana/config/provisioning/dashboards/
+    - /docker/grafana/config/provisioning/datasources/
+    - /docker/grafana/config/provisioning/notifiers/
+
+- name: create grafana config
+  template:
+    src: grafana.ini.j2
+    dest: /docker/grafana/config/grafana.ini
+    owner: "{{ hive_user }}"
+    group: "{{ hive_user }}"
+    mode: 0640
+  notify: restart grafana
+
+- name: create grafana ldap config
+  template:
+    src: grafana-ldap.toml.j2
+    dest: /docker/grafana/config/ldap.toml
+    owner: "{{ hive_user }}"
+    group: "{{ hive_user }}"
+    mode: 0640
+  notify: restart grafana
+
+- name: Create/Update datasources file (provisioning)
+  become: true
+  copy:
+    dest: "/docker/grafana/config/provisioning/datasources/ansible.yml"
+    content: |
+      apiVersion: 1
+      deleteDatasources: []
+      datasources:
+      {{ grafana_datasources | to_nice_yaml }}
+    backup: false
+    owner: "{{ hive_user }}"
+    group: "{{ hive_user }}"
+    mode: 0640
+  notify: restart grafana
+
+- name: grafana Docker Container
+  docker_container:
+    name: grafana
+    image: grafana/grafana
+    pull: true
+    volumes:
+      - /docker/grafana:/var/lib/grafana
+      - /docker/grafana/config:/etc/grafana
+    ports:
+      - "{{ grafana_port }}:3000/tcp"
+    env:
+      TZ: "{{ timezone }}"
+      PUID: "{{ hive_uid | string }}"
+      PGID: "{{ hive_gid | string }}"
+    user: "{{ hive_uid }}"
+    restart_policy: unless-stopped
+
+- name: Add grafana to network
+  docker_network:
+    name: hive
+    connected:
+      - grafana
+    appends: yes

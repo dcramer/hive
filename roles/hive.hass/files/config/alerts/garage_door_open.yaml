@@ -1,0 +1,18 @@
+# TODO: Ideally the name would not be templated like this, but it overrides data.message
+name: '{{now().strftime("%H:%M:%S %Y-%m-%d")}}: Garage door open for {{ relative_time(states.cover.garage_door.last_changed) }}. /ackGarage /closeGarage'
+data:
+  data:
+    # TODO: not sending?
+    photo:
+      - url: https://192.168.1.16/snap.jpeg
+        caption: Garage Camera
+done_message: '{{now().strftime("%H:%M:%S %Y-%m-%d")}}: Garage has been closed.'
+entity_id: cover.garage_door
+state: "open"
+repeat:
+  - 5
+  - 30
+can_acknowledge: true
+skip_first: true
+notifiers:
+  - telegram_household

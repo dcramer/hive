@@ -1,0 +1,85 @@
+---
+# sonoff s31 - autodiscovery disabled
+switch:
+  - platform: mqtt
+    name: "Dryer power"
+    state_topic: "tele/dryer/STATE"
+    value_template: "{{ value_json.POWER }}"
+    command_topic: "cmnd/dryer/POWER"
+    availability_topic: "tele/dryer/LWT"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    retain: false
+sensor:
+  - platform: mqtt
+    name: "Dryer Voltage"
+    state_topic: "tele/dryer/SENSOR"
+    value_template: "{{ value_json['ENERGY'].Voltage }}"
+    unit_of_measurement: "V"
+    availability_topic: "tele/dryer/LWT"
+    qos: 1
+    payload_available: "Online"
+    payload_not_available: "Offline"
+  - platform: mqtt
+    name: "Dryer Current"
+    state_topic: "tele/dryer/SENSOR"
+    value_template: "{{ value_json['ENERGY'].Current | round(2) }}"
+    unit_of_measurement: "A"
+    availability_topic: "tele/dryer/LWT"
+    qos: 1
+    payload_available: "Online"
+    payload_not_available: "Offline"
+  - platform: mqtt
+    name: "Dryer Power"
+    state_topic: "tele/dryer/SENSOR"
+    value_template: "{{ value_json['ENERGY'].Power }}"
+    unit_of_measurement: "W"
+    availability_topic: "tele/dryer/LWT"
+    qos: 1
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    device_class: power
+  - platform: mqtt
+    name: "Dryer Power Factor"
+    state_topic: "tele/dryer/SENSOR"
+    value_template: "{{ value_json['ENERGY'].Factor }}"
+    availability_topic: "tele/dryer/LWT"
+    qos: 1
+    payload_available: "Online"
+    payload_not_available: "Offline"
+  - platform: mqtt
+    name: "Dryer Energy Today"
+    state_topic: "tele/dryer/SENSOR"
+    value_template: "{{ value_json['ENERGY'].Today }}"
+    unit_of_measurement: "kWh"
+    availability_topic: "tele/dryer/LWT"
+    qos: 1
+    payload_available: "Online"
+    payload_not_available: "Offline"
+  - platform: mqtt
+    name: "Dryer Energy Yesterday"
+    state_topic: "tele/dryer/SENSOR"
+    value_template: "{{ value_json['ENERGY'].Yesterday }}"
+    unit_of_measurement: "kWh"
+    availability_topic: "tele/dryer/LWT"
+    qos: 1
+    payload_available: "Online"
+    payload_not_available: "Offline"
+  - platform: mqtt
+    name: "Dryer Energy Total"
+    state_topic: "tele/dryer/SENSOR"
+    value_template: "{{ value_json['ENERGY'].Total }}"
+    unit_of_measurement: "kWh"
+    availability_topic: "tele/dryer/LWT"
+    qos: 1
+    payload_available: "Online"
+    payload_not_available: "Offline"
+
+input_boolean:
+  dryer:
+    name: "Dryer"
+    initial: off
+    icon: mdi:tumble-dryer

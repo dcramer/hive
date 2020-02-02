@@ -1,0 +1,45 @@
+---
+- name: create bazarr directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ hive_user }}"
+    group: "{{ hive_user }}"
+    mode: 0755
+  with_items:
+    - /docker/bazarr/config/
+
+# - name: create bazarr config
+#   template:
+#     src: radarr-config.xml.j2
+#     dest: /docker/radarr/config/config.xml
+#     owner: "{{ hive_user }}"
+#     group: "{{ hive_user }}"
+#     mode: 0644
+#   notify: restart sonarr
+
+- name: bazarr Docker Container
+  docker_container:
+    name: bazarr
+    image: linuxserver/bazarr
+    pull: true
+    volumes:
+      - /docker/bazarr/config:/config
+      - /docker/shared:/shared
+      - "/etc/localtime:/etc/localtime:ro"
+      - "{{ nas_mount_folder }}/Movies:/movies"
+      - "{{ nas_mount_folder }}/TV Shows:/tv"
+    ports:
+      - "{{ bazarr_webui_port }}:6767/tcp"
+    env:
+      TZ: "{{ timezone }}"
+      PUID: "{{ hive_uid | string }}"
+      PGID: "{{ hive_gid | string }}"
+    restart_policy: unless-stopped
+
+- name: Add bazarr to network
+  docker_network:
+    name: hive
+    connected:
+      - bazarr
+    appends: yes

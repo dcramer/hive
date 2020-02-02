@@ -1,0 +1,20 @@
+alias: "Sonos TTS script"
+sequence:
+  - service: sonos.snapshot
+    data_template:
+      entity_id: "{{ entity_id }}"
+  - service: sonos.unjoin
+    data_template:
+      entity_id: "{{ entity_id }}"
+  - service: media_player.volume_set
+    data_template:
+      entity_id: "{{ entity_id }}"
+      volume_level: "{{ volume }}"
+  - service: tts.cloud_say
+    data_template:
+      entity_id: "{{ entity_id }}"
+      message: "{{ message }}"
+  - delay: "{{ delay }}"
+  - service: sonos.restore
+    data_template:
+      entity_id: "{{ entity_id }}"

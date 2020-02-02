@@ -1,0 +1,18 @@
+path: map
+title: Map
+icon: "mdi:map"
+panel: true
+cards:
+  - type: map
+    aspect_ratio: 16:9
+    default_zoom: 14
+    entities:
+      - zone.home
+      - zone.sentry_sfo
+      - zone.sukhpreet_s_parents
+      # david
+      - device_tracker.tile_p_8b507ab4dec15d32c4a49e5abebf3f97
+      # sukhpreet
+      - device_tracker.tile_p_696975757e9c41a67980c33870618b2b
+      # jeep
+      - device_tracker.tile_81c227517c644619

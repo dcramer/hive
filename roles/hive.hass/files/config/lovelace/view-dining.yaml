@@ -1,0 +1,11 @@
+title: Dining Room
+id: dining
+path: dining
+icon: mdi:silverware-fork-knife
+cards:
+  - type: custom:group-card
+    card:
+      type: entities
+      title: "Lights"
+      show_header_toggle: true
+    group: group.dining_room_lights

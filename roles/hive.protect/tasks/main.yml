@@ -1,0 +1,24 @@
+---
+- name: protect-archiver Docker Container
+  docker_image:
+    name: zeeg99/protect-archiver
+
+- name: install archiver cronjob
+  cron:
+    name: "archive camera footage"
+    minute: "0"
+    job: >
+      docker run
+      -v "{{ nas_mount_folder }}/cameras:/output"
+      -t
+      zeeg99/protect-archiver
+      --address=unifi
+      --username={{ protect_username }}
+      --password="{{ protect_password }}"
+      --cameras=all
+      --start="$(date -d '-2 days')"
+      --end="$(date -d '-1 day')"
+      --dest=/output/
+      --skip-existing-files
+      --use-subfolders
+      --ignore-failed-downloads

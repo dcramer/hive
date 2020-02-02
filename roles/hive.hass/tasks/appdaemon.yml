@@ -1,0 +1,49 @@
+---
+- name: create appdaemon directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ hive_user }}"
+    group: "{{ hive_user }}"
+    mode: 0755
+  with_items:
+    - /docker/homeassistant/logs/appdaemon/
+
+- name: create appdaemon configuration
+  template:
+    src: "appdaemon.yaml.j2"
+    dest: "/docker/homeassistant/config/appdaemon.yaml"
+    owner: "{{ hive_user }}"
+    group: "{{ hive_user }}"
+    mode: 0644
+  notify: restart appdaemon
+
+- name: copy apps
+  copy:
+    src: "apps"
+    dest: "/docker/homeassistant/config/"
+  notify: restart appdaemon
+
+- name: appdaemon Docker Container
+  docker_container:
+    name: appdaemon
+    image: acockburn/appdaemon
+    pull: true
+    restart_policy: unless-stopped
+    env:
+      HA_URL: "http://192.168.1.25:8123"
+      TOKEN: "{{ appdaemon_token }}"
+      DASH_URL: "http://192.168.1.25:5050"
+    ports:
+      - "5050:5050/tcp"
+    user: "{{ hive_uid }}"
+    volumes:
+      - /docker/homeassistant/config:/conf
+      - /docker/homeassistant/logs/appdaemon:/logs
+
+- name: Add appdaemon to network
+  docker_network:
+    name: hive
+    connected:
+      - appdaemon
+    appends: yes

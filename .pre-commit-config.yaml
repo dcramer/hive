@@ -1,0 +1,27 @@
+exclude: '\.snap$'
+repos:
+  - repo: https://github.com/ambv/black
+    rev: 19.10b0
+    hooks:
+      - id: black
+        language_version: python3.7
+  - repo: git://github.com/pre-commit/pre-commit-hooks
+    rev: v2.0.0
+    hooks:
+      - id: check-case-conflict
+      - id: check-merge-conflict
+      - id: check-symlinks
+      - id: check-xml
+      - id: detect-private-key
+      - id: end-of-file-fixer
+      - id: fix-encoding-pragma
+        args: ["--remove"]
+      - id: trailing-whitespace
+      - id: debug-statements
+        language_version: python3.7
+      - id: flake8
+        language_version: python3.7
+  - repo: git://github.com/getsentry/pre-commit-hooks
+    rev: f3237d2d65af81d435c49dee3593dc8f03d23c2d
+    hooks:
+      - id: prettier

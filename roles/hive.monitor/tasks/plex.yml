@@ -1,0 +1,40 @@
+---
+- name: Create plex directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ hive_user }}"
+    group: "{{ hive_user }}"
+    mode: 0755
+  with_items:
+    - "/docker/plex/transcode/"
+    - "/docker/plex/config/Library/Application Support/Plex Media Server/"
+    # - name: create plex preferences
+#   template:
+#     src: plex-preferences.xml.j2
+#     dest: "/docker/plex/config/Library/Application Support/Plex Media Server/Preferences.xml"
+#     owner: "{{ hive_user }}"
+#     owner: "{{ hive_user }}"
+#     mode: 0644
+#   notify: restart plex
+
+- name: plex Docker Container
+  docker_container:
+    name: plex
+    image: linuxserver/plex
+    pull: true
+    volumes:
+      - /docker/plex/config:/config
+      - /docker/plex/transcode:/transcode
+      - /docker/shared:/shared
+      - "{{ nas_mount_folder }}/TV Shows:/tv"
+      - "{{ nas_mount_folder }}/Movies:/movies"
+      - "{{ nas_mount_folder }}/Music:/music"
+      - "{{ nas_mount_folder }}/Photos:/photos"
+    network_mode: "host"
+    env:
+      TZ: "{{ timezone }}"
+      PUID: "{{ hive_uid | string }}"
+      PGID: "{{ hive_gid | string }}"
+      PLEX_CLAIM: "{{ plex_claim }}"
+    restart_policy: unless-stopped

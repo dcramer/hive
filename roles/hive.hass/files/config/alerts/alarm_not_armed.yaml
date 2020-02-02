@@ -1,0 +1,11 @@
+name: '{{now().strftime("%H:%M:%S %Y-%m-%d")}}: Alarm is not armed. /armAway /ackAlarm'
+done_message: '{{now().strftime("%H:%M:%S %Y-%m-%d")}}: Alarm condition has been resolved.'
+entity_id: binary_sensor.disarmed_and_away
+state: "on"
+repeat:
+- 1
+- 10
+skip_first: true
+can_acknowledge: true
+notifiers:
+  - telegram_household

@@ -1,0 +1,13 @@
+title: Kitchen
+id: kitchen
+path: kitchen
+icon: mdi:stove
+cards:
+  - type: custom:mini-media-player
+    entity: media_player.kitchen
+  - type: custom:group-card
+    card:
+      type: entities
+      title: "Lights"
+      show_header_toggle: true
+    group: group.kitchen_lights

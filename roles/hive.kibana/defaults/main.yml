@@ -1,0 +1,4 @@
+---
+# defaults file for hive.kibana
+kibana_port: 5601
+kibana_version: 7.5.1

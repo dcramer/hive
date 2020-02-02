@@ -1,0 +1,59 @@
+- name: apt-get stuff
+  apt:
+    state: present
+    name:
+      - openvpn
+      - unzip
+
+# TODO(dcramer): none of this should be executed unless it needs to update the
+# config file
+- name: check for vpn configs
+  shell: ls /etc/openvpn/*ovpn | grep "US Silicon Valley"
+  register: vpn_configs_exist
+
+- name: wget vpn configs
+  get_url: url=https://www.privateinternetaccess.com/openvpn/openvpn-strong.zip dest=/etc/openvpn
+  when: not vpn_configs_exist
+  register: vpn_configs_updated
+
+- name: extract vpn configs
+  unarchive: src=/etc/openvpn/openvpn-strong.zip dest=/etc/openvpn copy=no
+  when: not vpn_configs_updated.skipped
+
+- name: deploy auth file
+  template:
+    src: etc/openvpn/login.txt.j2
+    dest: /etc/openvpn/login.txt
+    owner: root
+    group: root
+    mode: 0600
+
+- name: deploy config file
+  template:
+    src: etc/openvpn/client.conf.j2
+    dest: /etc/openvpn/client.conf
+    owner: root
+    group: root
+    mode: 0600
+  notify: restart openvpn
+
+- name: gather vpn configs
+  shell: ls /etc/openvpn/*ovpn
+  register: vpn_confs
+
+- name: embed creds to all open vpn configs
+  lineinfile: line="auth-user-pass /etc/openvpn/login.txt" regexp="auth-user-pass" dest="{{ item }}"
+  with_items:
+    - "{{ vpn_confs.stdout.splitlines() }}"
+  notify: restart openvpn
+  when: not vpn_configs_exist
+
+- name: deploy defaults file
+  template: src=etc/default/openvpn dest=/etc/default/openvpn
+
+- name: install openvpn cronjob fix
+  cron:
+    name: "fix openvpn"
+    minute: "*/5"
+    job: >
+      systemctl status openvpn@client | grep -E "Authenticate/Decrypt packet error: bad packet ID|AUTH_FAILED|Nexthop has invalid gateway" && systemctl restart openvpn@client

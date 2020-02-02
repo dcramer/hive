@@ -1,0 +1,18 @@
+title: Office
+id: office
+path: office
+icon: mdi:desktop-classic
+cards:
+  - type: sensor
+    entity: sensor.office_temperature
+    graph: line
+    detail: 1
+    hours_to_show: 48
+  - type: custom:mini-media-player
+    entity: media_player.office
+  - type: custom:group-card
+    card:
+      type: entities
+      title: "Lights"
+      show_header_toggle: true
+    group: group.office_lights

@@ -1,0 +1,9 @@
+---
+- name: apply netplan
+  shell: netplan apply
+
+- name: restart heimdall
+  shell: docker restart heimdall
+
+- name: restart mariadb
+  shell: docker restart mariadb

@@ -1,0 +1,27 @@
+---
+- name: create portainer directories
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - "/docker/portainer"
+
+- name: Portainer Docker Container
+  docker_container:
+    name: portainer
+    image: portainer/portainer
+    pull: true
+    volumes:
+      - "/docker/portainer:/data:rw"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "/etc/timezone:/etc/timezone:ro"
+    ports:
+      - "{{ portainer_webui_port }}:9000"
+    restart_policy: unless-stopped
+
+- name: Add portainer to network
+  docker_network:
+    name: hive
+    connected:
+      - portainer
+    appends: yes

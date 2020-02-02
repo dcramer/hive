@@ -1,0 +1,9 @@
+---
+# UI doesnt require a restart
+- name: copy lovelace
+  copy:
+    src: "{{ item }}"
+    dest: "/docker/homeassistant/config/"
+  with_items:
+    - config/lovelace
+    - config/ui-lovelace.yaml

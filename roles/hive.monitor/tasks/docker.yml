@@ -1,0 +1,33 @@
+---
+# - name: install python3-pip
+#   apt:
+#     name: python3-pip
+#     state: present
+#   register: result
+#   until: result is succeeded
+
+# - name: "Install docker-py"
+#   pip:
+#     name: docker-py
+#     state: present
+#     executable: pip3
+#   register: result
+#   until: result is succeeded
+
+- name: Create docker directory
+  file:
+    path: /docker
+    state: directory
+    owner: "{{ hive_user }}"
+    group: "{{ hive_user }}"
+    mode: 0755
+
+- name: add user account to docker group
+  user:
+    name: "{{ hive_user }}"
+    groups: docker
+    append: yes
+
+- name: Create docker network
+  docker_network:
+    name: hive

@@ -1,0 +1,3 @@
+---
+# defaults file for hive.elasticsearch
+es_version: 7.5.1

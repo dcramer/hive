@@ -1,0 +1,50 @@
+---
+- name: Install nfs/cifs packages
+  apt:
+    name:
+      - nfs-common
+      - cifs-utils
+      # - autofs
+    state: present
+
+- name: Write credentials
+  template:
+    src: "credentials.j2"
+    dest: "/etc/nas.login"
+    mode: "0600"
+
+- name: "Mount {{ nas_mount_folder }}"
+  mount:
+    path: "{{ nas_mount_folder }}"
+    src: "{{ nas_mount_host }}:{{ nas_remote_mount }}"
+    fstype: nfs
+    opts: defaults,rw,auto,noatime,nolock,bg,nfsvers=3,intr,tcp,actimeo=1800
+    state: present
+  when: nas_fstype == 'nfs'
+  register: nas_mount
+  notify: mount nas
+
+- name: "Mount {{ nas_mount_folder }}"
+  mount:
+    path: "{{ nas_mount_folder }}"
+    src: "//{{ nas_mount_host }}/{{ nas_remote_mount }}"
+    fstype: cifs
+    opts: defaults,rw,credentials=/etc/nas.login,uid={{ hive_uid }},gid={{ hive_gid }},vers=3.0,forceuid,forcegid
+    state: present
+  when: nas_fstype == 'smb'
+  register: nas_mount
+
+# - name: Create auto.nas
+#   template:
+#     src: auto.nas.j2
+#     dest: /etc/auto.nas
+#     owner: root
+#     group: root
+#     mode: 0600
+
+# - name: Register auto.nas
+#   lineinfile:
+#     dest: /etc/auto.master
+#     state: present
+#     regexp: "^auto.nas"
+#     line: "{{ nas_mount_folder }} /etc/auto.nas"

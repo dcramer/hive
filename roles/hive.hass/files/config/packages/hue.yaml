@@ -1,0 +1,4 @@
+---
+hue:
+  bridges:
+    - host: !secret hue_host

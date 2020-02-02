@@ -1,0 +1,80 @@
+---
+# defaults file for ansible-telegraf
+
+telegraf_agent_version: 1.13.2
+telegraf_agent_version_patch: 1
+telegraf_agent_package: telegraf
+telegraf_agent_package_path: /tmp
+telegraf_agent_package_method: repo
+telegraf_agent_package_state: present
+telegraf_agent_hostname: "{{ ansible_fqdn }}"
+telegraf_agent_interval: 10
+telegraf_agent_debug: False
+telegraf_agent_round_interval: True
+telegraf_agent_flush_interval: 10
+telegraf_agent_flush_jitter: 0
+telegraf_agent_aws_tags: False
+telegraf_agent_aws_tags_prefix: ""
+
+# Docker specific settings
+telegraf_uid_docker: 998
+telegraf_gid_docker: 995
+telegraf_agent_docker: False
+telegraf_agent_docker_name: telegraf
+telegraf_agent_docker_network_mode: bridge
+telegraf_agent_docker_restart_policy: unless-stopped
+
+# v0.13 settings (not sure if supported in older version):
+telegraf_agent_collection_jitter: 0
+telegraf_agent_metric_batch_size: 1000
+telegraf_agent_metric_buffer_limit: 10000
+telegraf_agent_quiet: False
+
+# v1.1 settings:
+telegraf_agent_logfile: ""
+telegraf_agent_omit_hostname: False
+
+telegraf_global_tags: []
+
+telegraf_agent_output:
+  - type: influxdb
+    config:
+      - urls = ["http://localhost:8086"]
+      - database = "telegraf"
+      - precision = "s"
+
+# defaults - /etc/telegraf/telegraf.conf
+telegraf_plugins_default:
+  - plugin: cpu
+    config:
+      - percpu = true
+  - plugin: disk
+  - plugin: io
+  - plugin: mem
+  - plugin: net
+  - plugin: system
+  - plugin: swap
+  - plugin: netstat
+  - plugin: processes
+  - plugin: kernel
+
+# extra configuration - /etc/telegraf/telegraf.d/*
+telegraf_plugins_extra: {}
+telegraf_plugins_extra_exclusive: False
+
+# RedHat specific settings for convenience
+telegraf_redhat_releasever: "$releasever"
+
+telegraf_yum_baseurl:
+  amazon: "https://repos.influxdata.com/centos/6/$basearch/stable"
+  centos: "https://repos.influxdata.com/rhel/{{ telegraf_redhat_releasever }}/$basearch/stable"
+  default: "https://repos.influxdata.com/{{ ansible_distribution|lower }}/{{ telegraf_redhat_releasever }}/$basearch/stable"
+  redhat: "https://repos.influxdata.com/rhel/{{ telegraf_redhat_releasever }}/$basearch/stable"
+
+telegraf_win_install_dir: 'C:\Telegraf'
+telegraf_win_logfile: 'C:\\Telegraf\\telegraf.log'
+telegraf_win_include: 'C:\Telegraf\telegraf_agent.d'
+telegraf_win_service_args:
+  - -service install
+  - -config {{ telegraf_win_install_dir }}\telegraf\telegraf.conf
+  - --config-directory {{ telegraf_win_include }}

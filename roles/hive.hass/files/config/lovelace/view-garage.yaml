@@ -1,0 +1,45 @@
+title: Garage
+id: garage
+path: garage
+icon: mdi:garage
+cards:
+  - type: vertical-stack
+    cards:
+      - type: entities
+        entities:
+          - cover.garage_door
+      - type: picture-entity
+        entity: camera.garage
+        camera_view: live
+        show_name: false
+        show_state: false
+  - type: entities
+    name: Storage Room
+    entities:
+      - binary_sensor.garage_storage_door
+      - lock.garage_storage_deadbolt
+  - type: entities
+    name: External Door
+    entities:
+      - binary_sensor.garage_exterior_door
+
+  - type: glance
+    title: Laundry
+    entities:
+      - entity: input_boolean.dryer
+      - entity: input_boolean.washer
+
+  - type: custom:mini-graph-card
+    entities:
+      - sensor.home_energy_meter_power_total
+    graph: bar
+    hours_to_show: 48
+    lower_bound: -5000
+    upper_bound: 5000
+
+  - type: custom:group-card
+    card:
+      type: entities
+      title: "MultiSensor"
+      show_header_toggle: false
+    group: group.garage_multisensor

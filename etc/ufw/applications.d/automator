@@ -1,0 +1,44 @@
+[plexmediaserver]
+title=Plex Media Server
+description=The Plex Media Server is smart software that makes playing Movies, TV Shows and other media on your computer simple
+ports=32400/tcp|1900/udp|32469/udp|5353/udp
+
+[sonarr]
+title=Sonarr
+description=Sonarr is a PVR for Usenet and BitTorrent users
+ports=8989/tcp|8989/udp
+
+[radarr]
+title=Radarr
+description=Radarr is an independent fork of Sonarr reworked for automatically downloading movies via Usenet and BitTorrent.
+ports=7878/tcp|7878/udp
+
+[nzbget]
+title=NzbGet
+description=NZBGet is a binary downloader, which downloads files from Usenet based on information given in nzb-files.
+ports=6789/tcp|6789/udp
+
+[samba]
+title=Samba
+description=Samba network shares.
+ports=135/tcp|137/udp|138/udp|139/tcp|445/tcp
+
+[upnp]
+title=UPNP
+description=Universal Plug N' Play (UPnP) system.
+ports=1900/udp|5000/tcp
+
+[bonjour]
+title=Bonjour
+description=Avahi, Bonjour, Zeroconf
+ports=5353/udp
+
+[plex]
+title=Plex Media Server
+description=This opens up PlexMediaServer for http (32400), upnp, and autodiscovery.
+ports=32469/tcp|32413/udp|1900/udp|32400/tcp|32412/udp|32410/udp|32414/udp
+
+[vpn]
+title=VPN
+description=VPN ports
+ports=1194/udp|1197/udp|1198/udp|8080/udp|9201/udp|53/udp
