@@ -25,6 +25,7 @@ sensor: !include_dir_merge_list sensors/
 switch: !include switches.yaml
 zone: !include zones.yaml
 alert: !include_dir_named alerts/
+scene: !include_dir_list scenes/
 
 lovelace:
   mode: yaml
@@ -49,6 +50,7 @@ cloud:
         - switch.pi_hole
       include_domains:
         - light
+        - scene
         # - fan
         # - lock
         # - camera
@@ -56,26 +58,47 @@ cloud:
       #   - lock.2018_jeep_wrangler_lock
     entity_config:
       fan.master_bedroom:
-        room: master bedroom
+        room: Master Bedroom
       lock.garage_storage_deadbolt:
-        room: garage
+        room: Garage
       camera.garage:
-        room: garage
+        room: Garage
       cover.garage_door:
-        room: garage
+        room: Garage
       input_boolean.dryer:
-        room: garage
+        room: Garage
       input_boolean.washer:
-        room: garage
+        room: Garage
       light.master_bedroom_bedroom_center_cans:
-        room: master bedroom
+        room: Master Bedroom
       light.master_bedroom_bedroom_side_cans:
-        room: master bedroom
+        room: Master Bedroom
       light.master_bedroom_bedroom_sitting_cans:
-        room: master bedroom
+        room: Master Bedroom
       light.master_bedroom_master_bed_hallway_cans:
-        room: master bedroom
-
+        room: Master Bedroom
+      light.guest_bedroom_guest_bedroom_cans:
+        room: Guest Bedroom
+      light.guest_bedroom_guest_bedroom_wall:
+        room: Guest Bedroom
+      light.guest_bedroom_office_fire_place_cans:
+        room: Office
+      light.guest_bedroom_office_room_center_light:
+        room: Office
+      light.guest_bedroom_office_room_wall_cans:
+        room: Office
+      light.back_stairs_kitchen_cans:
+        room: Kitchen
+      light.guest_bedroom_dining_room_cans:
+        room: Dining Room
+      light.guest_bedroom_dining_room_center:
+        room: Dining Room
+      light.guest_bedroom_hallway_lights:
+        room: Hallway
+      light.garage_bottom_of_stairs:
+        room: Entryway
+      light.garage_bottom_of_stairs:
+        room: Entryway
 
 
 zwave:

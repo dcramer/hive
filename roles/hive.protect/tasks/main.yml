@@ -16,5 +16,5 @@
       --address=unifi
       --username={{ protect_username }}
       --password="{{ protect_password }}"
-      --cameras=all
+      --ignore-failed-downloads
       /output/
