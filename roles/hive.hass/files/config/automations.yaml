@@ -139,3 +139,22 @@
       data:
         topic: "cmnd/tasmotas/state"
         payload: ""
+
+
+- alias: "Enable overnight alerts"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.is_overnight
+      to: 'on'
+  action:
+    - service: homeassistant.turn_on
+      entity_id: alert.garage_motion_late_night
+
+- alias: "Disable overnight alerts"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.is_overnight
+      to: 'on'
+  action:
+    - service: homeassistant.turn_off
+      entity_id: alert.garage_motion_late_night

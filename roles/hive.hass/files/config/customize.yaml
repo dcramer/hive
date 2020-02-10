@@ -38,8 +38,6 @@ device_tracker.tile_p_8b507ab4dec15d32c4a49e5abebf3f97:
 device_tracker.tile_p_696975757e9c41a67980c33870618b2b:
   friendly_name: Sukhpreet's iPhone (Tile)
   entity_picture: /local/images/sukhpreet.jpg
-alarm_control_panel.home:
-  friendly_name: Alarm System
 person.david:
   entity_picture: /local/images/david.jpg
 person.sukhpreet:
@@ -128,8 +126,6 @@ sensor.garage_exterior_door_sourcenodeid:
   friendly_name: "Garage Exterior Door Source Node ID"
 sensor.garage_exterior_door_burglar:
   friendly_name: "Garage Exterior Door Burglar"
-sensor.garage_exterior_door_battery_level:
-  friendly_name: "Garage Exterior Door Battery Level"
 binary_sensor.garage_exterior_door:
   friendly_name: "Garage Exterior Door"
   device_class: door
