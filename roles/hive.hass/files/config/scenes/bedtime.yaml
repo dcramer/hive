@@ -2,7 +2,7 @@ name: Bedtime
 entities:
   light.master_bedroom_bedroom_center_cans:
     state: on
-    brightness: 36
+    brightness: 18
   light.master_bedroom_bedroom_side_cans: off
   light.master_bedroom_bedroom_sitting_cans: off
   light.master_bedroom_master_bed_hallway_cans: off

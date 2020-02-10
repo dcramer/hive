@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from .base import AlertApp
+from base import AlertApp
 
 
 def parse_tod(tod):
@@ -13,11 +13,17 @@ def parse_tod(tod):
     }
 
 
+def parse_state(state):
+    if isinstance(state, list):
+        return frozenset(state)
+    return frozenset([state])
+
+
 class GenericAlert(AlertApp):
     def initialize(self):
         super().initialize()
         self.telegram_list = self.args.get("telegram_list") or []
-        self.state = self.args.get("state")
+        self.states = parse_state(self.args.get("state"))
         self.message = self.args.get("message")
         self.done_message = self.args.get("done_message")
         self.camera = self.args.get("camera")
@@ -26,15 +32,15 @@ class GenericAlert(AlertApp):
     def should_trigger(self, old, new):
         if self.tod:
             now = datetime.now()
-            if not (
-                now.hour < self.tod["before"][0] or now.hour > self.tod["after"][0]
-            ):
+            before = datetime.now().replace(
+                hour=self.tod["before"][0], minute=self.tod["before"][1]
+            )
+            after = datetime.now().replace(
+                hour=self.tod["after"][0], minute=self.tod["after"][1]
+            )
+            if not (now > after or now < before):
                 return False
-            if not (
-                now.minute < self.tod["before"][1] or now.minute > self.tod["after"][1]
-            ):
-                return False
-        return new == self.state
+        return new in self.states
 
     def on_activate(self, *args, **kwargs):
         if self.message:

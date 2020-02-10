@@ -29,9 +29,11 @@ garage_motion_overnight:
   class: GenericAlert
   entity_id: garage
   input_boolean: sensor.garage_multisensor_burglar
-  state: 3
+  state:
+    - 3
+    - 8
   tod:
-    after: '12:00'
+    after: '10:00'
     before: '07:00'
   message: '{{now().strftime("%H:%M:%S %Y-%m-%d")}}: Garage motion detected {{ relative_time(states.cover.garage_door.last_changed) }} ago.'
   camera: camera.garage

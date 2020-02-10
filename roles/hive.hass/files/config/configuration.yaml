@@ -57,8 +57,10 @@ cloud:
       # exclude_entities:
       #   - lock.2018_jeep_wrangler_lock
     entity_config:
-      fan.master_bedroom:
-        room: Master Bedroom
+      camera.garage_exterior:
+        room: Front Exterior
+      camera.front_door_exterior:
+        room: Front Exterior
       lock.garage_storage_deadbolt:
         room: Garage
       camera.garage:
@@ -69,6 +71,8 @@ cloud:
         room: Garage
       input_boolean.washer:
         room: Garage
+      fan.master_bedroom:
+        room: Master Bedroom
       light.master_bedroom_bedroom_center_cans:
         room: Master Bedroom
       light.master_bedroom_bedroom_side_cans:
