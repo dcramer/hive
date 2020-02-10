@@ -6,6 +6,10 @@
 #   log_size: 1000000
 appdaemon:
   threads: 10
+  latitude: !secret lat
+  longitude: !secret lng
+  elevation: 92
+  time_zone: America/Los_Angeles
   plugins:
     HASS:
       type: hass
