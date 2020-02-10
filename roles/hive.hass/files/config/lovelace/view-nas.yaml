@@ -10,16 +10,16 @@ cards:
       - sensor.speedtest_download
       - sensor.speedtest_upload
 
-  - type: entities
-    title: NAS
-    entities:
-      - entity: sensor.synology_dsm_cpu_load_total
-      - entity: sensor.synology_dsm_network_up
-      - entity: sensor.synology_dsm_status_volume_1
-      - entity: sensor.synology_dsm_volume_used_volume_1
-      - entity: sensor.synology_dsm_status_volume_2
-      - entity: sensor.synology_dsm_volume_used_volume_2
-    show_header_toggle: false
+  # - type: entities
+  #   title: NAS
+  #   entities:
+  #     - entity: sensor.synology_dsm_cpu_load_total
+  #     - entity: sensor.synology_dsm_network_up
+  #     - entity: sensor.synology_dsm_status_volume_1
+  #     - entity: sensor.synology_dsm_volume_used_volume_1
+  #     - entity: sensor.synology_dsm_status_volume_2
+  #     - entity: sensor.synology_dsm_volume_used_volume_2
+  #   show_header_toggle: false
 
   - type: custom:mini-graph-card
     entities:
