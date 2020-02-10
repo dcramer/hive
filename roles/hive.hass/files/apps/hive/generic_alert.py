@@ -1,7 +1,19 @@
+from datetime import datetime
+
 from .base import AlertApp
 
 
-class BinarySensorAlert(AlertApp):
+def parse_tod(tod):
+    if not tod:
+        return None
+
+    return {
+        "after": list(map(int, tod["after"].split(":"))),
+        "before": list(map(int, tod["after"].split(":"))),
+    }
+
+
+class GenericAlert(AlertApp):
     def initialize(self):
         super().initialize()
         self.telegram_list = self.args.get("telegram_list") or []
@@ -9,8 +21,19 @@ class BinarySensorAlert(AlertApp):
         self.message = self.args.get("message")
         self.done_message = self.args.get("done_message")
         self.camera = self.args.get("camera")
+        self.tod = parse_tod(self.args.get("tod"))
 
     def should_trigger(self, old, new):
+        if self.tod:
+            now = datetime.now()
+            if not (
+                now.hour < self.tod["before"][0] or now.hour > self.tod["after"][0]
+            ):
+                return False
+            if not (
+                now.minute < self.tod["before"][1] or now.minute > self.tod["after"][1]
+            ):
+                return False
         return new == self.state
 
     def on_activate(self, *args, **kwargs):

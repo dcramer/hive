@@ -27,8 +27,7 @@
 - name: appdaemon Docker Container
   docker_container:
     name: appdaemon
-    image: acockburn/appdaemon
-    pull: true
+    image: acockburn/appdaemon:3.0.5
     restart_policy: unless-stopped
     env:
       HA_URL: "http://192.168.1.25:8123"

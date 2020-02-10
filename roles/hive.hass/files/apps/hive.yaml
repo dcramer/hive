@@ -24,9 +24,30 @@ power_usage_dryer:
     - media_player.kitchen
   done_message: "The dryer has finished"
 
+garage_motion_overnight:
+  module: generic_alert
+  class: GenericAlert
+  entity_id: garage
+  input_boolean: sensor.garage_multisensor_burglar
+  state: 3
+  tod:
+    after: '12:00'
+    before: '07:00'
+  message: '{{now().strftime("%H:%M:%S %Y-%m-%d")}}: Garage motion detected {{ relative_time(states.cover.garage_door.last_changed) }} ago.'
+  camera: camera.garage
+  camera_output: "/downloads/camera/garage_{alert_id}.jpg"
+  repeat:
+    - 1
+    - 5
+  can_acknowledge: true
+  skip_first: true
+  telegram:
+    - !secret telegram_chat_id_david
+    - !secret telegram_chat_id_sukhpreet
+
 # garage_door_alert:
 #   module: hive
-#   class: BinarySensorAlert
+#   class: GenericAlert
 #   entity_id: cover.garage_door
 #   # should account for camera lag
 #   delay: 3

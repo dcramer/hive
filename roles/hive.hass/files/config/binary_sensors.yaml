@@ -30,8 +30,3 @@
       value_template: >-
         {{ is_state('alarm_control_panel.home', 'disarmed')
             and is_state('binary_sensor.any_home', 'off') }}
-
-- platform: tod
-  name: Is Overnight
-  after: '12:00'
-  before: '07:00'
