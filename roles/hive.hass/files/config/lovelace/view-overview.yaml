@@ -64,6 +64,7 @@ cards:
     title: "Pi Hole Status"
     entities:
       - switch.pi_hole
+    show_header_toggle: false
 
   # - type: vertical-stack
   #   cards:
