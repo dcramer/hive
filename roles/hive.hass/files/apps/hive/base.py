@@ -102,7 +102,7 @@ class AlertApp(hass.Hass):
                 self.alert_id = uuid1().hex
                 self.first_active_at = self.last_active_at = now
                 self.repeat_idx = 0
-                self.log("{} is: {} - now active".format(entity, new))
+                self.log("{} is: {} - active".format(entity, new))
                 if self.input_boolean is not None:
                     self.set_state(
                         self.input_boolean,
@@ -127,7 +127,11 @@ class AlertApp(hass.Hass):
             and self._waiting_handle is None
             and not self.should_trigger(old=old, new=new)
         ):
-            self.log("Waiting: {} seconds to notify.".format(self.delay))
+            self.log(
+                "{} is: {} - inactive [waiting {} to notify]".format(
+                    entity, new, self.delay
+                )
+            )
             self._waiting_handle = self.run_in(self._on_deactivate, self.delay)
             self._timer_handles.append(self._waiting_handle)
 
@@ -139,14 +143,13 @@ class AlertApp(hass.Hass):
             and self._waiting_handle is not None
             and float(new) > self.threshold
         ):
-            self.log("Cancelling timer")
+            self.log("{} is: {} - reactivated [cancelling timer]".format(entity, new))
             self.cancel_timer(self._waiting_handle)
             self._waiting_handle = None
             self.alert_id = None
 
     def _on_deactivate(self, kwargs):
         self.active = False
-        self.log("Setting active to: {}".format(self.active))
         if self.input_boolean is not None:
             self.set_state(self.input_boolean, state="off", attributes={})
         self.on_deactivate()
