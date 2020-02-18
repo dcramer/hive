@@ -60,10 +60,10 @@ cards:
       - type: picture-entity
         entity: camera.garage_exterior
 
-- type: entities
-  title: "Pi Hole Status"
-  entities:
-    - switch.pi_hole
+  - type: entities
+    title: "Pi Hole Status"
+    entities:
+      - switch.pi_hole
 
   # - type: vertical-stack
   #   cards:
