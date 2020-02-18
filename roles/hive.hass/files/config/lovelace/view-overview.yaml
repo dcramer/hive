@@ -80,17 +80,3 @@ cards:
   #       hours_to_show: 48
   #       lower_bound: 32
   #       upper_bound: 100
-
-  - type: entities
-    title: Network
-    show_header_toggle: false
-    entities:
-      - sensor.speedtest_download
-      - sensor.speedtest_upload
-
-  - type: custom:group-card
-    card:
-      type: entities
-      title: "Pi Hole Status"
-      show_header_toggle: false
-    group: group.pi_hole

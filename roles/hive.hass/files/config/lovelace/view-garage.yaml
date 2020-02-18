@@ -43,3 +43,6 @@ cards:
       title: "MultiSensor"
       show_header_toggle: false
     group: group.garage_multisensor
+
+  - type: custom:mini-media-player
+    entity: media_player.garage
