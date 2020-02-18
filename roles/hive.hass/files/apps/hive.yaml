@@ -48,7 +48,7 @@ garage_motion_overnight:
     - !secret telegram_chat_id_sukhpreet
 
 garage_door_alert:
-  module: hive
+  module: generic_alert
   class: GenericAlert
   entity_id: cover.garage_door
   # should account for camera lag
