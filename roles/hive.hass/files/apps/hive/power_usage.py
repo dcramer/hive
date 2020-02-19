@@ -18,7 +18,7 @@ class PowerUsageAlert(AlertApp):
             self.done_message = None
 
     def should_trigger(self, old, new):
-        return new is not None and new != "" and float(new) > self.threshold
+        return new not in (None, "", "unavailable") and float(new) > self.threshold
 
     def on_activate(self, *args, **kwargs):
         if self.message:
