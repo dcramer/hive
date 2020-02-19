@@ -27,8 +27,8 @@ power_usage_dryer:
 garage_motion_overnight:
   module: generic_alert
   class: GenericAlert
-  entity_id: garage
-  input_boolean: sensor.garage_multisensor_burglar
+  entity_id: sensor.garage_multisensor_burglar
+  input_boolean: input_boolean.garage_motion
   state:
     - 3
     - 8
@@ -37,12 +37,10 @@ garage_motion_overnight:
     before: '07:00'
   message: '{{now().strftime("%H:%M:%S %Y-%m-%d")}}: Garage motion detected {{ relative_time(states.cover.garage_door.last_changed) }} ago.'
   camera: camera.garage
-  camera_output: "/downloads/camera/garage_{alert_id}.jpg"
+  camera_output: "/downloads/cameras/garage_{alert_id}.jpg"
   repeat:
-    - 1
     - 5
   can_acknowledge: true
-  skip_first: true
   telegram:
     - !secret telegram_chat_id_david
     - !secret telegram_chat_id_sukhpreet
@@ -59,7 +57,7 @@ garage_door_alert:
   message: '{{now().strftime("%H:%M:%S %Y-%m-%d")}}: Garage door open for {{ relative_time(states.cover.garage_door.last_changed) }}. /closeGarage'
   done_message: '{{now().strftime("%H:%M:%S %Y-%m-%d")}}: Garage has been closed.'
   camera: camera.garage
-  camera_output: "/downloads/camera/garage_{alert_id}.jpg"
+  camera_output: "/downloads/cameras/garage_{alert_id}.jpg"
   repeat:
     - 5
     - 30

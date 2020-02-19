@@ -266,3 +266,13 @@ mqtt:
     retain: false
   # discovery: true
   # discovery_prefix: homeassistant
+
+input_boolean:
+  garage_motion:
+    name: "Garage Motion"
+    initial: off
+    icon: mdi:garage
+  garage_door:
+    name: "Garage Door"
+    initial: off
+    icon: mdi:garage

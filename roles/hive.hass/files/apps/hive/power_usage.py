@@ -2,8 +2,9 @@ from base import AlertApp
 
 
 class PowerUsageAlert(AlertApp):
+    EMPTY_NEW_VALUES = frozenset([None, "", "unavailable"])
+
     def initialize(self):
-        super().initialize()
         self.notify_list = self.args.get("notify") or []
         self.sonos_list = self.args.get("sonos") or []
         self.sonos_volume = float(self.args.get("sonos_volume") or 0.5)
@@ -16,9 +17,10 @@ class PowerUsageAlert(AlertApp):
             self.done_message = self.args.get("done_message")
         except KeyError:
             self.done_message = None
+        super().initialize()
 
     def should_trigger(self, old, new):
-        return new not in (None, "", "unavailable") and float(new) > self.threshold
+        return new not in self.EMPTY_NEW_VALUES and float(new) > self.threshold
 
     def on_activate(self, *args, **kwargs):
         if self.message:
