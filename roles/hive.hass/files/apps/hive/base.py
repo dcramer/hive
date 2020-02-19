@@ -1,7 +1,7 @@
 # import adbase as ad
 import appdaemon.plugins.hass.hassapi as hass
 
-import datetime
+from datetime import datetime
 from time import time
 from uuid import uuid1
 
@@ -45,7 +45,7 @@ class AlertApp(hass.Hass):
         self.entity_id = self.args.get("entity_id")
 
         # delay to activate
-        self.delay = self.args.get("delay")
+        self.delay = self.args.get("delay") or 0
 
         # used to store the state of whether this alert is active
         self.input_boolean = self.args.get("input_boolean")
@@ -100,7 +100,7 @@ class AlertApp(hass.Hass):
             self.active = False
 
         if self.active:
-            self._waiting_handle = self.run_minutely(self._tick, datetime.time())
+            self._waiting_handle = self.run_every(self._tick, datetime.now(), 60)
 
     def _get_attributes(self):
         return {
@@ -125,9 +125,9 @@ class AlertApp(hass.Hass):
                 self.input_boolean, state="on", attributes=self._get_attributes(),
             )
             self.on_activate(old, new)
-            self._waiting_handle = self.run_minutely(self._tick, datetime.time())
 
     def _state_change(self, entity, attribute, old, new, kwargs):
+        self.log("Received state change for {}: {} -> {}".format(entity, old, new))
         self._test_state(old, new)
 
     def _test_state(self, old, new):
@@ -152,7 +152,9 @@ class AlertApp(hass.Hass):
                     )
                 if not self.skip_first:
                     self.on_activate(old, new)
-                self._waiting_handle = self.run_minutely(self._tick, datetime.time())
+                if self._waiting_handle:
+                    self.cancel_timer(self._waiting_handle)
+                self._waiting_handle = self.run_every(self._tick, datetime.now(), 60)
         elif (
             self.active
             and self._waiting_handle is None
@@ -179,13 +181,15 @@ class AlertApp(hass.Hass):
                 "{} is: {} - reactivated [cancelling timer]".format(self.entity_id, new)
             )
             self.cancel_timer(self._waiting_handle)
-            self._waiting_handle = self.run_minutely(self._tick, datetime.time())
+            self._waiting_handle = self.run_every(self._tick, datetime.now(), 60)
         self.last_value = new
 
     def _on_deactivate(self, kwargs):
         self.active = False
         if self.input_boolean is not None:
-            self.set_state(self.input_boolean, state="off", attributes={})
+            self.set_state(
+                self.input_boolean, state="off", attributes=self._get_attributes()
+            )
         self.on_deactivate(kwargs["old"], kwargs["new"])
         self.alert_id = None
 

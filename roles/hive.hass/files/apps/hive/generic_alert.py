@@ -15,8 +15,8 @@ def parse_tod(tod):
 
 def parse_state(state):
     if isinstance(state, list):
-        return frozenset(state)
-    return frozenset([state])
+        return frozenset([str(s) for s in state])
+    return frozenset([str(state)])
 
 
 class GenericAlert(AlertApp):
@@ -59,12 +59,10 @@ class GenericAlert(AlertApp):
 
     def send_notifications(self, message):
         if self.camera:
-            print(
-                self.call_service(
-                    "camera/snapshot",
-                    entity_id=self.camera,
-                    filename=self.camera_output.format(alert_id=self.alert_id),
-                )
+            self.call_service(
+                "camera/snapshot",
+                entity_id=self.camera,
+                filename=self.camera_output.format(alert_id=self.alert_id),
             )
 
         for target in self.telegram_list:
