@@ -141,7 +141,7 @@ class AlertApp(hass.Hass):
             and new != ""
             and self.active
             and self._waiting_handle is not None
-            and float(new) > self.threshold
+            and self.should_trigger(old=old, new=new)
         ):
             self.log("{} is: {} - reactivated [cancelling timer]".format(entity, new))
             self.cancel_timer(self._waiting_handle)
