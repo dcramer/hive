@@ -171,8 +171,7 @@ class AlertApp(hass.Hass):
 
         # Power usage goes up before delay
         elif (
-            new not in self.EMPTY_NEW_VALUES
-            and self.active
+            self.active
             and self._waiting_handle is not None
             and self.should_trigger(old=old, new=new)
         ):

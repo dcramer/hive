@@ -42,8 +42,7 @@ garage_motion_overnight:
     - 5
   can_acknowledge: true
   telegram:
-    - !secret telegram_chat_id_david
-    - !secret telegram_chat_id_sukhpreet
+    - !secret telegram_group_id_home
 
 garage_door_alert:
   module: generic_alert
@@ -65,5 +64,4 @@ garage_door_alert:
   can_acknowledge: true
   skip_first: true
   telegram:
-    - !secret telegram_chat_id_david
-    # - !secret telegram_chat_id_sukhpreet
+    - !secret telegram_group_id_home
