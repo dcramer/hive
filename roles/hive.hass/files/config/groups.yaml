@@ -41,3 +41,4 @@ all_media:
     - media_player.kitchen
     - media_player.office
     - media_player.garage
+    - media_player.master_bedroom

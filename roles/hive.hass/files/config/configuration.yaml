@@ -48,6 +48,12 @@ cloud:
         - input_boolean.dryer
         - input_boolean.washer
         - switch.pi_hole
+        # TODO(dcramer): for some reason this doesnt actually work for
+        # the sonos devices
+        - media_player.garage
+        - media_player.office
+        - media_player.kitchen
+        - media_player.master_bedroom
       include_domains:
         - light
         - scene
@@ -71,6 +77,8 @@ cloud:
         room: Garage
       input_boolean.washer:
         room: Garage
+      media_player.garage:
+        room: Garage
       fan.master_bedroom:
         room: Master Bedroom
       light.master_bedroom_bedroom_center_cans:
@@ -80,6 +88,8 @@ cloud:
       light.master_bedroom_bedroom_sitting_cans:
         room: Master Bedroom
       light.master_bedroom_master_bed_hallway_cans:
+        room: Master Bedroom
+      media_player.master_bedroom:
         room: Master Bedroom
       light.guest_bedroom_guest_bedroom_cans:
         room: Guest Bedroom
@@ -91,7 +101,11 @@ cloud:
         room: Office
       light.guest_bedroom_office_room_wall_cans:
         room: Office
+      media_player.office:
+        room: Office
       light.back_stairs_kitchen_cans:
+        room: Kitchen
+      media_player.kitchen:
         room: Kitchen
       light.guest_bedroom_dining_room_cans:
         room: Dining Room

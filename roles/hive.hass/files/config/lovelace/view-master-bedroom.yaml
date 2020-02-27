@@ -22,3 +22,5 @@ cards:
       title: "Lights"
       show_header_toggle: true
     group: group.master_bedroom_lights
+  - type: custom:mini-media-player
+    entity: media_player.master_bedroom
