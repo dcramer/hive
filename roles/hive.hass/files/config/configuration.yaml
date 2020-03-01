@@ -178,7 +178,7 @@ influxdb:
   port: !secret influxdb_port
   database: hass
 
-image_processing: !include image_processing.yaml
+# image_processing: !include image_processing.yaml
 
 panel_custom: !include panel_custom.yaml
 
@@ -250,10 +250,10 @@ notify:
 hacs:
   token: !secret hacs_github_token
 
-media_player:
-  - platform: spotify
-    client_id: !secret spotify_client_id
-    client_secret: !secret spotify_client_secret
+# media_player:
+#   - platform: spotify
+#     client_id: !secret spotify_client_id
+#     client_secret: !secret spotify_client_secret
 
 sonos:
   media_player:
