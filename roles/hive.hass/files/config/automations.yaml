@@ -30,7 +30,6 @@
 # {'message_id': 171, 'date': 1578624944, 'chat': {'id': -313131514, 'type': 'group', 'title': 'Home', 'all_members_are_administrators': True}, 'entities': [], 'caption_entities': [], 'photo': [], 'new_chat_members': [{'id': 850525420, 'first_name': 'Red Queen', 'is_bot': True, 'username': 'Hive4332Bot'}], 'new_chat_photo': [], 'delete_chat_photo': False, 'group_chat_created': False, 'supergroup_chat_created': False, 'channel_chat_created': False, 'from': {'id': 958786881, 'first_name': 'David', 'is_bot': False, 'last_name': 'Cramer', 'language_code': 'en'}}
 
 - alias: "Telegram bot that reply pong to ping"
-  hide_entity: true
   trigger:
     platform: event
     event_type: telegram_command
@@ -44,7 +43,6 @@
 
 - id: replyAckGarage
   alias: "Telegram bot to ack the garage door being open"
-  hide_entity: true
   trigger:
     platform: event
     event_type: telegram_command
@@ -56,7 +54,6 @@
 
 - id: replyCloseGarage
   alias: "Telegram bot to close the garage door"
-  hide_entity: true
   trigger:
     platform: event
     event_type: telegram_command
@@ -68,7 +65,6 @@
 
 - id: replyAckStorage
   alias: "Telegram bot to ack the garage storage being unlocked"
-  hide_entity: true
   trigger:
     platform: event
     event_type: telegram_command
@@ -80,7 +76,6 @@
 
 - id: replyLockStorage
   alias: "Telegram bot to lock the garage storage"
-  hide_entity: true
   trigger:
     platform: event
     event_type: telegram_command
@@ -92,7 +87,6 @@
 
 - id: replyArmAway
   alias: "Telegram bot to arm the alarm in away mode"
-  hide_entity: true
   trigger:
     platform: event
     event_type: telegram_command
@@ -104,7 +98,6 @@
 
 - id: replyDisarm
   alias: "Telegram bot to disarmarm the alarm"
-  hide_entity: true
   trigger:
     platform: event
     event_type: telegram_command
@@ -119,7 +112,6 @@
 
 - id: replyAckAlarm
   alias: "Telegram bot to ack the alarm being unarmed"
-  hide_entity: true
   trigger:
     platform: event
     event_type: telegram_command
