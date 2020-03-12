@@ -112,9 +112,11 @@ class AlertApp(hass.Hass):
         }
 
     def _tick(self, *args, **kwargs):
-        if self.repeat:
+        if not self.repeat:
             return
         now = time()
+        if self.repeat_idx > len(self.repeat) - 1:
+            self.repeat_idx = len(self.repeat) - 1
         if (self.last_active_at + (self.repeat[self.repeat_idx] * 60)) <= now:
             old = self.last_value
             new = self.get_state(self.entity_id)

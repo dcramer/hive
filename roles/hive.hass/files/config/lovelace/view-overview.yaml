@@ -50,8 +50,8 @@ cards:
   # - type: alarm-panel
   #   entity: alarm_control_panel.home
 
-  - type: custom:recology-card
-    entity: sensor.recology
+  # - type: custom:recology-card
+  #   entity: sensor.recology
 
   - type: vertical-stack
     cards:
