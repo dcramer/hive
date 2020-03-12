@@ -13,6 +13,7 @@ class AlertApp(hass.Hass):
         self._timer_handles = []
         self._listen_state_handles = []
         self._waiting_handle = None
+        self._tick_handle = None
 
         # is the alert active?
         self.active = None
@@ -53,10 +54,10 @@ class AlertApp(hass.Hass):
         # TODO: add sonos list?
         # TODO: add script list?
 
+        self._load_previous_state()
         self._listen_state_handles.append(
             self.listen_state(self._state_change, self.entity_id)
         )
-        self._load_initial_state()
 
     def should_trigger(self, old, new):
         """
@@ -76,11 +77,10 @@ class AlertApp(hass.Hass):
 
     # TODO: when we up to appd 4.x
     # @ad.app_lock
-    def _load_initial_state(self):
+    def _load_previous_state(self):
         if self.input_boolean:
             now = now = time()
             state = self.get_state(self.input_boolean)
-            self.log("loading initial state: {}".format(state))
             self.first_active_at = (
                 self.get_state(self.input_boolean, attribute="first_active_at") or now
             )
@@ -101,6 +101,11 @@ class AlertApp(hass.Hass):
 
         if self.active:
             self._tick_handle = self.run_every(self._tick, datetime.now(), 60)
+            self.log("{} previous state is: {} - active".format(self.entity_id, state))
+        else:
+            self.log(
+                "{} previous state is: {} - inactive".format(self.entity_id, state)
+            )
 
     def _get_attributes(self):
         return {
@@ -126,6 +131,7 @@ class AlertApp(hass.Hass):
             self.set_state(
                 self.input_boolean, state="on", attributes=self._get_attributes(),
             )
+            self.log("{} is: {} - active [repeat]".format(self.entity_id, new,))
             self.on_activate(old, new)
 
     def _state_change(self, entity, attribute, old, new, kwargs):
@@ -137,7 +143,7 @@ class AlertApp(hass.Hass):
 
         # if self.active is None:
         #     # restore previous state
-        #     self._load_initial_state()
+        #     self._load_previous_state()
 
         if self.should_trigger(old=old, new=new):
             if not self.active:
@@ -154,10 +160,10 @@ class AlertApp(hass.Hass):
                     )
                 if not self.skip_first:
                     self.on_activate(old, new)
-                if self._tick_handle:
-                    self.cancel_timer(self._tick_handle)
                 if self._waiting_handle:
                     self.cancel_timer(self._waiting_handle)
+                if self._tick_handle:
+                    self.cancel_timer(self._tick_handle)
                 self._tick_handle = self.run_every(self._tick, datetime.now(), 60)
         elif (
             self.active
@@ -171,6 +177,8 @@ class AlertApp(hass.Hass):
             )
             if self._waiting_handle:
                 self.cancel_timer(self._waiting_handle)
+            if self._tick_handle:
+                self.cancel_timer(self._tick_handle)
             self._waiting_handle = self.run_in(
                 self._on_deactivate, self.delay, old=old, new=new
             )
