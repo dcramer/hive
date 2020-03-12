@@ -100,7 +100,7 @@ class AlertApp(hass.Hass):
             self.active = False
 
         if self.active:
-            self._waiting_handle = self.run_every(self._tick, datetime.now(), 60)
+            self._tick_handle = self.run_every(self._tick, datetime.now(), 60)
 
     def _get_attributes(self):
         return {
@@ -154,9 +154,11 @@ class AlertApp(hass.Hass):
                     )
                 if not self.skip_first:
                     self.on_activate(old, new)
+                if self._tick_handle:
+                    self.cancel_timer(self._tick_handle)
                 if self._waiting_handle:
                     self.cancel_timer(self._waiting_handle)
-                self._waiting_handle = self.run_every(self._tick, datetime.now(), 60)
+                self._tick_handle = self.run_every(self._tick, datetime.now(), 60)
         elif (
             self.active
             and self._waiting_handle is None
@@ -182,8 +184,9 @@ class AlertApp(hass.Hass):
             self.log(
                 "{} is: {} - reactivated [cancelling timer]".format(self.entity_id, new)
             )
-            self.cancel_timer(self._waiting_handle)
-            self._waiting_handle = self.run_every(self._tick, datetime.now(), 60)
+            if self._tick_handle:
+                self.cancel_timer(self._tick_handle)
+            self._tick_handle = self.run_every(self._tick, datetime.now(), 60)
         self.last_value = new
 
     def _on_deactivate(self, kwargs):
