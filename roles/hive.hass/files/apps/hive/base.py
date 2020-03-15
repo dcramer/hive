@@ -164,10 +164,7 @@ class AlertApp(hass.Hass):
                     )
                 if not self.skip_first:
                     self.on_activate(old, new)
-                if self._delay_handle:
-                    self.cancel_timer(self._delay_handle)
-                if self._tick_handle:
-                    self.cancel_timer(self._tick_handle)
+                self._cancel_timers()
                 self._tick_handle = self.run_every(self._tick, datetime.now(), 60)
         elif (
             self.active
@@ -179,10 +176,7 @@ class AlertApp(hass.Hass):
                     self.entity_id, new, self.delay
                 )
             )
-            if self._delay_handle:
-                self.cancel_timer(self._delay_handle)
-            if self._tick_handle:
-                self.cancel_timer(self._tick_handle)
+            self._cancel_timers()
             self._delay_handle = self.run_in(
                 self._on_deactivate, self.delay, old=old, new=new
             )
@@ -196,10 +190,7 @@ class AlertApp(hass.Hass):
             self.log(
                 "{} is: {} - reactivated [cancelling timer]".format(self.entity_id, new)
             )
-            if self._delay_handle:
-                self.cancel_timer(self._delay_handle)
-            if self._tick_handle:
-                self.cancel_timer(self._tick_handle)
+            self._cancel_timers()
             self._tick_handle = self.run_every(self._tick, datetime.now(), 60)
         self.last_value = new
 
@@ -212,9 +203,15 @@ class AlertApp(hass.Hass):
         self.on_deactivate(kwargs["old"], kwargs["new"])
         self.alert_id = None
 
-    def terminate(self):
+    def _cancel_timers(self):
+        if self._tick_handle:
+            self.cancel_timer(self._tick_handle)
+
         if self._delay_handle:
             self.cancel_timer(self._delay_handle)
+
+    def terminate(self):
+        self._cancel_timers()
 
         for handle in self._timer_handles:
             self.cancel_timer(handle)
