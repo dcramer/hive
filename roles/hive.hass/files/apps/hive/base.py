@@ -99,9 +99,9 @@ class AlertApp(hass.Hass):
             self.active = False
 
         if self.active:
+            self.log("{} previous state is: {} - active".format(self.entity_id, state))
             self._tick_handle = self.run_every(self._tick, datetime.now(), 60)
             self._test_state(self.last_value, self.get_state(self.entity_id))
-            self.log("{} previous state is: {} - active".format(self.entity_id, state))
         else:
             self.log(
                 "{} previous state is: {} - inactive".format(self.entity_id, state)
