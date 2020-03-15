@@ -131,10 +131,10 @@ class AlertApp(hass.Hass):
             self.repeat_idx = max(self.repeat_idx + 1, len(self.repeat) - 1)
             self.last_active_at = now
             self.last_value = new
-            self.active = True
-            self.set_state(
-                self.input_boolean, state="on", attributes=self._get_attributes(),
-            )
+            if self.input_boolean is not None:
+                self.set_state(
+                    self.input_boolean, state="on", attributes=self._get_attributes(),
+                )
             self.log("{} is: {} - active [repeat]".format(self.entity_id, new,))
             self.on_activate(old, new)
 
