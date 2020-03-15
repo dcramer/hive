@@ -12,7 +12,7 @@ class AlertApp(hass.Hass):
     def initialize(self):
         self._timer_handles = []
         self._listen_state_handles = []
-        self._waiting_handle = None
+        self._delay_handle = None
         self._tick_handle = None
 
         # is the alert active?
@@ -160,14 +160,14 @@ class AlertApp(hass.Hass):
                     )
                 if not self.skip_first:
                     self.on_activate(old, new)
-                if self._waiting_handle:
-                    self.cancel_timer(self._waiting_handle)
+                if self._delay_handle:
+                    self.cancel_timer(self._delay_handle)
                 if self._tick_handle:
                     self.cancel_timer(self._tick_handle)
                 self._tick_handle = self.run_every(self._tick, datetime.now(), 60)
         elif (
             self.active
-            and self._waiting_handle is None
+            and self._delay_handle is None
             and not self.should_trigger(old=old, new=new)
         ):
             self.log(
@@ -175,23 +175,25 @@ class AlertApp(hass.Hass):
                     self.entity_id, new, self.delay
                 )
             )
-            if self._waiting_handle:
-                self.cancel_timer(self._waiting_handle)
+            if self._delay_handle:
+                self.cancel_timer(self._delay_handle)
             if self._tick_handle:
                 self.cancel_timer(self._tick_handle)
-            self._waiting_handle = self.run_in(
+            self._delay_handle = self.run_in(
                 self._on_deactivate, self.delay, old=old, new=new
             )
 
         # Power usage goes up before delay
         elif (
             self.active
-            and self._waiting_handle is not None
+            and self._delay_handle is not None
             and self.should_trigger(old=old, new=new)
         ):
             self.log(
                 "{} is: {} - reactivated [cancelling timer]".format(self.entity_id, new)
             )
+            if self._delay_handle:
+                self.cancel_timer(self._delay_handle)
             if self._tick_handle:
                 self.cancel_timer(self._tick_handle)
             self._tick_handle = self.run_every(self._tick, datetime.now(), 60)
@@ -207,8 +209,8 @@ class AlertApp(hass.Hass):
         self.alert_id = None
 
     def terminate(self):
-        if self._waiting_handle:
-            self.cancel_timer(self._waiting_handle)
+        if self._delay_handle:
+            self.cancel_timer(self._delay_handle)
 
         for handle in self._timer_handles:
             self.cancel_timer(handle)
