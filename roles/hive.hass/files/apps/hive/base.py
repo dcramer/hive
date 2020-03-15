@@ -18,6 +18,9 @@ class AlertApp(hass.Hass):
         # is the alert active?
         self.active = None
 
+        # did this alert trigger? (e.g. with skip_first + repeat)
+        self.did_alert = False
+
         # a unique id for the currently active alert
         self.alert_id = None
 
@@ -131,11 +134,15 @@ class AlertApp(hass.Hass):
             self.repeat_idx = max(self.repeat_idx + 1, len(self.repeat) - 1)
             self.last_active_at = now
             self.last_value = new
+            self.did_alert = (
+                not self.skip_first or self.last_active_at > self.first_active_at
+            )
             if self.input_boolean is not None:
                 self.set_state(
                     self.input_boolean, state="on", attributes=self._get_attributes(),
                 )
             self.log("{} is: {} - active [repeat]".format(self.entity_id, new,))
+            self.did_alert = True
             self.on_activate(old, new)
 
     def _state_change(self, entity, attribute, old, new, kwargs):
@@ -163,6 +170,7 @@ class AlertApp(hass.Hass):
                         attributes=self._get_attributes(),
                     )
                 if not self.skip_first:
+                    self.did_alert = True
                     self.on_activate(old, new)
                 self._cancel_timers()
                 self._tick_handle = self.run_every(self._tick, datetime.now(), 60)
@@ -200,8 +208,10 @@ class AlertApp(hass.Hass):
             self.set_state(
                 self.input_boolean, state="off", attributes=self._get_attributes()
             )
-        self.on_deactivate(kwargs["old"], kwargs["new"])
+        if self.did_alert:
+            self.on_deactivate(kwargs["old"], kwargs["new"])
         self.alert_id = None
+        self.did_alert = False
 
     def _cancel_timers(self):
         if self._tick_handle:
