@@ -119,6 +119,9 @@ class AlertApp(hass.Hass):
     def _tick(self, *args, **kwargs):
         if not self.repeat:
             return
+        if not self.active:
+            self.log("{} is is ticking but inactive".format(self.entity_id))
+            return
         now = time()
         if self.repeat_idx > len(self.repeat) - 1:
             self.repeat_idx = len(self.repeat) - 1
@@ -128,6 +131,7 @@ class AlertApp(hass.Hass):
             self.repeat_idx = max(self.repeat_idx + 1, len(self.repeat) - 1)
             self.last_active_at = now
             self.last_value = new
+            self.active = True
             self.set_state(
                 self.input_boolean, state="on", attributes=self._get_attributes(),
             )
