@@ -34,3 +34,6 @@ es:
 
 docker:
 	ansible-playbook roles.yml -l rex -t docker
+
+dst:
+	ansible-playbook roles.yml -l rex -t dst

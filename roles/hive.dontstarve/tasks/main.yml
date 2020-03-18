@@ -1,0 +1,45 @@
+---
+- name: create dst directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ hive_user }}"
+    group: "{{ hive_user }}"
+    mode: 0755
+  with_items:
+    - /docker/dst
+    - /docker/dst/data
+    - /docker/dst/data/DoNotStarveTogether
+    - /docker/dst/data/DoNotStarveTogether/Cluster_1
+
+- name: create dst cluster config
+  template:
+    src: cluster.ini.j2
+    dest: /docker/dst/data/DoNotStarveTogether/Cluster_1/cluster.ini
+    owner: "{{ hive_user }}"
+    group: "{{ hive_user }}"
+    mode: 0644
+  notify: restart dst
+
+
+- name: create dst cluster token
+  copy:
+    content: "{{ dst_cluster_token }}"
+    dest: /docker/dst/data/DoNotStarveTogether/Cluster_1/cluster_token.txt
+    owner: "{{ hive_user }}"
+    group: "{{ hive_user }}"
+    mode: 0644
+  notify: restart dst
+
+- name: dst Docker Container
+  docker_container:
+    name: dst
+    image: jamesits/dst-server:nightly
+    pull: true
+    restart_policy: unless-stopped
+    volumes:
+      - /docker/dst/data:/data
+    ports:
+      - "10999-11000:10999-11000/udp"
+      - "12346-12347:12346-12347/udp"
+    # user: "{{ hive_uid }}"
