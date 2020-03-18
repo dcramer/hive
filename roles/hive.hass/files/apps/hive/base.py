@@ -152,28 +152,21 @@ class AlertApp(hass.Hass):
     def _test_state(self, old, new):
         now = time()
 
-        # if self.active is None:
-        #     # restore previous state
-        #     self._load_previous_state()
-
-        if self.should_trigger(old=old, new=new):
-            if not self.active:
-                self.active = True
-                self.alert_id = uuid1().hex
-                self.first_active_at = self.last_active_at = now
-                self.repeat_idx = 0
-                self.log("{} is: {} - active".format(self.entity_id, new,))
-                if self.input_boolean is not None:
-                    self.set_state(
-                        self.input_boolean,
-                        state="on",
-                        attributes=self._get_attributes(),
-                    )
-                if not self.skip_first:
-                    self.did_alert = True
-                    self.on_activate(old, new)
-                self._cancel_timers()
-                self._tick_handle = self.run_every(self._tick, datetime.now(), 60)
+        if not self.active and self.should_trigger(old=old, new=new):
+            self.active = True
+            self.alert_id = uuid1().hex
+            self.first_active_at = self.last_active_at = now
+            self.repeat_idx = 0
+            self.log("{} is: {} - active".format(self.entity_id, new,))
+            if self.input_boolean is not None:
+                self.set_state(
+                    self.input_boolean, state="on", attributes=self._get_attributes(),
+                )
+            if not self.skip_first:
+                self.did_alert = True
+                self.on_activate(old, new)
+            self._cancel_timers()
+            self._tick_handle = self.run_every(self._tick, datetime.now(), 60)
         elif (
             self.active
             and self._delay_handle is None
@@ -216,9 +209,11 @@ class AlertApp(hass.Hass):
     def _cancel_timers(self):
         if self._tick_handle:
             self.cancel_timer(self._tick_handle)
+        self._tick_handle = None
 
         if self._delay_handle:
             self.cancel_timer(self._delay_handle)
+        self._delay_handle = None
 
     def terminate(self):
         self._cancel_timers()
