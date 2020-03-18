@@ -1,0 +1,26 @@
+---
+- name: create boinc directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ hive_user }}"
+    group: "{{ hive_user }}"
+    mode: 0755
+  with_items:
+    - /docker/boinc
+    - /docker/boinc/data
+
+- name: boinc Docker Container
+  docker_container:
+    name: boinc
+    image: boinc/client
+    pull: true
+    restart_policy: unless-stopped
+    volumes:
+      - /docker/boinc/data:/var/lib/boinc
+    ports:
+      - "31416:31416/tcp"
+    user: "{{ hive_uid }}"
+    env:
+      BOINC_GUI_RPC_PASSWORD: "{{ boinc_password }}"
+      BOINC_CMD_LINE_OPTIONS: --allow_remote_gui_rpc
