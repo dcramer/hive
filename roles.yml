@@ -333,6 +333,7 @@
         config:
           - urls = ["http://localhost:{{ influxdb_port }}"]
           - database = "telegraf"
+    telegraf_agent_version: 1.13.4
 
     # glhf every remembering this - couldnt get the device to work anyways
     gocontrol_serial: "81300714"
