@@ -1,6 +1,15 @@
+global_modules:
+  - sentry
+
+sentry:
+  module: sentry
+  class: Sentry
+  dsn: !secret sentry_dsn
+
 power_usage_washer:
   module: power_usage
   class: PowerUsageAlert
+  dependencies: sentry
   entity_id: sensor.washer_power
   delay: 3
   input_boolean: input_boolean.washer
@@ -14,6 +23,7 @@ power_usage_washer:
 power_usage_dryer:
   module: power_usage
   class: PowerUsageAlert
+  dependencies: sentry
   entity_id: sensor.dryer_power
   delay: 3
   input_boolean: input_boolean.dryer
@@ -27,6 +37,7 @@ power_usage_dryer:
 garage_motion_overnight:
   module: generic_alert
   class: GenericAlert
+  dependencies: sentry
   entity_id: sensor.garage_multisensor_burglar
   input_boolean: input_boolean.garage_motion
   state:
@@ -35,7 +46,7 @@ garage_motion_overnight:
   tod:
     after: '23:59'
     before: '07:00'
-  message: '{{now().strftime("%H:%M:%S %Y-%m-%d")}}: Garage motion detected {{ relative_time(states.cover.garage_multisensor_burglar.last_changed) }} ago.'
+  message: '{{now().strftime("%H:%M:%S %Y-%m-%d")}}: Garage motion detected {{ relative_time(states.sensor.garage_multisensor_burglar.last_changed) }} ago.'
   camera: camera.garage
   camera_output: "/downloads/cameras/garage_{alert_id}.jpg"
   repeat:
@@ -47,6 +58,7 @@ garage_motion_overnight:
 garage_door_alert:
   module: generic_alert
   class: GenericAlert
+  dependencies: sentry
   entity_id: cover.garage_door
   # should account for camera lag
   delay: 3

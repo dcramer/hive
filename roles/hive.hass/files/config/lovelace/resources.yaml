@@ -4,11 +4,11 @@
   type: module
 - url: /local/community/lovelace-recology-card/recology-card.js?v=2
   type: module
-- url: /community_plugin/upcoming-media-card/upcoming-media-card.js
+- url: /hacsfiles/upcoming-media-card/upcoming-media-card.js
   type: js
-- url: /community_plugin/mini-graph-card/mini-graph-card-bundle.js
+- url: /hacsfiles/mini-graph-card/mini-graph-card-bundle.js
   type: module
-- url: /community_plugin/mini-media-player/mini-media-player-bundle.js
+- url: /hacsfiles/mini-media-player/mini-media-player-bundle.js
   type: module
-- url: /community_plugin/group-card/group-card.js
+- url: /hacsfiles/group-card/group-card.js
   type: module

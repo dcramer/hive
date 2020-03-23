@@ -8,6 +8,7 @@
     mode: 0755
   with_items:
     - /docker/homeassistant/logs/appdaemon/
+    - /docker/homeassistant/appdaemon/local
 
 - name: create appdaemon configuration
   template:
@@ -22,12 +23,14 @@
   copy:
     src: "apps"
     dest: "/docker/homeassistant/config/"
+    owner: "{{ hive_user }}"
+    group: "{{ hive_user }}"
   notify: restart appdaemon
 
 - name: appdaemon Docker Container
   docker_container:
     name: appdaemon
-    image: acockburn/appdaemon:3.0.5
+    image: acockburn/appdaemon:latest
     restart_policy: unless-stopped
     env:
       HA_URL: "http://192.168.1.25:8123"
@@ -39,6 +42,7 @@
     volumes:
       - /docker/homeassistant/config:/conf
       - /docker/homeassistant/logs/appdaemon:/logs
+      - /docker/homeassistant/appdaemon/local:/.local
 
 - name: Add appdaemon to network
   docker_network:
