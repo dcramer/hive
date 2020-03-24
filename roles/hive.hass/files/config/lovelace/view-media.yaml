@@ -18,15 +18,3 @@ cards:
           name: Office
         - entity_id: media_player.kitchen
           name: Kitchen
-
-    shortcuts:
-      columns: 4 # Max buttons per row
-      buttons:
-        - icon: mdi:cat
-          type: playlist
-          name: Discovery Weekly
-          id: spotify:user:spotify:playlist:37i9dQZEVXcHXmvZsLUc4h
-        - icon: mdi:cat
-          type: playlist
-          name: Something
-          id: spotify:playlist:37i9dQZF1E8Em65iz7xPwH

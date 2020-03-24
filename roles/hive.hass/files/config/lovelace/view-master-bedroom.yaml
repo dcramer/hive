@@ -3,16 +3,16 @@ id: master-bedroom
 path: master-bedroom
 icon: mdi:bed-king
 cards:
-  - type: sensor
-    entity: sensor.master_bedroom_temperature
-    graph: line
-    detail: 1
-    hours_to_show: 48
-  - type: sensor
-    entity: sensor.master_bedroom_humidity
-    graph: line
-    detail: 1
-    hours_to_show: 48
+  # - type: sensor
+  #   entity: sensor.master_bedroom_temperature
+  #   graph: line
+  #   detail: 1
+  #   hours_to_show: 48
+  # - type: sensor
+  #   entity: sensor.master_bedroom_humidity
+  #   graph: line
+  #   detail: 1
+  #   hours_to_show: 48
   - type: entities
     entities:
       - fan.master_bedroom
