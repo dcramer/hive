@@ -53,6 +53,15 @@ cards:
   # - type: custom:recology-card
   #   entity: sensor.recology
 
+  - type: custom:auto-entities
+    show_empty: false
+    card:
+      type: entities
+      title: Lights
+    filter:
+      include:
+        - entity_id: "light.*_lights"
+
   - type: vertical-stack
     cards:
       - type: picture-entity

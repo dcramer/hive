@@ -3,6 +3,67 @@ lutron:
   username: !secret lutron_username
   password: !secret lutron_password
 
+light:
+  # - platform: group
+  #   name: All Lights
+  #   entities:
+  #     - light.master_bedroom_bedroom_center_cans
+  #     - light.master_bedroom_bedroom_side_cans
+  #     - light.master_bedroom_bedroom_sitting_cans
+  #     - light.master_bedroom_master_bed_hallway_cans
+  #     - light.guest_bedroom_guest_bedroom_cans
+  #     - light.guest_bedroom_guest_bedroom_wall
+  #     - light.guest_bedroom_office_fire_place_cans
+  #     - light.guest_bedroom_office_room_center_light
+  #     - light.guest_bedroom_office_room_wall_cans
+  #     - light.back_stairs_kitchen_cans
+  #     - light.guest_bedroom_dining_room_cans
+  #     - light.guest_bedroom_dining_room_center
+  #     - light.guest_bedroom_hallway_lights
+  #     - light.garage_bottom_of_stairs
+  #     - light.garage_entry_can
+  #     - light.garage_bottom_of_stairs
+  - platform: group
+    name: Master Bedroom Lights
+    entities:
+      - light.master_bedroom_bedroom_center_cans
+      - light.master_bedroom_bedroom_side_cans
+      - light.master_bedroom_bedroom_sitting_cans
+      - light.master_bedroom_master_bed_hallway_cans
+  - platform: group
+    name: Guest Bedroom Lights
+    entities:
+      - light.guest_bedroom_guest_bedroom_cans
+      - light.guest_bedroom_guest_bedroom_wall
+  - platform: group
+    name: Office Lights
+    entities:
+      - light.guest_bedroom_office_fire_place_cans
+      - light.guest_bedroom_office_room_center_light
+      - light.guest_bedroom_office_room_wall_cans
+  - platform: group
+    name: Kitchen Lights
+    entities:
+      - light.back_stairs_kitchen_cans
+  - platform: group
+    name: Dining Room Lights
+    entities:
+      - light.guest_bedroom_dining_room_cans
+      - light.guest_bedroom_dining_room_center
+  - platform: group
+    name: Hallway Lights
+    entities:
+      - light.guest_bedroom_hallway_lights
+  - platform: group
+    name: Entryway Lights
+    entities:
+      - light.garage_bottom_of_stairs
+  - platform: group
+    name: Front Door Lights
+    entities:
+      - light.garage_entry_can
+      - light.garage_bottom_of_stairs
+
 group:
   master_bedroom_lights:
     name: Master Bedroom Lights

@@ -20,7 +20,9 @@ class AlarmReminder(hass.Hass):
         self._activation_handle = None
 
     def on_reminder(self, kwargs):
-        if self.get_state(self.alarm) != "disarmed":
+        alarm_state = self.get_state(self.alarm)
+        if alarm_state == "disarmed":
+            self.log(f"not arming; state is {alarm_state}")
             return
 
         message = f"Alarm will be automatically armed in {self.activation_delay} minutes /stopArm"
@@ -44,7 +46,9 @@ class AlarmReminder(hass.Hass):
 
     def on_deactivate(self, kwargs):
         # TODO: what should we do if they had stopped the auto arm?
-        if self.get_state(self.alarm) == "armed_home":
+        alarm_state = self.get_state(self.alarm)
+        if alarm_state == "armed_home":
+            self.log(f"not disarming; state is {alarm_state}")
             return
 
         self.call_service("alarm_control_panel/alarm_disarm", entity_id=self.alarm)
