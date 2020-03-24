@@ -77,3 +77,14 @@ garage_door_alert:
   skip_first: true
   telegram:
     - !secret telegram_group_id_home
+
+alarm_reminder:
+  module: alarm_reminder
+  class: AlarmReminder
+  dependencies: sentry
+  alarm: alarm_control_panel.home
+  telegram:
+    - !secret telegram_group_id_home
+  reminder_time: "00:45:00"
+  deactivate_time: "00:07:00"
+  activation_delay: 15
