@@ -86,5 +86,5 @@ alarm_reminder:
   telegram:
     - !secret telegram_group_id_home
   reminder_time: "23:45:00"
-  deactivate_time: "00:07:00"
+  deactivate_time: "07:00:00"
   activation_delay: 15
