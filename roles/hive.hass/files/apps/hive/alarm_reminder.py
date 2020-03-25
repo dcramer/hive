@@ -61,11 +61,12 @@ class AlarmReminder(hass.Hass):
 
     def receive_telegram_command(self, event_id, payload_event, *args):
         assert event_id == "telegram_command"
-        if payload_event["command"] == "/stopArm":
+        if payload_event["command"] == "/stopArm" and self._activation_handle:
+            self.log(f"automatic arming cancelled")
             self.call_service(
                 "telegram_bot/send_message",
                 target=payload_event["chat_id"],
                 message="Automatic arming has been cancelled",
             )
-            if self._activation_handle:
-                self.cancel_timer(self._activation_handle)
+            self.cancel_timer(self._activation_handle)
+            self._activation_handle = None
