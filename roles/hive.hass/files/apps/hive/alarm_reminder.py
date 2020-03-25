@@ -21,7 +21,7 @@ class AlarmReminder(hass.Hass):
 
     def on_reminder(self, kwargs):
         alarm_state = self.get_state(self.alarm)
-        if alarm_state == "disarmed":
+        if alarm_state != "disarmed":
             self.log(f"not arming; state is {alarm_state}")
             return
 
@@ -47,7 +47,7 @@ class AlarmReminder(hass.Hass):
     def on_deactivate(self, kwargs):
         # TODO: what should we do if they had stopped the auto arm?
         alarm_state = self.get_state(self.alarm)
-        if alarm_state == "armed_home":
+        if alarm_state != "armed_home":
             self.log(f"not disarming; state is {alarm_state}")
             return
 
