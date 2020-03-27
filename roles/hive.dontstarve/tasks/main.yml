@@ -11,6 +11,7 @@
     - /docker/dst/data
     - /docker/dst/data/DoNotStarveTogether
     - /docker/dst/data/DoNotStarveTogether/Cluster_1
+    - /docker/dst/data/DoNotStarveTogether/Cluster_1/mods
 
 - name: create dst cluster config
   template:
@@ -26,6 +27,19 @@
   copy:
     content: "{{ dst_cluster_token }}"
     dest: /docker/dst/data/DoNotStarveTogether/Cluster_1/cluster_token.txt
+    owner: "{{ hive_user }}"
+    group: "{{ hive_user }}"
+    mode: 0644
+  notify: restart dst
+
+
+- name: register dst cluster mods
+  copy:
+    content: |
+      ServerModSetup("345692228")
+      ServerModSetup("376333686")
+      ServerModSetup("378160973")
+    dest: /docker/dst/data/DoNotStarveTogether/Cluster_1/mods/dedicated_server_mods_setup.lua
     owner: "{{ hive_user }}"
     group: "{{ hive_user }}"
     mode: 0644
