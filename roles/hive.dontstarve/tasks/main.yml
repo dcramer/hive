@@ -39,6 +39,7 @@
       ServerModSetup("345692228")
       ServerModSetup("376333686")
       ServerModSetup("378160973")
+      ServerModSetup("1207269058")
     dest: /docker/dst/data/DoNotStarveTogether/Cluster_1/mods/dedicated_server_mods_setup.lua
     owner: "{{ hive_user }}"
     group: "{{ hive_user }}"
