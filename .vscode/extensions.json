@@ -9,6 +9,7 @@
         "lextudio.restructuredtext",
         "PeterJausovec.vscode-docker",
         "DavidAnson.vscode-markdownlint",
+        "keesschollaart.vscode-home-assistant",
         "bungcip.better-toml"
     ]
 }
