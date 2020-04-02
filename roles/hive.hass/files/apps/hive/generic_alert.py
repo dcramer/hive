@@ -1,9 +1,10 @@
-from datetime import datetime
+from datetime import datetime, time
+from typing import List
 
 from base import AlertApp
 
 
-def parse_tod(tod):
+def parse_tod(tod: List[str]):
     if not tod:
         return None
 
@@ -19,6 +20,28 @@ def parse_state(state):
     return frozenset([str(state)])
 
 
+def between(dt: datetime, start: time, stop: time) -> bool:
+    if stop > start:  # range does not cross midnight
+        return stop >= dt.time() >= start
+    else:
+        return not (dt.time() <= start and dt.time() >= stop)
+
+
+if __name__ == "__main__":
+    now = datetime(2020, 4, 1, 21, 10)
+    assert between(now, time(0), time(1)) is False
+    assert between(now, time(0), time(22)) is True
+    assert between(now, time(19), time(7)) is True
+    assert between(now, time(23), time(7)) is False
+
+    now = datetime(2020, 4, 1, 1, 10)
+    assert between(now, time(0), time(1)) is False
+    assert between(now, time(0), time(22)) is True
+    assert between(now, time(19), time(7)) is True
+    assert between(now, time(22), time(7)) is True
+    assert between(now, time(4), time(23)) is False
+
+
 class GenericAlert(AlertApp):
     def initialize(self):
         self.telegram_list = self.args.get("telegram") or []
@@ -32,17 +55,13 @@ class GenericAlert(AlertApp):
 
     def should_trigger(self, old, new):
         if self.tod:
-            # TODO: this doesnt handle things like 0000-0700
             now = datetime.now()
-            before = datetime.now().replace(
-                hour=self.tod["before"][0], minute=self.tod["before"][1]
-            )
-            after = datetime.now().replace(
-                hour=self.tod["after"][0], minute=self.tod["after"][1]
-            )
-            if not (now > after or now < before):
+            before = time(self.tod["before"][0], minute=self.tod["before"][1])
+            after = time(self.tod["after"][0], minute=self.tod["after"][1])
+            if not between(now, before, after):
                 self.log("not correct time of day")
                 return False
+
         return new in self.states
 
     def on_activate(self, *args, **kwargs):
