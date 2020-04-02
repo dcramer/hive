@@ -3,8 +3,9 @@ import appdaemon.plugins.hass.hassapi as hass
 
 class AlarmReminder(hass.Hass):
     def initialize(self):
-        # if set, disable the next on_activate call
+        # list of chats to notify
         self.telegram_list = self.args.get("telegram") or []
+        # entity id
         self.alarm = self.args.get("alarm")
         # the time to begin the reminder
         self.reminder_time = self.args.get("reminder_time")
