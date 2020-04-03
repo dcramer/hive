@@ -41,6 +41,9 @@ if __name__ == "__main__":
     assert between(now, time(22), time(7)) is True
     assert between(now, time(4), time(23)) is False
 
+    now = datetime(2020, 4, 1, 17, 10)
+    assert between(now, time(23, 59), time(7, 0)) is False
+
 
 class GenericAlert(AlertApp):
     def initialize(self):
@@ -56,8 +59,8 @@ class GenericAlert(AlertApp):
     def should_trigger(self, old, new):
         if self.tod:
             now = datetime.now()
-            before = time(self.tod["before"][0], minute=self.tod["before"][1])
-            after = time(self.tod["after"][0], minute=self.tod["after"][1])
+            before = time(self.tod["before"][0], self.tod["before"][1])
+            after = time(self.tod["after"][0], self.tod["after"][1])
             if not between(now, before, after):
                 self.log("not correct time of day")
                 return False

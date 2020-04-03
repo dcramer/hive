@@ -44,8 +44,8 @@ garage_motion_overnight:
     - 3
     - 8
   tod:
-    after: '23:59'
-    before: '07:00'
+    after: "00:00"
+    before: "07:00"
   message: '{{now().strftime("%H:%M:%S %Y-%m-%d")}}: Garage motion detected {{ relative_time(states.sensor.garage_multisensor_burglar.last_changed) }} ago.'
   camera: camera.garage
   camera_output: "/downloads/cameras/garage_{alert_id}.jpg"
