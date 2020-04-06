@@ -51,7 +51,6 @@ garage_motion_overnight:
   camera_output: "/downloads/cameras/garage_{alert_id}.jpg"
   repeat:
     - 5
-  can_acknowledge: true
   telegram:
     - !secret telegram_group_id_home
 
@@ -65,7 +64,7 @@ garage_door_alert:
   input_boolean: input_boolean.garage_door
   state: open
   # TODO: support ack
-  message: '{{now().strftime("%H:%M:%S %Y-%m-%d")}}: Garage door open for {{ relative_time(states.cover.garage_door.last_changed) }}. /closeGarage'
+  message: '{{now().strftime("%H:%M:%S %Y-%m-%d")}}: Garage door open for {{ relative_time(states.cover.garage_door.last_changed) }}. /closeGarage /ackGarage'
   done_message: '{{now().strftime("%H:%M:%S %Y-%m-%d")}}: Garage has been closed.'
   camera: camera.garage
   camera_output: "/downloads/cameras/garage_{alert_id}.jpg"
@@ -74,6 +73,7 @@ garage_door_alert:
     - 30
     - 60
   can_acknowledge: true
+  ack_command: "/ackGarage"
   skip_first: true
   telegram:
     - !secret telegram_group_id_home

@@ -30,6 +30,9 @@ class AlertApp(hass.Hass):
         # can we acknowledge this via service calls?
         self.can_acknowledge = self.args.get("can_acknowledge", True) or False
 
+        # telegram to ack
+        self.ack_command = self.args.get("ack_command") or "/ack"
+
         # when this alert first became active
         self.first_active_at = None
 
@@ -223,3 +226,11 @@ class AlertApp(hass.Hass):
 
         for handle in self._listen_state_handles:
             self.cancel_listen_state(handle)
+
+    def receive_telegram_command(self, event_id, payload_event, *args):
+        if not self.can_acknowledge:
+            return
+        assert event_id == "telegram_command"
+        if self.active and payload_event["command"] == self.ack_command:
+            self.log(f"alert acked")
+            self._cancel_timers()
