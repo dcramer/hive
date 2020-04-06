@@ -10,7 +10,7 @@ def parse_tod(tod: List[str]):
 
     return {
         "after": list(map(int, tod["after"].split(":"))),
-        "before": list(map(int, tod["after"].split(":"))),
+        "before": list(map(int, tod["before"].split(":"))),
     }
 
 
