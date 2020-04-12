@@ -21,10 +21,11 @@ def parse_state(state):
 
 
 def between(dt: datetime, start: time, stop: time) -> bool:
+    cur_time = dt.time().replace(tzinfo=dt.tzinfo)
     if stop > start:  # range does not cross midnight
-        return stop >= dt.time() >= start
+        return stop >= cur_time.replace(tzinfo=dt.tzinfo) >= start
     else:
-        return not (dt.time() <= start and dt.time() >= stop)
+        return not (cur_time <= start and cur_time >= stop)
 
 
 if __name__ == "__main__":
@@ -43,6 +44,12 @@ if __name__ == "__main__":
 
     now = datetime(2020, 4, 1, 17, 10)
     assert between(now, time(23, 59), time(7, 0)) is False
+
+    now = datetime(2020, 4, 1, 17, 10, tzinfo=timezone.utc)
+    assert (
+        between(now, time(23, 59, tzinfo=timezone.utc), time(7, 0, tzinfo=timezone.utc))
+        is False
+    )
 
     conf = parse_tod({"before": "07:00", "after": "00:00"}, timezone.utc)
     assert conf == {
