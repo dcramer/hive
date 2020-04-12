@@ -13,9 +13,8 @@ sensor:
     sensors:
       jeep_odometer:
         friendly_name: "Jeep Odometer"
-        unit_of_measurement: 'km'
+        unit_of_measurement: "km"
         value_template: "{{ state_attr('sensor.2018_jeep_wrangler', 'odometer') }}"
-
 # automation:
 #   - id: replyAckJeep
 #     alias: "Telegram bot to ack the jeep being unlocked"
@@ -54,3 +53,8 @@ sensor:
 #     skip_first: true
 #     notifiers:
 #       - telegram_household
+
+# mopar:
+#   username: !secret mopar_username
+#   password: !secret mopar_password
+#   pin: !secret mopar_pin

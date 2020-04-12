@@ -37,3 +37,6 @@ docker:
 
 dst:
 	ansible-playbook roles.yml -l rex -t dst
+
+test:
+	python roles/hive.hass/files/apps/hive/generic_alert.py

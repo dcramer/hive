@@ -34,18 +34,20 @@ cards:
           state: "on"
         - entity_id: "cover.garage"
           state: "on"
+      exclude:
+        - entity_id: binary_sensor.*gateway*
 
-  - type: glance
-    entities:
-      - person.david
-      - person.sukhpreet
+  # - type: glance
+  #   entities:
+  #     - person.david
+  #     - person.sukhpreet
 
-  - type: "custom:nextbus-card"
-    entities:
-      - sensor.sf_muni_j
-      - sensor.sf_muni_48
-    name: Public Transit
-    show_header_toggle: false
+  # - type: "custom:nextbus-card"
+  #   entities:
+  #     - sensor.sf_muni_j
+  #     - sensor.sf_muni_48
+  #   name: Public Transit
+  #   show_header_toggle: false
 
   # - type: alarm-panel
   #   entity: alarm_control_panel.home
@@ -86,7 +88,6 @@ cards:
     entities:
       - switch.pi_hole
     show_header_toggle: false
-
   # - type: vertical-stack
   #   cards:
   #     # - type: weather-forecast

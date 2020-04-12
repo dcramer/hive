@@ -1,16 +1,16 @@
-from datetime import datetime, time
-from typing import List
+from datetime import datetime, timedelta, timezone, time
+from typing import Dict
 
 from base import AlertApp
 
 
-def parse_tod(tod: List[str]):
+def parse_tod(tod: Dict[str, str], tzinfo=timezone.utc) -> Dict[str, time]:
     if not tod:
         return None
 
     return {
-        "after": list(map(int, tod["after"].split(":"))),
-        "before": list(map(int, tod["before"].split(":"))),
+        "after": time(*[int(x) for x in tod["after"].split(":")], tzinfo=tzinfo),
+        "before": time(*[int(x) for x in tod["before"].split(":")], tzinfo=tzinfo),
     }
 
 
@@ -44,6 +44,12 @@ if __name__ == "__main__":
     now = datetime(2020, 4, 1, 17, 10)
     assert between(now, time(23, 59), time(7, 0)) is False
 
+    conf = parse_tod({"before": "07:00", "after": "00:00"}, timezone.utc)
+    assert conf == {
+        "before": time(7, 00, tzinfo=timezone.utc),
+        "after": time(0, 0, tzinfo=timezone.utc),
+    }
+
 
 class GenericAlert(AlertApp):
     def initialize(self):
@@ -53,15 +59,16 @@ class GenericAlert(AlertApp):
         self.done_message = self.args.get("done_message")
         self.camera = self.args.get("camera")
         self.camera_output = self.args.get("camera_output")
-        self.tod = parse_tod(self.args.get("tod"))
+        self.tod = parse_tod(
+            self.args.get("tod"),
+            timezone(timedelta(seconds=self.get_tz_offset()), name=self.get_timezone()),
+        )
         super().initialize()
 
     def should_trigger(self, old, new):
         if self.tod:
-            now = datetime.now()
-            before = time(self.tod["before"][0], self.tod["before"][1])
-            after = time(self.tod["after"][0], self.tod["after"][1])
-            if not between(now, before, after):
+            now = self.datetime(aware=True)
+            if not between(now, self.tod["before"], self.tod["after"]):
                 self.log("not correct time of day")
                 return False
 
