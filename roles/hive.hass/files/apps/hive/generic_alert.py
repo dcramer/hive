@@ -74,7 +74,7 @@ class GenericAlert(AlertApp):
 
     def should_trigger(self, old, new):
         if self.tod:
-            now = datetime.utcnow(tzinfo=timezone.utc)
+            now = datetime.utcnow().replace(tzinfo=timezone.utc)
             if not between(now, self.tod["before"], self.tod["after"]):
                 self.log("not correct time of day")
                 return False
