@@ -1,0 +1,5 @@
+platform: generic
+name: Backyard
+still_image_url: https://192.168.1.163/snap.jpeg
+stream_source: rtsp://192.168.1.7:7447/gr2Wt6uAsAZU4Lmn
+verify_ssl: false
