@@ -1,0 +1,3 @@
+---
+- name: restart frigate
+  shell: docker restart frigate

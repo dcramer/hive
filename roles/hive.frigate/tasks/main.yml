@@ -1,0 +1,43 @@
+---
+- name: create frigate directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ hive_user }}"
+    group: "{{ hive_user }}"
+    mode: 0755
+  with_items:
+    - /docker/frigate
+
+- name: create frigate config
+  template:
+    src: config.yml.j2
+    dest: /docker/frigate/config.yml
+    owner: "{{ hive_user }}"
+    group: "{{ hive_user }}"
+    mode: 0644
+  notify: restart frigate
+
+- name: frigate Docker Container
+  docker_container:
+    name: frigate
+    image: blakeblackshear/frigate:stable
+    pull: true
+    restart_policy: unless-stopped
+    shm_size: 1g
+    volumes:
+      - /dev/bus/usb:/dev/bus/usb
+      - "/docker/frigate:/config:ro"
+      - "/etc/localtime:/etc/localtime:ro"
+    ports:
+      - "{{ frigate_port }}:5000/tcp"
+    env:
+      FRIGATE_RTSP_PASSWORD: "{{ frigate_rtsp_password }}"
+    # user: "{{ hive_uid }}"
+
+- name: Add frigate to network
+  docker_network:
+    name: hive
+    connected:
+      - frigate
+    appends: yes

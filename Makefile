@@ -38,5 +38,8 @@ docker:
 dst:
 	ansible-playbook roles.yml -l rex -t dst
 
+frigate:
+	ansible-playbook roles.yml -l rex -t frigate
+
 test:
 	python roles/hive.hass/files/apps/hive/generic_alert.py

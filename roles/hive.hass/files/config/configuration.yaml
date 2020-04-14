@@ -264,8 +264,8 @@ sonos:
 #   dash_url: http://192.168.1.25:5050
 
 mqtt:
-  broker: 192.168.1.25
-  port: 1883
+  broker: !secret mqtt_host
+  port: !secret mqtt_port
   client_id: home-assistant-1
   keepalive: 60
   protocol: 3.1
