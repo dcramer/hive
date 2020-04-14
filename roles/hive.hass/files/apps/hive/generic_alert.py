@@ -57,6 +57,14 @@ if __name__ == "__main__":
         "after": time(0, 0, tzinfo=timezone.utc),
     }
 
+    import pytz
+
+    la_timezone = pytz.timezone("America/Los_Angeles")
+    now = datetime(2020, 4, 13, 22, 22, 17, tzinfo=la_timezone)
+    after = time(0, 0, tzinfo=la_timezone)
+    before = time(7, 0, tzinfo=la_timezone)
+    assert not between(now, after, before)
+
 
 class GenericAlert(AlertApp):
     def initialize(self):
@@ -72,7 +80,7 @@ class GenericAlert(AlertApp):
     def should_trigger(self, old, new):
         if self.tod:
             now = self.datetime(aware=True)
-            if not between(now, self.tod["before"], self.tod["after"]):
+            if not between(now, self.tod["after"], self.tod["before"]):
                 self.log("not correct time of day")
                 return False
 
