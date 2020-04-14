@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta, timezone, time
+from datetime import datetime, timezone, time
 from typing import Dict
 
 from base import AlertApp
@@ -23,7 +23,7 @@ def parse_state(state):
 def between(dt: datetime, start: time, stop: time) -> bool:
     cur_time = dt.time().replace(tzinfo=dt.tzinfo)
     if stop > start:  # range does not cross midnight
-        return stop >= cur_time.replace(tzinfo=dt.tzinfo) >= start
+        return stop >= cur_time >= start
     else:
         return not (cur_time <= start and cur_time >= stop)
 
@@ -66,15 +66,12 @@ class GenericAlert(AlertApp):
         self.done_message = self.args.get("done_message")
         self.camera = self.args.get("camera")
         self.camera_output = self.args.get("camera_output")
-        self.tod = parse_tod(
-            self.args.get("tod"),
-            timezone(timedelta(seconds=self.get_tz_offset()), name=self.get_timezone()),
-        )
+        self.tod = parse_tod(self.args.get("tod"), tzinfo=self.AD.tz)
         super().initialize()
 
     def should_trigger(self, old, new):
         if self.tod:
-            now = datetime.utcnow().replace(tzinfo=timezone.utc)
+            now = self.datetime(aware=True)
             if not between(now, self.tod["before"], self.tod["after"]):
                 self.log("not correct time of day")
                 return False
