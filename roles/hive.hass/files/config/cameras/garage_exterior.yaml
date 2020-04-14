@@ -1,5 +1,5 @@
 platform: generic
 name: Garage - Exterior
-still_image_url: https://192.168.1.27/snap.jpeg
-stream_source: rtsp://192.168.1.7:7447/KyNbHb954GRCnH9E
+still_image_url: !secret camera_garage_exterior_still
+stream_source: !secret camera_garage_exterior_stream
 verify_ssl: false

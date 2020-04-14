@@ -63,20 +63,26 @@ objects:
     - person
     - car
     - truck
+    - dog
+    - cat
   filters:
     person:
       min_area: 5000
       max_area: 100000
       threshold: 0.5
+    car:
+      threshold: 0.7
+    truck:
+      threshold: 0.7
 
 cameras:
-  backyard:
+  garage_exterior:
     ffmpeg:
       ################
       # Source passed to ffmpeg after the -i parameter. Supports anything compatible with OpenCV and FFmpeg.
       # Environment variables that begin with 'FRIGATE_' may be referenced in {}
       ################
-      input: rtsp://192.168.1.7:7447/gr2Wt6uAsAZU4Lmn
+      input: {{ cameras['garage_exterior']['stream'] }}
       # input: rtsp://viewer:{FRIGATE_RTSP_PASSWORD}@10.0.10.10:554/cam/realmonitor?channel=1&subtype=2
       #################
       # These values will override default values for just this camera
@@ -135,4 +141,4 @@ cameras:
         person:
           min_area: 5000
           max_area: 100000
-          threshold: 0.5
+          threshold: 0.7
