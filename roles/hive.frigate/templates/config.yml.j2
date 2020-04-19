@@ -76,6 +76,27 @@ objects:
       threshold: 0.7
 
 cameras:
+  backyard:
+    ffmpeg:
+      input: {{ cameras['backyard']['stream'] }}
+    take_frame: 1
+    fps: 30
+    snapshots:
+      show_timestamp: false
+  front_door_exterior:
+    ffmpeg:
+      input: {{ cameras['front_door_exterior']['stream'] }}
+    take_frame: 1
+    fps: 30
+    snapshots:
+      show_timestamp: false
+  garage:
+    ffmpeg:
+      input: {{ cameras['garage']['stream'] }}
+    take_frame: 1
+    fps: 30
+    snapshots:
+      show_timestamp: false
   garage_exterior:
     ffmpeg:
       ################
@@ -116,14 +137,14 @@ cameras:
     # custom framerates. A value of 1 tells frigate to look at every frame, 2 every 2nd frame,
     # 3 every 3rd frame, etc.
     ################
-    take_frame: 5
+    take_frame: 1
 
     ################
     # The expected framerate for the camera. Frigate will try and ensure it maintains this framerate
     # by dropping frames as necessary. Setting this lower than the actual framerate will allow frigate
     # to process every frame at the expense of realtime processing.
     ################
-    fps: 5
+    fps: 30
 
     ################
     # Configuration for the snapshots in the debug view and mqtt
