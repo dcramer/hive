@@ -25,6 +25,7 @@
     pull: true
     restart_policy: unless-stopped
     shm_size: 1g
+    privileged: true
     volumes:
       - /dev/bus/usb:/dev/bus/usb
       - "/docker/frigate:/config:ro"

@@ -46,3 +46,17 @@ cards:
       title: "Pi Hole Status"
       show_header_toggle: false
     group: group.pi_hole
+
+  - type: custom:mini-graph-card
+    entities:
+      - sensor.frigate_coral_fps
+    hours_to_show: 24
+    lower_bound: 0
+    upper_bound: 30
+
+  - type: custom:mini-graph-card
+    entities:
+      - sensor.frigate_coral_inference_speed
+    hours_to_show: 24
+    lower_bound: 0
+    upper_bound: 1000
