@@ -1,0 +1,19 @@
+---
+- name: minecraft (java) Docker Container
+  docker_container:
+    name: minecraft
+    image: itzg/minecraft-server
+    pull: true
+    restart_policy: unless-stopped
+    volumes:
+      - /docker/minecraft/data:/data
+    ports:
+      - "25565:25565/tcp"
+    env:
+      EULA: "TRUE"
+      GAMEMODE: "{{ minecraft_gamemode }}"
+      DIFFICULTY: "{{ minecraft_difficulty }}"
+      MOTD: "{{ minecraft_server_name }}"
+      MAX_PLAYERS: "{{ minecraft_max_players }}"
+      UID: "{{ hive_uid | string }}"
+      GID: "{{ hive_gid | string }}"

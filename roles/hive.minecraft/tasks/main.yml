@@ -1,0 +1,17 @@
+---
+- name: create minecraft directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ hive_user }}"
+    group: "{{ hive_user }}"
+    mode: 0755
+  with_items:
+    - /docker/minecraft
+    - /docker/minecraft/data
+
+- include: bedrock.yml
+  when: minecraft_server == 'bedrock'
+
+- include: java.yml
+  when: minecraft_server == 'java'

@@ -1,2 +1,3 @@
 ---
-# handlers file for shared
+- name: restart minecraft
+  shell: docker restart minecraft

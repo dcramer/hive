@@ -1,0 +1,19 @@
+---
+- name: minecraft (bedrock) Docker Container
+  docker_container:
+    name: minecraft
+    image: itzg/minecraft-bedrock-server
+    pull: true
+    restart_policy: unless-stopped
+    volumes:
+      - /docker/minecraft/data:/data
+    ports:
+      - "19132:19132/udp"
+    env:
+      EULA: "TRUE"
+      GAMEMODE: "{{ minecraft_gamemode }}"
+      DIFFICULTY: "{{ minecraft_difficulty }}"
+      SERVER_NAME: "{{ minecraft_server_name }}"
+      MAX_PLAYERS: "{{ minecraft_max_players }}"
+      UID: "{{ hive_uid | string }}"
+      GID: "{{ hive_gid | string }}"
