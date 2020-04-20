@@ -60,3 +60,10 @@ cards:
     hours_to_show: 24
     lower_bound: 0
     upper_bound: 1000
+
+  - type: custom:mini-graph-card
+    entities:
+      - sensor.frigate_coral_detection_queue
+    hours_to_show: 24
+    lower_bound: 0
+    upper_bound: 100
