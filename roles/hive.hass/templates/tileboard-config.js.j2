@@ -1,13 +1,130 @@
+function getTileSize(groupWidth, tileMargin, groupMargin) {
+  var width = window.innerWidth;
+  width -= groupMargin * 2 + tileMargin * (groupWidth - 1);
+  return +(width / groupWidth).toFixed(1);
+}
+
+function getCameraItems(width) {
+  var cameras = [
+    ["camera.front_door_exterior", "Font Door"],
+    ["camera.garage_exterior", "Garage Exterior"],
+    ["camera.garage", "Garage"],
+    ["camera.backyard", "Backyard"],
+  ];
+  var items = [];
+  for (var i = 0; i < cameras.length; i++) {
+    items.push({
+      position: [0, i],
+      width: width,
+      height: 1,
+      title: cameras[i][1],
+      type: TYPES.CAMERA,
+      id: cameras[i][0],
+      fullscreen: {
+        type: TYPES.CAMERA_STREAM,
+        objFit: "contain",
+      },
+    });
+  }
+  return items;
+}
+
+function getLightItems(width) {
+  var items = [
+    {
+      position: [0, 0],
+      width: width,
+      title: "Turn Off Lights",
+      id: "scene.lights_off",
+      icon: "mdi-lightbulb",
+      type: TYPES.SCENE,
+      state: false,
+    },
+  ];
+  var lights = [
+    ["light.master_bedroom_lights", "Master Bedroom"],
+    ["light.guest_bedroom_lights", "Guest Bedroom"],
+    ["light.hallway_lights", "Hallway"],
+    ["light.office_lights", "Office"],
+    ["light.dining_room_lights", "Dining Room"],
+    ["light.kitchen_lights", "Kitchen"],
+    ["light.entryway_lights", "Entryway"],
+    ["light.front_door_lights", "Front Door"],
+  ];
+  for (var i = 0; i < lights.length; i++) {
+    items.push({
+      position: [i % width, 1 + Math.floor(i / width)],
+      width: 1,
+      height: 1,
+      title: lights[i][1],
+      id: lights[i][0],
+      type: TYPES.LIGHT,
+      states: {
+        on: "On",
+        off: "Off",
+      },
+      icons: {
+        on: "mdi-lightbulb-on",
+        off: "mdi-lightbulb",
+      },
+      sliders: [
+        {
+          title: "Brightness",
+          field: "brightness",
+          max: BRIGHTNESS_MAX,
+          min: 0,
+          step: BRIGHTNESS_STEP,
+          request: {
+            type: "call_service",
+            domain: "light",
+            service: "turn_on",
+            field: "brightness",
+          },
+        },
+      ],
+    });
+  }
+  return items;
+}
+
+var suffix = location.protocol === "file:" ? "" : "?r=" + Math.random();
+["theme.css"].map(function (value) {
+  document.write(
+    "<li" + 'nk rel="stylesheet" href="custom/' + value + suffix + '"/>'
+  );
+});
+
+// optimize for 4:3
+var gridWidth = 8;
+var gridHeight = 6;
+
+var groupWidth = gridWidth; // count of tiles horizontally
+var tileMargin = gridWidth / 2; // px
+var groupMargin = 0; // px
+
+// 150 is default
+var tileSize = getTileSize(groupWidth, tileMargin, groupMargin);
+
+// Lutron lights
 var BRIGHTNESS_STEP = 25.5;
 var BRIGHTNESS_MAX = 255;
 
+var customThemes = [];
+var entitySize;
+if (/[?&]mobile/.test(location.search)) {
+  entitySize = ENTITY_SIZES.SMALL;
+  customThemes.push(CUSTOM_THEMES.MOBILE);
+} else {
+  entitySize = ENTITY_SIZES.NORMAL;
+}
+
 var CONFIG = {
-  customTheme: CUSTOM_THEMES.TRANSPARENT, // CUSTOM_THEMES.TRANSPARENT, CUSTOM_THEMES.MATERIAL, CUSTOM_THEMES.MOBILE, CUSTOM_THEMES.COMPACT, CUSTOM_THEMES.HOMEKIT, CUSTOM_THEMES.WINPHONE, CUSTOM_THEMES.WIN95
-  transition: TRANSITIONS.ANIMATED_GPU, //ANIMATED or SIMPLE (better perfomance)
-  entitySize: ENTITY_SIZES.NORMAL, //SMALL, BIG are available
-  tileSize: 130, // 150 is default
+  customTheme: customThemes,
+  transition: TRANSITIONS.ANIMATED_GPU,
+  entitySize: entitySize,
+  tileSize: tileSize,
   tileMargin: 4,
-  groupMarginCss: "0",
+  groupMarginCss: tileMargin / 2 + "px",
   serverUrl: "http://" + location.hostname + ":8123",
   wsUrl: "ws://" + location.hostname + ":8123/api/websocket",
   authToken: "{{ tileboard_hass_token }}",
@@ -22,45 +139,6 @@ var CONFIG = {
   hideScrollbar: false, // horizontal scrollbar
   groupsAlign: GROUP_ALIGNS.HORIZONTALLY, // or VERTICALLY
   onReady: function () {},
-  header: {
-    // https://github.com/resoai/TileBoard/wiki/Header-configuration
-    styles: {
-      padding: "20px 140px 0",
-      // fontSize: "28px",
-    },
-    right: [
-      {
-        type: HEADER_ITEMS.WEATHER,
-        icon: "&weather.home.state",
-        icons: {
-          sunny: "sunny",
-          "clear-night": "nt-clear",
-          cloudy: "cloudy",
-          rain: "rain",
-          sleet: "sleet",
-          snow: "snow",
-          wind: "hazy",
-          fog: "fog",
-          partlycloudy: "partlycloudy",
-        },
-        fields: {
-          // summary: "&sensor.dark_sky_summary.state",
-          temperature: "&weather.home.attributes.temperature",
-          temperatureUnit: "F",
-          // windSpeed: "&weather.home.attributes.wind_speed",
-        },
-      },
-    ],
-    left: [
-      {
-        type: HEADER_ITEMS.DATETIME,
-        dateFormat: "EEEE, LLLL dd", //https://docs.angularjs.org/api/ng/filter/date
-        styles: {
-          margin: "0",
-        },
-      },
-    ],
-  },
 
   /*screensaver: {// optional. https://github.com/resoai/TileBoard/wiki/Screensaver-configuration
       timeout: 300, // after 5 mins of inactive
@@ -91,11 +169,65 @@ var CONFIG = {
       groups: [
         {
           title: "",
-          width: 3,
-          height: 4,
+          width: 2,
+          height: gridHeight,
           items: [
             {
               position: [0, 0],
+              height: 1,
+              width: 2,
+              classes: ["-compact"],
+              hideSource: true,
+              type: TYPES.WEATHER,
+              id: "weather.san_francisco_ca",
+              state: "@state",
+              icon: "@state",
+              icons: {
+                cloudy: "cloudy",
+                rain: "rain",
+                sunny: "sunny",
+                sleet: "sleet",
+                snow: "snow",
+                wind: "hazy",
+                fog: "fog",
+                partlycloudy: "partlycloudy",
+              },
+              fields: {
+                temperature: "@attributes.temperature",
+                temperatureUnit: "F",
+                windSpeed: "@attributes.wind_speed",
+                windSpeedUnit: " mph",
+              },
+            },
+            {
+              position: [0, 1],
+              type: TYPES.DEVICE_TRACKER,
+              id: "person.david",
+              map: "yandex",
+              states: {
+                home: "Home",
+                not_home: "Away",
+                sentry_sfo: "Work",
+              },
+              zoomLevels: [9, 13], // or [9] for only one map slide
+              hideEntityPicture: true, //hide entity pic, if you need only map
+              slidesDelay: 2, // delay before first slide animation
+            },
+            {
+              position: [1, 1],
+              type: TYPES.DEVICE_TRACKER,
+              id: "person.sukhpreet",
+              map: "yandex",
+              states: {
+                home: "Home",
+                not_home: "Away",
+              },
+              zoomLevels: [9, 13], // or [9] for only one map slide
+              hideEntityPicture: true, //hide entity pic, if you need only map
+              slidesDelay: 2, // delay before first slide animation
+            },
+            {
+              position: [0, 2],
               type: TYPES.DOOR_ENTRY,
               id: {},
               icon: "mdi-doorbell-video",
@@ -154,7 +286,7 @@ var CONFIG = {
               },
             },
             {
-              position: [1, 0],
+              position: [1, 2],
               type: TYPES.ALARM,
               title: "Alarm",
               id: "alarm_control_panel.home",
@@ -174,15 +306,7 @@ var CONFIG = {
               },
             },
             {
-              position: [0, 1],
-              title: "Turn Off Lights",
-              id: "scene.lights_off",
-              icon: "mdi-lightbulb",
-              type: TYPES.SCENE,
-              state: false,
-            },
-            {
-              position: [0, 3],
+              position: [0, 4],
               type: TYPES.SWITCH,
               id: "switch.pi_hole",
               title: "Pi Hole",
@@ -199,305 +323,15 @@ var CONFIG = {
         },
         {
           title: "",
-          width: 3,
-          height: 4,
-          items: [
-            {
-              position: [0, 0],
-              title: "Master Bedroom",
-              id: "light.master_bedroom_lights",
-              type: TYPES.LIGHT,
-              states: {
-                on: "On",
-                off: "Off",
-              },
-              icons: {
-                on: "mdi-lightbulb-on",
-                off: "mdi-lightbulb",
-              },
-              sliders: [
-                {
-                  title: "Brightness",
-                  field: "brightness",
-                  max: BRIGHTNESS_MAX,
-                  min: 0,
-                  step: BRIGHTNESS_STEP,
-                  request: {
-                    type: "call_service",
-                    domain: "light",
-                    service: "turn_on",
-                    field: "brightness",
-                  },
-                },
-              ],
-            },
-            {
-              position: [1, 0],
-              title: "Guest Bedroom",
-              id: "light.guest_bedroom_lights",
-              type: TYPES.LIGHT,
-              states: {
-                on: "On",
-                off: "Off",
-              },
-              icons: {
-                on: "mdi-lightbulb-on",
-                off: "mdi-lightbulb",
-              },
-              sliders: [
-                {
-                  title: "Brightness",
-                  field: "brightness",
-                  max: BRIGHTNESS_MAX,
-                  min: 0,
-                  step: BRIGHTNESS_STEP,
-                  request: {
-                    type: "call_service",
-                    domain: "light",
-                    service: "turn_on",
-                    field: "brightness",
-                  },
-                },
-              ],
-            },
-            {
-              position: [0, 1],
-              title: "Hallway",
-              id: "light.hallway_lights",
-              type: TYPES.LIGHT,
-              states: {
-                on: "On",
-                off: "Off",
-              },
-              icons: {
-                on: "mdi-lightbulb-on",
-                off: "mdi-lightbulb",
-              },
-              sliders: [
-                {
-                  title: "Brightness",
-                  field: "brightness",
-                  max: BRIGHTNESS_MAX,
-                  min: 0,
-                  step: BRIGHTNESS_STEP,
-                  request: {
-                    type: "call_service",
-                    domain: "light",
-                    service: "turn_on",
-                    field: "brightness",
-                  },
-                },
-              ],
-            },
-            {
-              position: [1, 1],
-              title: "Office",
-              id: "light.office_lights",
-              type: TYPES.LIGHT,
-              states: {
-                on: "On",
-                off: "Off",
-              },
-              icons: {
-                on: "mdi-lightbulb-on",
-                off: "mdi-lightbulb",
-              },
-              sliders: [
-                {
-                  title: "Brightness",
-                  field: "brightness",
-                  max: BRIGHTNESS_MAX,
-                  min: 0,
-                  step: BRIGHTNESS_STEP,
-                  request: {
-                    type: "call_service",
-                    domain: "light",
-                    service: "turn_on",
-                    field: "brightness",
-                  },
-                },
-              ],
-            },
-            {
-              position: [0, 2],
-              title: "Kitchen",
-              id: "light.kitchen_lights",
-              type: TYPES.LIGHT,
-              states: {
-                on: "On",
-                off: "Off",
-              },
-              icons: {
-                on: "mdi-lightbulb-on",
-                off: "mdi-lightbulb",
-              },
-              sliders: [
-                {
-                  title: "Brightness",
-                  field: "brightness",
-                  max: BRIGHTNESS_MAX,
-                  min: 0,
-                  step: BRIGHTNESS_STEP,
-                  request: {
-                    type: "call_service",
-                    domain: "light",
-                    service: "turn_on",
-                    field: "brightness",
-                  },
-                },
-              ],
-            },
-            {
-              position: [1, 2],
-              title: "Dining Room",
-              id: "light.dining_room_lights",
-              type: TYPES.LIGHT,
-              states: {
-                on: "On",
-                off: "Off",
-              },
-              icons: {
-                on: "mdi-lightbulb-on",
-                off: "mdi-lightbulb",
-              },
-              sliders: [
-                {
-                  title: "Brightness",
-                  field: "brightness",
-                  max: BRIGHTNESS_MAX,
-                  min: 0,
-                  step: BRIGHTNESS_STEP,
-                  request: {
-                    type: "call_service",
-                    domain: "light",
-                    service: "turn_on",
-                    field: "brightness",
-                  },
-                },
-              ],
-            },
-            {
-              position: [0, 3],
-              title: "Entryway",
-              id: "light.entryway_lights",
-              type: TYPES.LIGHT,
-              states: {
-                on: "On",
-                off: "Off",
-              },
-              icons: {
-                on: "mdi-lightbulb-on",
-                off: "mdi-lightbulb",
-              },
-              sliders: [
-                {
-                  title: "Brightness",
-                  field: "brightness",
-                  max: BRIGHTNESS_MAX,
-                  min: 0,
-                  step: BRIGHTNESS_STEP,
-                  request: {
-                    type: "call_service",
-                    domain: "light",
-                    service: "turn_on",
-                    field: "brightness",
-                  },
-                },
-              ],
-            },
-            {
-              position: [1, 3],
-              title: "Front Door",
-              id: "light.front_door_lights",
-              type: TYPES.LIGHT,
-              states: {
-                on: "On",
-                off: "Off",
-              },
-              icons: {
-                on: "mdi-lightbulb-on",
-                off: "mdi-lightbulb",
-              },
-              sliders: [
-                {
-                  title: "Brightness",
-                  field: "brightness",
-                  max: BRIGHTNESS_MAX,
-                  min: 0,
-                  step: BRIGHTNESS_STEP,
-                  request: {
-                    type: "call_service",
-                    domain: "light",
-                    service: "turn_on",
-                    field: "brightness",
-                  },
-                },
-              ],
-            },
-          ],
+          width: 2,
+          height: gridHeight,
+          items: getLightItems(2),
         },
         {
           title: "",
-          width: 2,
-          height: 4,
-          items: [
-            {
-              position: [0, 0],
-              width: 2,
-              height: 1,
-              title: "Front Door",
-              type: TYPES.CAMERA,
-              id: "camera.front_door_exterior",
-              fullscreen: {
-                type: TYPES.CAMERA_STREAM,
-                objFit: "contain",
-                id: "camera.front_door_exterior", // Optional: camera entity to use on fullscreen, defaults to the tile camera entity if omitted
-                bufferLength: 5, // Optional: buffer length in seconds for the HLS buffer, default is 5 seconds
-              },
-            },
-            {
-              position: [0, 1],
-              width: 2,
-              height: 1,
-              title: "Garage Exterior",
-              type: TYPES.CAMERA,
-              id: "camera.garage_exterior",
-              fullscreen: {
-                type: TYPES.CAMERA_STREAM,
-                objFit: "contain",
-                id: "camera.garage_exterior", // Optional: camera entity to use on fullscreen, defaults to the tile camera entity if omitted
-                bufferLength: 5, // Optional: buffer length in seconds for the HLS buffer, default is 5 seconds
-              },
-            },
-            {
-              position: [0, 2],
-              width: 2,
-              height: 1,
-              title: "Garage",
-              type: TYPES.CAMERA,
-              id: "camera.garage",
-              fullscreen: {
-                type: TYPES.CAMERA_STREAM,
-                objFit: "contain",
-                id: "camera.garage", // Optional: camera entity to use on fullscreen, defaults to the tile camera entity if omitted
-                bufferLength: 5, // Optional: buffer length in seconds for the HLS buffer, default is 5 seconds
-              },
-            },
-            {
-              position: [0, 3],
-              width: 2,
-              height: 1,
-              title: "Backyard",
-              type: TYPES.CAMERA,
-              id: "camera.backyard",
-              fullscreen: {
-                type: TYPES.CAMERA_STREAM,
-                objFit: "contain",
-                id: "camera.backyard", // Optional: camera entity to use on fullscreen, defaults to the tile camera entity if omitted
-                bufferLength: 5, // Optional: buffer length in seconds for the HLS buffer, default is 5 seconds
-              },
-            },
-          ],
+          width: 4,
+          height: gridHeight,
+          items: getCameraItems(4),
         },
       ],
     },
