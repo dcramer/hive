@@ -1,6 +1,25 @@
+.page-container {
+}
+
+.header {
+  margin-top: 80px;
+  padding: 0 15px;
+  height: 120.75px;
+}
+
+.header-content {
+}
+
+.header--left {
+}
+
+.header--right {
+}
+
 .page {
   display: flex;
   justify-content: center;
+  padding-top: 120.75px;
 }
 
 .-menu-left .page-align {

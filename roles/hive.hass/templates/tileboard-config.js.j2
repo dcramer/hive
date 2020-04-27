@@ -39,20 +39,25 @@ function getLightItems(width) {
     },
   ];
   var lights = [
-    ["light.master_bedroom_lights", "Master Bedroom"],
-    ["light.guest_bedroom_lights", "Guest Bedroom"],
+    ["light.master_bedroom_lights", "Master Bd"],
+    ["light.guest_bedroom_lights", "Guest Bd"],
     ["light.hallway_lights", "Hallway"],
     ["light.office_lights", "Office"],
-    ["light.dining_room_lights", "Dining Room"],
+    ["light.dining_room_lights", "Dining"],
     ["light.kitchen_lights", "Kitchen"],
     ["light.entryway_lights", "Entryway"],
     ["light.front_door_lights", "Front Door"],
   ];
+  var lightWidth = 1;
+  var lightHeight = 0.5;
   for (var i = 0; i < lights.length; i++) {
     items.push({
-      position: [i % width, 1 + Math.floor(i / width)],
-      width: 1,
-      height: 1,
+      position: [
+        (i * lightWidth) % width,
+        1 + Math.floor((i * lightWidth) / width) * lightHeight,
+      ],
+      width: lightWidth,
+      height: lightHeight,
       title: lights[i][1],
       id: lights[i][0],
       type: TYPES.LIGHT,
@@ -99,7 +104,7 @@ var suffix = location.protocol === "file:" ? "" : "?r=" + Math.random();
 
 // optimize for 4:3
 var gridWidth = 8;
-var gridHeight = 6;
+var gridHeight = 4;
 
 var groupWidth = gridWidth; // count of tiles horizontally
 var tileMargin = gridWidth / 2; // px
@@ -126,7 +131,7 @@ var CONFIG = {
   transition: TRANSITIONS.ANIMATED_GPU,
   entitySize: entitySize,
   tileSize: tileSize,
-  tileMargin: 4,
+  tileMargin: tileMargin,
   // groupMarginCss: tileMargin / 2 + "px",
   serverUrl: "http://" + location.hostname + ":8123",
   wsUrl: "ws://" + location.hostname + ":8123/api/websocket",
@@ -143,26 +148,39 @@ var CONFIG = {
   groupsAlign: GROUP_ALIGNS.HORIZONTALLY, // or VERTICALLY
   onReady: function () {},
 
-  /*screensaver: {// optional. https://github.com/resoai/TileBoard/wiki/Screensaver-configuration
-      timeout: 300, // after 5 mins of inactive
-      slidesTimeout: 10, // 10s for one slide
-      styles: { fontSize: '40px' },
-      leftBottom: [{ type: SCREENSAVER_ITEMS.DATETIME }], // put datetime to the left-bottom of screensaver
-      slides: [
-         { bg: 'images/bg1.jpeg' },
-         {
-            bg: 'images/bg2.png',
-            rightTop: [ // put text to the 2nd slide
-               {
-                  type: SCREENSAVER_ITEMS.CUSTOM_HTML,
-                  html: 'Welcome to the <b>TileBoard</b>',
-                  styles: { fontSize: '40px' }
-               }
-            ]
-         },
-         { bg: 'images/bg3.jpg' }
-      ]
-   },*/
+  header: {
+    left: [
+      {
+        type: HEADER_ITEMS.DATETIME,
+        dateFormat: "EEEE, LLLL dd", // https://docs.angularjs.org/api/ng/filter/date
+        styles: {
+          margin: "0",
+        },
+      },
+    ],
+    right: [
+      {
+        type: HEADER_ITEMS.WEATHER,
+        icon: "&weather.san_francisco_ca.state",
+        icons: {
+          sunny: "clear",
+          cloudy: "cloudy",
+          rain: "rain",
+          sleet: "sleet",
+          snow: "snow",
+          wind: "hazy",
+          fog: "fog",
+          partlycloudy: "partlycloudy",
+        },
+        fields: {
+          temperature: "&weather.san_francisco_ca.attributes.temperature",
+          temperatureUnit: "F",
+          windSpeed: "&weather.san_francisco_ca.attributes.wind_speed",
+          windSpeedUnit: " mph",
+        },
+      },
+    ],
+  },
 
   pages: [
     {
@@ -175,33 +193,6 @@ var CONFIG = {
           width: 2,
           height: gridHeight,
           items: [
-            {
-              position: [0, 0],
-              height: 1,
-              width: 2,
-              classes: ["-compact"],
-              hideSource: true,
-              type: TYPES.WEATHER,
-              id: "weather.san_francisco_ca",
-              state: "@state",
-              icon: "@state",
-              icons: {
-                cloudy: "cloudy",
-                rain: "rain",
-                sunny: "sunny",
-                sleet: "sleet",
-                snow: "snow",
-                wind: "hazy",
-                fog: "fog",
-                partlycloudy: "partlycloudy",
-              },
-              fields: {
-                temperature: "@attributes.temperature",
-                temperatureUnit: "F",
-                windSpeed: "@attributes.wind_speed",
-                windSpeedUnit: " mph",
-              },
-            },
             // {
             //   position: [0, 1],
             //   type: TYPES.DEVICE_TRACKER,
@@ -230,7 +221,7 @@ var CONFIG = {
             //   slidesDelay: 2, // delay before first slide animation
             // },
             {
-              position: [0, 1],
+              position: [0, 0],
               type: TYPES.DOOR_ENTRY,
               id: {},
               icon: "mdi-door",
@@ -271,7 +262,7 @@ var CONFIG = {
                   //   state: false,
                   // },
                   {
-                    position: [0, 2],
+                    position: [0, 0],
                     theme: ITEM_TRANSPARENT,
                     id: "light.garage_entry_can",
                     type: TYPES.SWITCH,
@@ -289,7 +280,7 @@ var CONFIG = {
               },
             },
             {
-              position: [1, 1],
+              position: [1, 0],
               type: TYPES.ALARM,
               title: "Alarm",
               id: "alarm_control_panel.home",
@@ -309,7 +300,7 @@ var CONFIG = {
               },
             },
             {
-              position: [0, 4],
+              position: [0, 3],
               type: TYPES.SWITCH,
               id: "switch.pi_hole",
               classes: ["-th-pi-hole"],
