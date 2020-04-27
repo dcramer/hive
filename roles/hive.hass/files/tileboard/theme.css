@@ -8,6 +8,30 @@
   display: none;
 }
 
-.item.-th-alarm.-disarmed {
+.item-.-th-alarm.-disarmed {
   background-color: #124e2a;
+}
+
+.item.-th-pi-hole.-on {
+  background-color: #124e2a;
+}
+
+.-theme-transparent .item.-th-alarm.-disarmed {
+  /* box-shadow: 1px 1px 0 rgba(54, 47, 36, 0.35), -1px -1px 0 rgba(200, 200, 200, 0.1); */
+  color: #8bc34a;
+}
+
+.-theme-transparent .item.-th-alarm.-armed_home,
+.-theme-transparent .item.-th-alarm.-armed_away,
+.-theme-transparent .item.-th-pi-hole.-off {
+  color: #ffa726;
+}
+
+.-theme-transparent .item.-th-pi-hole.-on {
+  color: #f5efee;
+}
+
+.-theme-transparent .item.-th-pi-hole.-on .item-entity--icon,
+.-theme-transparent .item.-th-pi-hole.-on .item-state {
+  color: inherit;
 }

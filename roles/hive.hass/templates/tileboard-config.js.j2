@@ -1,9 +1,3 @@
-function getTileSize(groupWidth, tileMargin, groupMargin) {
-  var width = window.innerWidth;
-  width -= groupMargin * 2 + tileMargin * (groupWidth - 1);
-  return +(width / groupWidth).toFixed(1);
-}
-
 function getCameraItems(width) {
   var cameras = [
     ["camera.front_door_exterior", "Font Door"],
@@ -17,9 +11,11 @@ function getCameraItems(width) {
       position: [0, i],
       width: width,
       height: 1,
+      type: TYPES.CAMERA_THUMBNAIL,
+      refresh: 3000,
       title: cameras[i][1],
-      type: TYPES.CAMERA,
       id: cameras[i][0],
+      bgSize: "cover",
       fullscreen: {
         type: TYPES.CAMERA_STREAM,
         objFit: "contain",
@@ -36,7 +32,8 @@ function getLightItems(width) {
       width: width,
       title: "Turn Off Lights",
       id: "scene.lights_off",
-      icon: "mdi-lightbulb",
+      // TODO: switch to 'group' icon when mdi is updated
+      icon: "mdi-lightbulb-off",
       type: TYPES.SCENE,
       state: false,
     },
@@ -87,6 +84,12 @@ function getLightItems(width) {
   return items;
 }
 
+function getTileSize(groupWidth, tileMargin, groupMargin) {
+  var width = window.innerWidth;
+  width -= groupMargin * 2 + tileMargin * (groupWidth - 1);
+  return +(width / groupWidth).toFixed(1);
+}
+
 var suffix = location.protocol === "file:" ? "" : "?r=" + Math.random();
 ["theme.css"].map(function (value) {
   document.write(
@@ -100,7 +103,7 @@ var gridHeight = 6;
 
 var groupWidth = gridWidth; // count of tiles horizontally
 var tileMargin = gridWidth / 2; // px
-var groupMargin = 0; // px
+var groupMargin = 60; // px
 
 // 150 is default
 var tileSize = getTileSize(groupWidth, tileMargin, groupMargin);
@@ -109,7 +112,7 @@ var tileSize = getTileSize(groupWidth, tileMargin, groupMargin);
 var BRIGHTNESS_STEP = 25.5;
 var BRIGHTNESS_MAX = 255;
 
-var customThemes = [];
+var customThemes = [CUSTOM_THEMES.TRANSPARENT];
 var entitySize;
 if (/[?&]mobile/.test(location.search)) {
   entitySize = ENTITY_SIZES.SMALL;
@@ -124,7 +127,7 @@ var CONFIG = {
   entitySize: entitySize,
   tileSize: tileSize,
   tileMargin: 4,
-  groupMarginCss: tileMargin / 2 + "px",
+  // groupMarginCss: tileMargin / 2 + "px",
   serverUrl: "http://" + location.hostname + ":8123",
   wsUrl: "ws://" + location.hostname + ":8123/api/websocket",
   authToken: "{{ tileboard_hass_token }}",
@@ -199,38 +202,38 @@ var CONFIG = {
                 windSpeedUnit: " mph",
               },
             },
+            // {
+            //   position: [0, 1],
+            //   type: TYPES.DEVICE_TRACKER,
+            //   id: "person.david",
+            //   map: "yandex",
+            //   states: {
+            //     home: "Home",
+            //     not_home: "Away",
+            //     sentry_sfo: "Work",
+            //   },
+            //   zoomLevels: [9, 13], // or [9] for only one map slide
+            //   hideEntityPicture: true, //hide entity pic, if you need only map
+            //   slidesDelay: 2, // delay before first slide animation
+            // },
+            // {
+            //   position: [1, 1],
+            //   type: TYPES.DEVICE_TRACKER,
+            //   id: "person.sukhpreet",
+            //   map: "yandex",
+            //   states: {
+            //     home: "Home",
+            //     not_home: "Away",
+            //   },
+            //   zoomLevels: [9, 13], // or [9] for only one map slide
+            //   hideEntityPicture: true, //hide entity pic, if you need only map
+            //   slidesDelay: 2, // delay before first slide animation
+            // },
             {
               position: [0, 1],
-              type: TYPES.DEVICE_TRACKER,
-              id: "person.david",
-              map: "yandex",
-              states: {
-                home: "Home",
-                not_home: "Away",
-                sentry_sfo: "Work",
-              },
-              zoomLevels: [9, 13], // or [9] for only one map slide
-              hideEntityPicture: true, //hide entity pic, if you need only map
-              slidesDelay: 2, // delay before first slide animation
-            },
-            {
-              position: [1, 1],
-              type: TYPES.DEVICE_TRACKER,
-              id: "person.sukhpreet",
-              map: "yandex",
-              states: {
-                home: "Home",
-                not_home: "Away",
-              },
-              zoomLevels: [9, 13], // or [9] for only one map slide
-              hideEntityPicture: true, //hide entity pic, if you need only map
-              slidesDelay: 2, // delay before first slide animation
-            },
-            {
-              position: [0, 2],
               type: TYPES.DOOR_ENTRY,
               id: {},
-              icon: "mdi-doorbell-video",
+              icon: "mdi-door",
               title: "Front Door",
               state: false,
               layout: {
@@ -286,7 +289,7 @@ var CONFIG = {
               },
             },
             {
-              position: [1, 2],
+              position: [1, 1],
               type: TYPES.ALARM,
               title: "Alarm",
               id: "alarm_control_panel.home",
@@ -309,6 +312,7 @@ var CONFIG = {
               position: [0, 4],
               type: TYPES.SWITCH,
               id: "switch.pi_hole",
+              classes: ["-th-pi-hole"],
               title: "Pi Hole",
               states: {
                 on: "Active",
