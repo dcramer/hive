@@ -80,86 +80,25 @@ cameras:
     ffmpeg:
       input: {{ cameras['backyard']['stream'] }}
     take_frame: 1
-    fps: 30
+    fps: 15
     snapshots:
       show_timestamp: false
   front_door_exterior:
     ffmpeg:
       input: {{ cameras['front_door_exterior']['stream'] }}
     take_frame: 1
-    fps: 30
+    fps: 15
     snapshots:
       show_timestamp: false
   garage:
     ffmpeg:
       input: {{ cameras['garage']['stream'] }}
     take_frame: 1
-    fps: 30
+    fps: 15
     snapshots:
       show_timestamp: false
   garage_exterior:
     ffmpeg:
-      ################
-      # Source passed to ffmpeg after the -i parameter. Supports anything compatible with OpenCV and FFmpeg.
-      # Environment variables that begin with 'FRIGATE_' may be referenced in {}
-      ################
       input: {{ cameras['garage_exterior']['stream'] }}
-      # input: rtsp://viewer:{FRIGATE_RTSP_PASSWORD}@10.0.10.10:554/cam/realmonitor?channel=1&subtype=2
-      #################
-      # These values will override default values for just this camera
-      #################
-      # global_args: []
-      # hwaccel_args: []
-      # input_args: []
-      # output_args: []
-
-    ################
-    ## Optionally specify the resolution of the video feed. Frigate will try to auto detect if not specified
-    ################
-    # height: 1280
-    # width: 720
-
-    ################
-    ## Optional mask. Must be the same aspect ratio as your video feed.
-    ##
-    ## The mask works by looking at the bottom center of the bounding box for the detected
-    ## person in the image. If that pixel in the mask is a black pixel, it ignores it as a
-    ## false positive. In my mask, the grass and driveway visible from my backdoor camera
-    ## are white. The garage doors, sky, and trees (anywhere it would be impossible for a
-    ## person to stand) are black.
-    ##
-    ## Masked areas are also ignored for motion detection.
-    ################
-    # mask: back-mask.bmp
-
-    ################
-    # Allows you to limit the framerate within frigate for cameras that do not support
-    # custom framerates. A value of 1 tells frigate to look at every frame, 2 every 2nd frame,
-    # 3 every 3rd frame, etc.
-    ################
     take_frame: 1
-
-    ################
-    # The expected framerate for the camera. Frigate will try and ensure it maintains this framerate
-    # by dropping frames as necessary. Setting this lower than the actual framerate will allow frigate
-    # to process every frame at the expense of realtime processing.
-    ################
-    fps: 30
-
-    ################
-    # Configuration for the snapshots in the debug view and mqtt
-    ################
-    snapshots:
-      show_timestamp: false
-
-    ################
-    # Camera level object config. This config is merged with the global config above.
-    ################
-    objects:
-      track:
-        - person
-      filters:
-        person:
-          min_area: 5000
-          max_area: 100000
-          threshold: 0.7
+    fps: 15

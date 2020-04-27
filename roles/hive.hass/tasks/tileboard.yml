@@ -1,0 +1,11 @@
+---
+- name: Install TileBoard
+  git:
+    repo: "https://github.com/resoai/TileBoard.git"
+    dest: /docker/homeassistant/config/www/tileboard
+    # version: ccf5f2e217d6b34da28f55c84e5772d86e38ca00
+
+- name: create tileboard config
+  template:
+    src: "tileboard-config.js.j2"
+    dest: "/docker/homeassistant/config/www/tileboard/config.js"

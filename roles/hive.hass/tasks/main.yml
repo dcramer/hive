@@ -54,18 +54,26 @@
   notify: restart avahi
 
 # - import_tasks: nodered.yml
+
 - import_tasks: lovelace.yml
   tags:
     - hass-ui
+
 # - import_tasks: tensorflow.yml
 #   tags:
 #     - tensorflow
+
 - import_tasks: hacs.yml
   tags:
     - hacs
+
 - import_tasks: appdaemon.yml
   tags:
     - appdaemon
+
+- import_tasks: tileboard.yml
+  tags:
+    - tileboard
 
 - name: homeassistant Docker Container
   docker_container:

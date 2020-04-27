@@ -24,7 +24,7 @@ hass:
 	ansible-playbook roles.yml -l rex -t hass
 
 hass-ui:
-	ansible-playbook roles.yml -l rex -t hass-ui
+	ansible-playbook roles.yml -l rex -t hass-ui -t tileboard
 
 appd:
 	ansible-playbook roles.yml -l rex -t appdaemon
