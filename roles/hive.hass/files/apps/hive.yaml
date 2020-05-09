@@ -78,9 +78,9 @@ garage_door_alert:
   telegram:
     - !secret telegram_group_id_home
 
-alarm_reminder:
-  module: alarm_reminder
-  class: AlarmReminder
+alarm_manager:
+  module: alarm_manager
+  class: AlarmManager
   dependencies: sentry
   alarm: alarm_control_panel.home
   telegram:
