@@ -1,0 +1,112 @@
+/* global TILE, ICON */
+
+window.CONFIG = {
+  url: "http://" + location.hostname + ":8123",
+  accessToken: "{{ tileboard_hass_token }}",
+  tiles: [
+    {
+      width: 2,
+      tiles: [
+        {
+          type: TILE.DOOR_CONTROL,
+          camera: "camera.front_door_exterior",
+          title: "Front Door",
+        },
+        {
+          type: TILE.ALARM,
+          entityId: "alarm_control_panel.home",
+        },
+        {
+          type: TILE.SWITCH,
+          entityId: "switch.pi_hole",
+          icon: "pi-hole",
+        },
+      ],
+    },
+    {
+      width: 2,
+      tiles: [
+        {
+          width: 2,
+          type: TILE.SCENE,
+          entityId: "scene.lights_off",
+          title: "Turn Off Lights",
+          icon: "lightbulb-group-off",
+        },
+        {
+          height: 0.75,
+          type: TILE.LIGHT,
+          entityId: "light.master_bedroom_lights",
+          title: "Master Bd",
+        },
+        {
+          height: 0.75,
+          type: TILE.LIGHT,
+          entityId: "light.guest_bedroom_lights",
+          title: "Guest Bd",
+        },
+        {
+          height: 0.75,
+          type: TILE.LIGHT,
+          entityId: "light.hallway_lights",
+          title: "Hallway",
+        },
+        {
+          height: 0.75,
+          type: TILE.LIGHT,
+          entityId: "light.office_lights",
+          title: "Office",
+        },
+        {
+          height: 0.75,
+          type: TILE.LIGHT,
+          entityId: "light.dining_room_lights",
+          title: "Dining",
+        },
+        {
+          height: 0.75,
+          type: TILE.LIGHT,
+          entityId: "light.kitchen_lights",
+          title: "Kitchen",
+        },
+        {
+          height: 0.75,
+          type: TILE.LIGHT,
+          entityId: "light.entryway_lights",
+          title: "Entryway",
+        },
+        {
+          height: 0.75,
+          type: TILE.LIGHT,
+          entityId: "light.front_door_lights",
+          title: "Front Door",
+        },
+      ],
+    },
+    {
+      width: 4,
+      tiles: [
+        {
+          width: 4,
+          type: TILE.CAMERA,
+          entityId: "camera.front_door_exterior",
+        },
+        {
+          width: 4,
+          type: TILE.CAMERA,
+          entityId: "camera.garage_exterior",
+        },
+        {
+          width: 4,
+          type: TILE.CAMERA,
+          entityId: "camera.garage",
+        },
+        {
+          width: 4,
+          type: TILE.CAMERA,
+          entityId: "camera.backyard",
+        },
+      ],
+    },
+  ],
+};

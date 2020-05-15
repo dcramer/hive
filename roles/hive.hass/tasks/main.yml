@@ -75,6 +75,10 @@
   tags:
     - tileboard
 
+- import_tasks: panelkit.yml
+  tags:
+    - panelkit
+
 - name: homeassistant Docker Container
   docker_container:
     name: homeassistant

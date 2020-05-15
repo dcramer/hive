@@ -2,6 +2,8 @@
 # defaults file for hive.hass
 homeassistant_webui_port: 8123
 
+panelkit_version: "0.0.2"
+
 hacs_version: "0.20.4"
 
 # https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md
