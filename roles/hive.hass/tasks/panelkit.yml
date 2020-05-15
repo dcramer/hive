@@ -19,7 +19,7 @@
     url: "https://github.com/dcramer/panelkit/releases/download/{{ panelkit_version }}/index.html"
     dest: "/docker/homeassistant/cache/panelkit-{{ panelkit_version }}.html"
     mode: 0644
-  when: not panelkit_archive_exist.stat.exists
+  when: not panelkit_archive_exist.stat.exists or panelkit_version == "latest"
 
 - name: install panelkit
   copy:

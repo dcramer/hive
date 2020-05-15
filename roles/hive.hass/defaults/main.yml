@@ -2,7 +2,7 @@
 # defaults file for hive.hass
 homeassistant_webui_port: 8123
 
-panelkit_version: "0.0.7"
+panelkit_version: "latest"
 
 hacs_version: "0.20.4"
 
