@@ -104,7 +104,7 @@ WIP. I'm planning to install an Axis door station so I can go keyfob at home (ya
 
 ### Alarm & Cameras
 
-I have a SimpliSafe alarm system that seemed like a great idea at the time, and then I realizd all of the local APIs are encrypted and recently it stopped working with HASS. Turns out all of the security systems are tightly locked to vendors (not literally all, but any that dont look like shit). I'll suck it up with this since it's only the core alarms and sensors.
+I have a SimpliSafe alarm system that seemed like a great idea at the time, and then I realized all of the local APIs are encrypted and has routinely stopped working with HASS. Turns out all of the security systems are tightly locked to vendors (not literally all, but any that dont look like shit). I'll suck it up with this since it's only the core alarms and sensors.
 
 Additionally I have various Ubiquiti security cameras which archive footage to the NAS.
 
