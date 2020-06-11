@@ -5,51 +5,52 @@ This is my work on automating my home infrastructure.
 **Disclaimer**
 
 - This repo is for me, not you. It's not directly reusable, but I hope you find it helpful.
-- I've not read docs on Ansible, nor do I intend to
-- First time racking anything, I'm not experienced (or an expert)
+- I've not read docs on Ansible, nor do I intend to.
+- First time racking anything, I'm not experienced.
 
 High level this project is primarily for:
 
-- various media-related services (private)
 - home assistant with a variety of configurations
 - internal monitoring
 - routine backups outbound to a cloud provider (gcp)
+- various media-related services (private)
 
 The goal is to create a memory of my home infrastructures information. Whether that means it happens via Ansible, or I simply have some record of it in git, it helps service the task of re-configuring a service if it ever needs it.
 
 Some additional goals I have that may or may not have progress in the repo:
 
-- local focused, especially with "smart" devices
+- local focused, especially with "smart" devices (avoiding internet-based solutions)
 - configured via code as much as possible, especially with home assistant
 - secure and private, everythings full of exploits
-- redudancy for important things in life (e.g. google photos)
+- redundancy for important things in life (e.g. google photos)
 - hands-free use, alert me when I need to take action
 
 ## Table of Contents
 
 <!--ts-->
-   * [Hive](#hive)
-      * [Table of Contents](#table-of-contents)
-      * [Architecture and Devices](#architecture-and-devices)
-         * [Lights](#lights)
-         * [Audio](#audio)
-         * [Doors](#doors)
-         * [Alarm &amp; Cameras](#alarm--cameras)
-         * [Various Sensors](#various-sensors)
-         * [Automations](#automations)
-         * [Pi-hole](#pi-hole)
-         * [NAS](#nas)
-      * [Home Assistant](#home-assistant)
-      * [Other](#other)
-         * [Google Photos Sync](#google-photos-sync)
-         * [Internal Monitoring](#internal-monitoring)
-         * [VPN](#vpn)
-      * [Ansible / Machine Configuration](#ansible--machine-configuration)
-         * [Bootstrap](#bootstrap)
-         * [Encrypted Values](#encrypted-values)
-         * [Cameras](#cameras)
-         * [Firewall](#firewall)
-   * [References](#references)
+
+- [Hive](#hive)
+  - [Table of Contents](#table-of-contents)
+  - [Architecture and Devices](#architecture-and-devices)
+    - [Lights](#lights)
+    - [Audio](#audio)
+    - [Doors](#doors)
+    - [Alarm &amp; Cameras](#alarm--cameras)
+    - [Various Sensors](#various-sensors)
+    - [Automations](#automations)
+    - [Pi-hole](#pi-hole)
+    - [NAS](#nas)
+  - [Home Assistant](#home-assistant)
+  - [Other](#other)
+    - [Google Photos Sync](#google-photos-sync)
+    - [Internal Monitoring](#internal-monitoring)
+    - [VPN](#vpn)
+  - [Ansible / Machine Configuration](#ansible--machine-configuration)
+    - [Bootstrap](#bootstrap)
+    - [Encrypted Values](#encrypted-values)
+    - [Cameras](#cameras)
+    - [Firewall](#firewall)
+- [References](#references)
 
 <!-- Added by: dcramer, at: Fri Jan 31 23:29:30 PST 2020 -->
 
@@ -137,7 +138,7 @@ I have had a few goals in mind when playing with it:
 - as much as possible, the configuration is in this repo (wish could be even more so)
 - remove cruft that turns out not to be valuable
 
-You'll find the bulk of this in the ``hive.hass`` role, which I'm told is not terribly done. I also have some overkill early work at re-architecting home assistant alerts on top of appdaemon to make my (builders) life easier.
+You'll find the bulk of this in the `hive.hass` role, which I'm told is not terribly done. I also have some overkill early work at re-architecting home assistant alerts on top of appdaemon to make my (builders) life easier.
 
 What I'm enjoying so far:
 
@@ -159,7 +160,7 @@ What has failed miserably:
 
 I'm using [gphotos-sync](https://pypi.org/project/gphotos-sync/) -- which is clearly someones ocean of sweat and tears -- to automatically pull down copies of my photos. I'm not worried about Google ditching this product, so its more of an exercise to achieve it. It doesn't work perfectly (see the project for limitations), but hopefully Google will improve this over time.
 
-You'll find the automation for this in ``hive.gphotos``.
+You'll find the automation for this in `hive.gphotos`.
 
 ### Internal Monitoring
 
@@ -169,7 +170,7 @@ There's a cool generic dashboard with an endless list of system metrics though.
 
 ### VPN
 
-I previously was running an Intel Nuc with a bunch of services and had that configured to route all traffic through Private Internet Access. I haven't gotten around to making it work well, and may not ever do it. There's remnants of that in the README as well as some efforts in the ``hive.pia`` role.
+I previously was running an Intel Nuc with a bunch of services and had that configured to route all traffic through Private Internet Access. I haven't gotten around to making it work well, and may not ever do it. There's remnants of that in the README as well as some efforts in the `hive.pia` role.
 
 ## Ansible / Machine Configuration
 
@@ -208,7 +209,7 @@ In protect itself:
 - Hit Cameras
 - Enable [Medium] RSTP stream
 
-The ``hive.protect`` role will attempt to auto archive footage automatically to the nas.
+The `hive.protect` role will attempt to auto archive footage automatically to the nas.
 
 ### Firewall
 
