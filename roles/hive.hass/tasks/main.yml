@@ -82,7 +82,7 @@
 - name: homeassistant Docker Container
   docker_container:
     name: homeassistant
-    image: homeassistant/home-assistant
+    image: "homeassistant/home-assistant:0.110.7"
     pull: true
     hostname: homeassistant
     restart_policy: unless-stopped
