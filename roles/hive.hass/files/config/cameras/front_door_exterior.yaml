@@ -1,5 +1,0 @@
-platform: generic
-name: Front Door - Exterior
-still_image_url: !secret camera_front_door_exterior_still
-stream_source: !secret camera_front_door_exterior_stream
-verify_ssl: false

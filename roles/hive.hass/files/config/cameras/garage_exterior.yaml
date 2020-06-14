@@ -1,5 +1,0 @@
-platform: generic
-name: Garage - Exterior
-still_image_url: !secret camera_garage_exterior_still
-stream_source: !secret camera_garage_exterior_stream
-verify_ssl: false

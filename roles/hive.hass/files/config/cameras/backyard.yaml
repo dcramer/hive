@@ -1,5 +1,0 @@
-platform: generic
-name: Backyard
-still_image_url: !secret camera_backyard_still
-stream_source: !secret camera_backyard_stream
-verify_ssl: false

@@ -19,7 +19,6 @@ script: !include_dir_named scripts/
 frontend: !include frontend.yaml
 http: !include http.yaml
 recorder: !include recorder.yaml
-camera: !include_dir_list cameras/
 person: !include persons.yaml
 sensor: !include_dir_merge_list sensors/
 switch: !include switches.yaml
@@ -186,12 +185,12 @@ binary_sensor: !include binary_sensors.yaml
 
 # Device Tracking
 
-unifi:
-  controllers:
-    - host: !secret unifi_host
-      site: "Default"
-      dont_track_wired_clients: true
-      dont_track_devices: true
+# unifi:
+#   controllers:
+#     - host: !secret unifi_host
+#       site: "Default"
+#       dont_track_wired_clients: true
+#       dont_track_devices: true
 
 device_tracker:
   - platform: tile
