@@ -70,12 +70,12 @@
     - role: hive.frigate
       tags:
         - frigate
-    - role: hive.dontstarve
-      tags:
-        - dst
-    - role: hive.minecraft
-      tags:
-        - minecraft
+    # - role: hive.dontstarve
+    #   tags:
+    #     - dst
+    # - role: hive.minecraft
+    #   tags:
+    #     - minecraft
   vars:
     timezone: America/Los_Angeles
 
