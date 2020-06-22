@@ -175,7 +175,10 @@ class AlarmManager(hass.Hass):
                 )
 
         if command == "/stopArm":
-            if self._timeout_handle and self.get_state(self.alarm) == "arming":
+            if self.get_state(self.alarm) == "arming":
+                if self._timeout_handle:
+                    self.cancel_timer(self._timeout_handle)
+                self._timeout_handle = self.run_in(self._timeout_state_change, 60)
                 self._alarm_state = AlarmState.waiting_disarm
                 self.call_service(
                     "alarm_control_panel/alarm_disarm", entity_id=self.alarm
