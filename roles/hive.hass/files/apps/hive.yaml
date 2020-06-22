@@ -6,6 +6,15 @@ sentry:
   class: Sentry
   dsn: !secret sentry_dsn
 
+telegram_bot:
+  module: telegram_bot
+  class: TelegramBot
+  commands:
+    - "/armAway /armhome /disarm"
+    - "/closeGarage"
+    - "/lockStorage"
+    - "/ping"
+
 power_usage_washer:
   module: power_usage
   class: PowerUsageAlert

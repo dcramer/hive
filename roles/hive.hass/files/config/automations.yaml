@@ -85,31 +85,6 @@
     - service: lock.lock
       entity_id: lock.garage_storage_deadbolt
 
-- id: replyArmAway
-  alias: "Telegram bot to arm the alarm in away mode"
-  trigger:
-    platform: event
-    event_type: telegram_command
-    event_data:
-      command: "/armAway"
-  action:
-    - service: alarm_control_panel.alarm_arm_away
-      entity_id: alarm_control_panel.home
-
-- id: replyDisarm
-  alias: "Telegram bot to disarmarm the alarm"
-  trigger:
-    platform: event
-    event_type: telegram_command
-    event_data:
-      command: "/disarm"
-  action:
-    - service: alarm_control_panel.alarm_disarm
-      entity_id: alarm_control_panel.home
-    - service: notify.telegram_household
-      data:
-        message: "The alarm has been disarmed via telegram"
-
 - id: replyAckAlarm
   alias: "Telegram bot to ack the alarm being unarmed"
   trigger:
@@ -132,12 +107,11 @@
         topic: "cmnd/tasmotas/state"
         payload: ""
 
-
 - alias: "Enable overnight alerts"
   trigger:
     - platform: state
       entity_id: binary_sensor.is_overnight
-      to: 'on'
+      to: "on"
   action:
     - service: homeassistant.turn_on
       entity_id: alert.garage_motion_late_night
@@ -146,7 +120,7 @@
   trigger:
     - platform: state
       entity_id: binary_sensor.is_overnight
-      to: 'on'
+      to: "on"
   action:
     - service: homeassistant.turn_off
       entity_id: alert.garage_motion_late_night
