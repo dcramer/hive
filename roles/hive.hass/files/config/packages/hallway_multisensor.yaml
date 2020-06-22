@@ -1,0 +1,40 @@
+homeassistant:
+  customize:
+    zwave.hallway_multisensor:
+      friendly_name: "Hallway MultiSensor"
+    sensor.hallway_multisensor_alarm_level:
+      friendly_name: "Hallway MultiSensor Alarm Level"
+    sensor.hallway_multisensor_alarm_type:
+      friendly_name: "Hallway MultiSensor Alarm Type"
+    sensor.hallway_multisensor_battery_level:
+      friendly_name: "Hallway MultiSensor Battery Level"
+    sensor.hallway_multisensor_burglar:
+      friendly_name: "Hallway MultiSensor Burglar"
+    sensor.hallway_multisensor_luminance:
+      friendly_name: "Hallway MultiSensor Luminance"
+    sensor.hallway_multisensor_relative_humidity:
+      friendly_name: "Hallway MultiSensor Relative Humidity"
+    binary_sensor.hallway_multisensor:
+      friendly_name: "Hallway MultiSensor"
+    sensor.hallway_multisensor_sourcenodeid:
+      friendly_name: "Hallway MultiSensor Source Node ID"
+    sensor.hallway_multisensor_temperature:
+      friendly_name: "Hallway MultiSensor Temperature"
+    sensor.hallway_multisensor_ultraviolet:
+      friendly_name: "Hallway MultiSensor Ultraviolet"
+
+group:
+  hallway_multisensor:
+    name: Hallway MultiSensor
+    entities:
+      - zwave.hallway_multisensor
+      - sensor.hallway_multisensor_alarm_level
+      - sensor.hallway_multisensor_alarm_type
+      - sensor.hallway_multisensor_battery_level
+      - sensor.hallway_multisensor_burglar
+      - sensor.hallway_multisensor_luminance
+      - sensor.hallway_multisensor_relative_humidity
+      - binary_sensor.hallway_multisensor
+      - sensor.hallway_multisensor_sourcenodeid
+      - sensor.hallway_multisensor_temperature
+      - sensor.hallway_multisensor_ultraviolet

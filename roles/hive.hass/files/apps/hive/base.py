@@ -1,9 +1,33 @@
 # import adbase as ad
 import appdaemon.plugins.hass.hassapi as hass
 
-from datetime import datetime
-from time import time
+from datetime import datetime, timezone, time
+from typing import Dict
 from uuid import uuid1
+
+
+def parse_tod(tod: Dict[str, str], tzinfo=timezone.utc) -> Dict[str, time]:
+    if not tod:
+        return None
+
+    return {
+        "after": time(*[int(x) for x in tod["after"].split(":")], tzinfo=tzinfo),
+        "before": time(*[int(x) for x in tod["before"].split(":")], tzinfo=tzinfo),
+    }
+
+
+def parse_state(state):
+    if isinstance(state, list):
+        return frozenset([str(s) for s in state])
+    return frozenset([str(state)])
+
+
+def between(dt: datetime, start: time, stop: time) -> bool:
+    cur_time = dt.time().replace(tzinfo=dt.tzinfo)
+    if stop > start:  # range does not cross midnight
+        return stop >= cur_time >= start
+    else:
+        return not (cur_time <= start and cur_time >= stop)
 
 
 class AlertApp(hass.Hass):
@@ -85,7 +109,7 @@ class AlertApp(hass.Hass):
     # @ad.app_lock
     def _load_previous_state(self):
         if self.input_boolean:
-            now = now = time()
+            now = float(datetime.utcnow().strftime("%s"))
             state = self.get_state(self.input_boolean)
             self.first_active_at = (
                 self.get_state(self.input_boolean, attribute="first_active_at") or now
@@ -103,6 +127,7 @@ class AlertApp(hass.Hass):
             self.active = state == "on"
         else:
             self.active = False
+            state = None
 
         if self.active:
             self.log("{} previous state is: {} - active".format(self.entity_id, state))
@@ -128,7 +153,7 @@ class AlertApp(hass.Hass):
         if not self.active:
             self.log("{} is is ticking but inactive".format(self.entity_id))
             return
-        now = time()
+        now = float(datetime.utcnow().strftime("%s"))
         if self.repeat_idx > len(self.repeat) - 1:
             self.repeat_idx = len(self.repeat) - 1
         if (self.last_active_at + (self.repeat[self.repeat_idx] * 60)) <= now:
@@ -153,7 +178,7 @@ class AlertApp(hass.Hass):
         self._test_state(old, new)
 
     def _test_state(self, old, new):
-        now = time()
+        now = float(datetime.utcnow().strftime("%s"))
 
         if not self.active and self.should_trigger(old=old, new=new):
             self.active = True
@@ -234,3 +259,41 @@ class AlertApp(hass.Hass):
         if self.active and payload_event["command"] == self.ack_command:
             self.log(f"alert acked")
             self._cancel_timers()
+
+
+if __name__ == "__main__":
+    now = datetime(2020, 4, 1, 21, 10)
+    assert between(now, time(0), time(1)) is False
+    assert between(now, time(0), time(22)) is True
+    assert between(now, time(19), time(7)) is True
+    assert between(now, time(23), time(7)) is False
+
+    now = datetime(2020, 4, 1, 1, 10)
+    assert between(now, time(0), time(1)) is False
+    assert between(now, time(0), time(22)) is True
+    assert between(now, time(19), time(7)) is True
+    assert between(now, time(22), time(7)) is True
+    assert between(now, time(4), time(23)) is False
+
+    now = datetime(2020, 4, 1, 17, 10)
+    assert between(now, time(23, 59), time(7, 0)) is False
+
+    now = datetime(2020, 4, 1, 17, 10, tzinfo=timezone.utc)
+    assert (
+        between(now, time(23, 59, tzinfo=timezone.utc), time(7, 0, tzinfo=timezone.utc))
+        is False
+    )
+
+    conf = parse_tod({"before": "07:00", "after": "00:00"}, timezone.utc)
+    assert conf == {
+        "before": time(7, 00, tzinfo=timezone.utc),
+        "after": time(0, 0, tzinfo=timezone.utc),
+    }
+
+    import pytz
+
+    la_timezone = pytz.timezone("America/Los_Angeles")
+    now = datetime(2020, 4, 13, 22, 22, 17, tzinfo=la_timezone)
+    after = time(0, 0, tzinfo=la_timezone)
+    before = time(7, 0, tzinfo=la_timezone)
+    assert not between(now, after, before)

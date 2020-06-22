@@ -42,4 +42,4 @@ frigate:
 	ansible-playbook roles.yml -l rex -t frigate
 
 test:
-	python roles/hive.hass/files/apps/hive/generic_alert.py
+	python roles/hive.hass/files/apps/hive/base.py

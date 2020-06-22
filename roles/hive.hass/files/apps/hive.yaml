@@ -88,3 +88,17 @@ alarm_manager:
   reminder_time: "23:45:00"
   deactivate_time: "07:00:00"
   activation_delay: 15
+
+# aeotec multisensor 6 configured with:
+# - on time: 10 (seconds)
+# - enable motion sensor: level 5 (most sensitive)
+hallway_motion_lights:
+  module: automatic_light
+  class: AutomaticLight
+  dependencies: sentry
+  entity_id: sensor.hallway_multisensor_burglar
+  input_boolean: input_boolean.hallway_motion
+  state:
+    - 3
+    - 8
+  light_entity: light.guest_bedroom_hallway_lights
