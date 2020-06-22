@@ -11,6 +11,9 @@ class AutomaticLight(AlertApp):
         super().initialize()
 
     def should_trigger(self, old, new):
+        if not self.now_is_between("sunset - 00:45:00", "sunrise + 00:45:00"):
+            return False
+
         return new in self.states
 
     def on_activate(self, *args, **kwargs):
