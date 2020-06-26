@@ -16,7 +16,7 @@ def parse_tod(tod: Dict[str, str], tzinfo=timezone.utc) -> Dict[str, time]:
     }
 
 
-def parse_state(state):
+def parse_list(state):
     if isinstance(state, list):
         return frozenset([str(s) for s in state])
     return frozenset([str(state)])

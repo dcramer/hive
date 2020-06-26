@@ -1,10 +1,10 @@
-from base import AlertApp, parse_state, parse_tod, between
+from base import AlertApp, parse_list, parse_tod, between
 
 
 class GenericAlert(AlertApp):
     def initialize(self):
         self.telegram_list = self.args.get("telegram") or []
-        self.states = parse_state(self.args.get("state"))
+        self.states = parse_list(self.args.get("state"))
         self.message = self.args.get("message")
         self.done_message = self.args.get("done_message")
         self.camera = self.args.get("camera")
@@ -15,6 +15,8 @@ class GenericAlert(AlertApp):
     def should_trigger(self, old, new):
         if self.tod:
             now = self.datetime(aware=True)
+            # TODO(dcramer): pretty sure i should just be using the builtin and didnt need to write this code
+            # if not self.now_is_between("sunset - 00:45:00", "sunrise + 00:45:00"):
             if not between(now, self.tod["after"], self.tod["before"]):
                 self.log("not correct time of day")
                 return False

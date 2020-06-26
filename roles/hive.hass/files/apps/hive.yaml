@@ -110,7 +110,8 @@ hallway_motion_lights:
   state:
     - 3
     - 8
-  light_entity: light.guest_bedroom_hallway_lights
+  light:
+    - light.guest_bedroom_hallway_lights
 
 entryway_motion_lights:
   module: automatic_light
@@ -121,4 +122,5 @@ entryway_motion_lights:
   state:
     - 3
     - 8
-  light_entity: light.garage_bottom_of_stairs
+  light:
+    - light.garage_bottom_of_stairs
