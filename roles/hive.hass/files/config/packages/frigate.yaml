@@ -44,13 +44,13 @@ automation:
           #       caption: A person was detected.
 
 sensor:
-  - platform: rest
-    name: Frigate Debug
-    resource: http://192.168.1.25:5500/debug/stats
-    scan_interval: 5
-    json_attributes:
-      - coral
-    value_template: "OK"
+  # - platform: rest
+  #   name: Frigate Debug
+  #   resource: http://192.168.1.25:5500/debug/stats
+  #   scan_interval: 5
+  #   json_attributes:
+  #     - coral
+  #   value_template: "OK"
   - platform: template
     sensors:
       # back_fps:
