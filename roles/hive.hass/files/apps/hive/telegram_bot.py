@@ -5,6 +5,7 @@ import appdaemon.plugins.hass.hassapi as hass
 class TelegramBot(hass.Hass):
     def initialize(self):
         self.command_list = self.args.get("commands")
+        self.listen_event(self.receive_telegram_command, "telegram_command")
 
     def receive_telegram_command(self, event_id, payload_event, *args):
         assert event_id == "telegram_command"

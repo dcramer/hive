@@ -10,7 +10,7 @@ telegram_bot:
   module: telegram_bot
   class: TelegramBot
   commands:
-    - "/armAway /armhome /disarm"
+    - "/armAway /armHome /disarm"
     - "/closeGarage"
     - "/lockStorage"
     - "/ping"
