@@ -9,11 +9,21 @@ sentry:
 telegram_bot:
   module: telegram_bot
   class: TelegramBot
+  dependencies: sentry
   commands:
-    - "/armAway /armHome /disarm"
+    - "/house /houseNormal /houseVacation"
+    - "/alarm /armAway /armHome /disarm"
     - "/closeGarage"
     - "/lockStorage"
     - "/ping"
+
+house_mode:
+  module: house_mode
+  class: HouseModeBot
+  dependencies: sentry
+  entity_id: input_select.house_mode
+  telegram:
+    - !secret telegram_group_id_home
 
 power_usage_washer:
   module: power_usage

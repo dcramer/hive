@@ -1,0 +1,29 @@
+input_select:
+  house_mode:
+    name: House Mode
+    options:
+      - normal
+      - vacation
+    initial: normal
+    icon: mdi:target
+# automation:
+#   - alias: Set House Mode Selector
+#     trigger:
+#       platform: mqtt
+#       topic: "houseMode"
+#     # entity_id: input_select.thermostat_mode
+#     action:
+#       service: input_select.select_option
+#       data_template:
+#         entity_id: input_select.house_mode
+#         option: "{{ trigger.payload }}"
+#   - alias: Set House Mode
+#     trigger:
+#       platform: state
+#       entity_id: input_select.house_mode
+#     action:
+#       service: mqtt.publish
+#       data_template:
+#         topic: "houseMode"
+#         retain: true
+#         payload: "{{ states('input_select.house_mode') }}"

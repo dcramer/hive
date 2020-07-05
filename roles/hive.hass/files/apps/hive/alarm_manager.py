@@ -1,6 +1,6 @@
 import appdaemon.plugins.hass.hassapi as hass
 
-VALID_COMMANDS = frozenset(["/stopArm", "/disarm", "/armAway", "/armHome"])
+VALID_COMMANDS = frozenset(["/alarm", "/stopArm", "/disarm", "/armAway", "/armHome"])
 
 
 class AlarmState(object):
@@ -21,6 +21,8 @@ class AlarmManager(hass.Hass):
         self.activation_delay = int(self.args.get("activation_delay") or 30)
         # the time to disarm the alarm
         self.deactivate_time = self.args.get("deactivate_time")
+
+        self.house_mode_entity = "input_select.house_mode"
 
         self.run_daily(self.on_reminder, self.reminder_time)
         self.run_daily(self.on_deactivate, self.deactivate_time)
@@ -87,7 +89,18 @@ class AlarmManager(hass.Hass):
         self._cancel_timers()
         self._timeout_handle = self.run_in(self._timeout_state_change, 60)
         self._alarm_state = AlarmState.waiting_arm
-        self.call_service("alarm_control_panel/alarm_arm_home", entity_id=self.alarm)
+        # if we're in vacation mode, we arm in away mode
+        if (
+            self.house_mode_entity
+            and self.get_state(self.house_mode_entity) == "vacation"
+        ):
+            self.call_service(
+                "alarm_control_panel/alarm_arm_away", entity_id=self.alarm
+            )
+        else:
+            self.call_service(
+                "alarm_control_panel/alarm_arm_home", entity_id=self.alarm
+            )
 
     def on_deactivate(self, kwargs):
         # TODO: what should we do if they had stopped the auto arm?
@@ -162,6 +175,11 @@ class AlarmManager(hass.Hass):
         self.log(f"received {command} command")
 
         chat_id = payload_event["chat_id"]
+
+        if command == "/alarm":
+            mode = self.get_state(self.alarm).split("_", 1)[-1]
+            self._send_message(f"Currently in _{mode} mode_")
+            return
 
         # all valid commands will cancel automatic arming
         if self._activation_handle:
