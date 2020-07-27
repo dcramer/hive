@@ -211,6 +211,14 @@ In protect itself:
 
 The `hive.protect` role will attempt to auto archive footage automatically to the nas.
 
+### Network Firewall Notes
+
+This is to help assist setting up VLAN/general configuration. Specifically notes are for Unifi configurations.
+
+Google Home - MDNS (Services -> MDNS)
+Plex - TCP/32400
+Sonos - UPNP (Services -> UNPN -> Enable for IOT), TCP/3500
+
 ### Firewall
 
 TODO: I've yet to re-implement this, and may take another pass.
