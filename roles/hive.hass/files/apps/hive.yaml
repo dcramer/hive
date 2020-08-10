@@ -107,6 +107,7 @@ alarm_manager:
   reminder_time: "23:45:00"
   deactivate_time: "07:00:00"
   activation_delay: 15
+  alarm_code: !secret simplisafe_code
 
 # aeotec multisensor 6 configured with:
 # - on time: 10 (seconds)

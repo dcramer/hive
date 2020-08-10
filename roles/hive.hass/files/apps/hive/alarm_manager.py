@@ -22,6 +22,8 @@ class AlarmManager(hass.Hass):
         # the time to disarm the alarm
         self.deactivate_time = self.args.get("deactivate_time")
 
+        self.alarm_code = self.args.get("alarm_code")
+
         self.house_mode_entity = "input_select.house_mode"
 
         self.run_daily(self.on_reminder, self.reminder_time)
@@ -95,11 +97,15 @@ class AlarmManager(hass.Hass):
             and self.get_state(self.house_mode_entity) == "vacation"
         ):
             self.call_service(
-                "alarm_control_panel/alarm_arm_away", entity_id=self.alarm
+                "alarm_control_panel/alarm_arm_away",
+                entity_id=self.alarm,
+                code=self.alarm_code,
             )
         else:
             self.call_service(
-                "alarm_control_panel/alarm_arm_home", entity_id=self.alarm
+                "alarm_control_panel/alarm_arm_home",
+                entity_id=self.alarm,
+                code=self.disarm,
             )
 
     def on_deactivate(self, kwargs):
@@ -112,7 +118,11 @@ class AlarmManager(hass.Hass):
         self._alarm_state = AlarmState.waiting_disarm
         self._cancel_timers()
         self._timeout_handle = self.run_in(self._timeout_state_change, 60)
-        self.call_service("alarm_control_panel/alarm_disarm", entity_id=self.alarm)
+        self.call_service(
+            "alarm_control_panel/alarm_disarm",
+            entity_id=self.alarm,
+            code=self.alarm_code,
+        )
 
     def receive_state_change(self, entity, attribute, old, new, kwargs):
         assert entity == self.alarm
@@ -156,7 +166,11 @@ class AlarmManager(hass.Hass):
         self._cancel_timers()
         self._timeout_handle = self.run_in(self._timeout_state_change, delay + 60)
         self._alarm_state = AlarmState.waiting_arm
-        self.call_service(f"alarm_control_panel/alarm_arm_{mode}", entity_id=self.alarm)
+        self.call_service(
+            f"alarm_control_panel/alarm_arm_{mode}",
+            entity_id=self.alarm,
+            code=self.alarm_code,
+        )
 
         if delay > 5:
             self._send_message(
@@ -199,7 +213,9 @@ class AlarmManager(hass.Hass):
                 self._timeout_handle = self.run_in(self._timeout_state_change, 60)
                 self._alarm_state = AlarmState.waiting_disarm
                 self.call_service(
-                    "alarm_control_panel/alarm_disarm", entity_id=self.alarm
+                    "alarm_control_panel/alarm_disarm",
+                    entity_id=self.alarm,
+                    code=self.alarm_code,
                 )
 
         elif command == "/disarm":
@@ -208,7 +224,9 @@ class AlarmManager(hass.Hass):
                 self._timeout_handle = self.run_in(self._timeout_state_change, 60)
                 self._alarm_state = AlarmState.waiting_disarm
                 self.call_service(
-                    "alarm_control_panel/alarm_disarm", entity_id=self.alarm
+                    "alarm_control_panel/alarm_disarm",
+                    entity_id=self.alarm,
+                    code=self.alarm_code,
                 )
             else:
                 self._send_message(
