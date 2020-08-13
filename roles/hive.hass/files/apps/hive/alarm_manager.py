@@ -105,7 +105,7 @@ class AlarmManager(hass.Hass):
             self.call_service(
                 "alarm_control_panel/alarm_arm_home",
                 entity_id=self.alarm,
-                code=self.disarm,
+                code=self.alarm_code,
             )
 
     def on_deactivate(self, kwargs):
