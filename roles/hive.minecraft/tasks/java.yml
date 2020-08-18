@@ -6,7 +6,8 @@
     pull: true
     restart_policy: unless-stopped
     volumes:
-      - /docker/minecraft/data:/data
+      - /docker/minecraft/data/rlcraft:/data
+      - /docker/minecraft/modpacks:/modpacks
     ports:
       - "25565:25565/tcp"
     env:
@@ -17,3 +18,6 @@
       MAX_PLAYERS: "{{ minecraft_max_players }}"
       UID: "{{ hive_uid | string }}"
       GID: "{{ hive_gid | string }}"
+      TYPE: "CURSEFORGE"
+      MEMORY: 4G
+      CF_SERVER_MOD: "/modpacks/RLCraft Server Pack 1.12.2 - Beta v2.8.2.zip"
