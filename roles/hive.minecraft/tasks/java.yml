@@ -2,14 +2,16 @@
 - name: minecraft (java) Docker Container
   docker_container:
     name: minecraft
-    image: itzg/minecraft-server
+    image: itzg/minecraft-server:latest
     pull: true
     restart_policy: unless-stopped
     volumes:
-      - /docker/minecraft/data/rlcraft:/data
-      - /docker/minecraft/modpacks:/modpacks
+      - /docker/minecraft/data:/data
+      - /docker/minecraft/modpacks:/modpacks:ro
     ports:
       - "25565:25565/tcp"
+      - "25575:25575/tcp"
+      # - "8123:8123/tcp"
     env:
       EULA: "TRUE"
       GAMEMODE: "{{ minecraft_gamemode }}"
@@ -18,6 +20,20 @@
       MAX_PLAYERS: "{{ minecraft_max_players }}"
       UID: "{{ hive_uid | string }}"
       GID: "{{ hive_gid | string }}"
-      TYPE: "CURSEFORGE"
-      MEMORY: 4G
-      CF_SERVER_MOD: "/modpacks/RLCraft Server Pack 1.12.2 - Beta v2.8.2.zip"
+      INIT_MEMORY: "1G"
+      MAX_MEMORY: "6G"
+      ALLOW_FLIGHT: "TRUE"
+      VERSION: "1.12.2"
+      TYPE: "FORGE"
+      FORGEVERSION: "14.23.5.2838"
+      REMOVE_OLD_MODS: "true"
+      # GENERIC_PACK_STRIP_DIRS: "1"
+      GENERIC_PACK: "/modpacks/RLCraftTest.zip"
+
+      MAX_TICK_TIME: "-1"
+      REPLACE_ENV_VARIABLES: "TRUE"
+      VIEW_DISTANCE: "6"
+      # GENERIC_PACK: "/modpacks/RLCraftTest.zip"
+      # TYPE: "CURSEFORGE"
+      # CF_SERVER_MOD: "/modpacks/RLCraft+Server+Pack+1.12.2+-+Beta+v2.8.2.zip"
+      # USE_MODPACK_START_SCRIPT: false
