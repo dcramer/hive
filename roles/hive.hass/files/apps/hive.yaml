@@ -60,7 +60,7 @@ garage_motion_overnight:
   entity_id: sensor.garage_multisensor_burglar
   input_boolean: input_boolean.garage_motion
   state:
-    - 3
+    # - 3
     - 8
   tod:
     after: "00:00:00"

@@ -1,6 +1,6 @@
 ---
 minecraft_server: "java"
 minecraft_gamemode: "survival"
-minecraft_difficulty: "hard"
+minecraft_difficulty: "easy"
 minecraft_max_players: "40"
 minecraft_server_name: "santry"
