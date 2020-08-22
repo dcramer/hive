@@ -2,14 +2,14 @@
   id: XRaplybedv
   user_id: 57d5420c06364a5c82738f3c2238fcde
   device_trackers:
-    # - device_tracker.davids_iphone
+    - device_tracker.davids_iphone
     - device_tracker.tile_p_8b507ab4dec15d32c4a49e5abebf3f97
-    - device_tracker.tile_92efad04d7066fc3
-    - device_tracker.tile_6e91fa2b18fd7cac
+    # - device_tracker.tile_92efad04d7066fc3
+    # - device_tracker.tile_6e91fa2b18fd7cac
 - name: Sukhpreet
   id: hxxvNwhkwg
   user_id: c059ae3f28af4388b391a00074190b3f
   device_trackers:
-    # - device_tracker.sk_iphone
+    - device_tracker.sk_iphone
     - device_tracker.tile_p_696975757e9c41a67980c33870618b2b
-    - device_tracker.tile_532871522e89b1a4
+    # - device_tracker.tile_532871522e89b1a4
