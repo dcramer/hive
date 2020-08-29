@@ -6,7 +6,7 @@
     pull: true
     restart_policy: unless-stopped
     volumes:
-      - /docker/minecraft/data:/data
+      - /docker/minecraft/data/valhesia:/data
       - /docker/minecraft/modpacks:/modpacks:ro
     ports:
       - "25565:25565/tcp"
@@ -22,18 +22,27 @@
       GID: "{{ hive_gid | string }}"
       INIT_MEMORY: "1G"
       MAX_MEMORY: "6G"
-      ALLOW_FLIGHT: "TRUE"
-      VERSION: "1.12.2"
-      TYPE: "FORGE"
-      FORGEVERSION: "14.23.5.2838"
       REMOVE_OLD_MODS: "true"
-      # GENERIC_PACK_STRIP_DIRS: "1"
-      GENERIC_PACK: "/modpacks/RLCraftTest.zip"
-
-      MAX_TICK_TIME: "-1"
-      REPLACE_ENV_VARIABLES: "TRUE"
       VIEW_DISTANCE: "6"
-      # GENERIC_PACK: "/modpacks/RLCraftTest.zip"
-      # TYPE: "CURSEFORGE"
-      # CF_SERVER_MOD: "/modpacks/RLCraft+Server+Pack+1.12.2+-+Beta+v2.8.2.zip"
-      # USE_MODPACK_START_SCRIPT: false
+      OVERRIDE_SERVER_PROPERTIES: "true"
+      # ALLOW_FLIGHT: "TRUE"
+      # MAX_TICK_TIME: "-1"
+      # REPLACE_ENV_VARIABLES: "TRUE"
+
+      # Valhesia
+      # TYPE: FORGE
+      FORGEVERSION: "31.2.36"
+      VERSION: "1.15.2"
+      # GENERIC_PACK: "/modpacks/Valhelsia_SERVER-2.2.8.zip"
+      TYPE: "CURSEFORGE"
+      CF_SERVER_MOD: "/modpacks/Valhelsia_SERVER-2.2.8.zip"
+      # Ages
+      # TYPE: CURSEFORGE
+      # FORGEVERSION: "31.2.33"
+      # VERSION: "1.15.2"
+      # GENERIC_PACK: "/modpacks/SevTech_Ages_Server_3.1.2-hotfix.1.zip"
+      # RLCraft
+      # TYPE: "FORGE"
+      # VERSION: "1.12.2"
+      # FORGEVERSION: "14.23.5.2838"
+      # GENERIC_PACK: "/modpacks/RLCraft+Server+Pack+1.12.2+-+Beta+v2.8.2.zip"
