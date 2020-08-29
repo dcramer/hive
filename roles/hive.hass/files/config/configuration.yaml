@@ -41,7 +41,7 @@ cloud:
     filter:
       include_entities:
         - fan.master_bedroom
-        - lock.garage_storage_deadbolt
+        # - lock.garage_storage_deadbolt
         - camera.garage
         - cover.garage_door
         - input_boolean.dryer
