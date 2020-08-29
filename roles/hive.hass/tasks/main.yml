@@ -89,9 +89,9 @@
     devices:
       - /dev/ttyUSB0:/dev/ttyUSB0
       - /dev/ttyUSB1:/dev/ttyUSB1
-      - /dev/ttyUSB2:/dev/ttyUSB2
-      - /dev/ttyACM0:/dev/ttyACM0
-      - /dev/ttyACM1:/dev/ttyACM1
+      # - /dev/ttyUSB2:/dev/ttyUSB2
+      # - /dev/ttyACM0:/dev/ttyACM0
+      # - /dev/ttyACM1:/dev/ttyACM1
       - /dev/zwave:/dev/zwave
       - /dev/zigbee:/dev/zigbee
     volumes:

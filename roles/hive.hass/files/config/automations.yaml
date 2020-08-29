@@ -124,3 +124,81 @@
   action:
     - service: homeassistant.turn_off
       entity_id: alert.garage_motion_late_night
+
+- id: master_bedroom_aqara_switch_one_single
+  alias: Master Bedroom - Switch One - Turn On
+  trigger:
+    - event_data:
+        command: "single"
+        unique_id: "00:15:8d:00:02:90:14:e9:1:0x0012"
+      event_type: zha_event
+      platform: event
+  action:
+    - data:
+        entity_id: group.master_bedroom_lights
+      service: homeassistant.turn_on
+
+- id: master_bedroom_aqara_switch_one_double
+  alias: Master Bedroom - Switch One - Bedtime
+  trigger:
+    - event_data:
+        command: "double"
+        unique_id: "00:15:8d:00:02:90:14:e9:1:0x0012"
+      event_type: zha_event
+      platform: event
+  action:
+    - service: scene.turn_on
+      data:
+        entity_id: scene.bedtime
+
+- id: master_bedroom_aqara_switch_one_hold
+  alias: Master Bedroom - Switch One - All Lights Off
+  trigger:
+    - event_data:
+        command: "hold"
+        unique_id: "00:15:8d:00:02:90:14:e9:1:0x0012"
+      event_type: zha_event
+      platform: event
+  action:
+    - service: scene.turn_on
+      data:
+        entity_id: scene.lights_off
+
+- id: master_bedroom_aqara_switch_two_single
+  alias: Master Bedroom - Switch Two - Toggle
+  trigger:
+    - event_data:
+        command: "single"
+        unique_id: "00:15:8d:00:02:8f:4c:98:1:0x0012"
+      event_type: zha_event
+      platform: event
+  action:
+    - data:
+        entity_id: group.master_bedroom_lights
+      service: homeassistant.toggle
+
+- id: master_bedroom_aqara_switch_two_double
+  alias: Master Bedroom - Switch Two - Bedtime
+  trigger:
+    - event_data:
+        command: "double"
+        unique_id: "00:15:8d:00:02:8f:4c:98:1:0x0012"
+      event_type: zha_event
+      platform: event
+  action:
+    - service: scene.turn_on
+      data:
+        entity_id: scene.bedtime
+
+- id: master_bedroom_aqara_switch_two_hold
+  alias: Master Bedroom - Switch Two - All Lights Off
+  trigger:
+    - event_data:
+        command: "hold"
+        unique_id: "00:15:8d:00:02:8f:4c:98:1:0x0012"
+      event_type: zha_event
+      platform: event
+  action:
+    - service: scene.turn_on
+      data:
+        entity_id: scene.lights_off
