@@ -88,6 +88,8 @@ cloud:
         room: Master Bedroom
       light.master_bedroom_master_bed_hallway_cans:
         room: Master Bedroom
+      switch.master_bedroom_vornado_fan:
+        room: Master Bedroom
       media_player.master_bedroom:
         room: Master Bedroom
       light.guest_bedroom_guest_bedroom_cans:

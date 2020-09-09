@@ -18,6 +18,7 @@ docker = "^4.1.0"
 black = "^19.10b0"
 flake8 = "^3.7.9"
 appdaemon = "^4.0.3"
+esptool = "^2.8"
 
 [build-system]
 requires = ["poetry>=1.0.0"]

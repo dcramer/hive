@@ -243,11 +243,39 @@ tls = ["pyOpenSSL (>=17.5.0)", "cryptography (>=1.3.4)", "idna (>=2.0.0)"]
 
 [[package]]
 category = "main"
+description = "ECDSA cryptographic signature library (pure python)"
+name = "ecdsa"
+optional = false
+python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
+version = "0.16.0"
+
+[package.dependencies]
+six = ">=1.9.0"
+
+[package.extras]
+gmpy = ["gmpy"]
+gmpy2 = ["gmpy2"]
+
+[[package]]
+category = "main"
 description = "Discover and load entry points from installed packages."
 name = "entrypoints"
 optional = false
 python-versions = ">=2.7"
 version = "0.3"
+
+[[package]]
+category = "main"
+description = "A serial utility to communicate & flash code to Espressif ESP8266 & ESP32 chips."
+name = "esptool"
+optional = false
+python-versions = "*"
+version = "2.8"
+
+[package.dependencies]
+ecdsa = "*"
+pyaes = "*"
+pyserial = ">=3.0"
 
 [[package]]
 category = "main"
@@ -377,6 +405,14 @@ enum = ["enum34"]
 
 [[package]]
 category = "main"
+description = "Pure-Python Implementation of the AES block-cipher and common modes of operation"
+name = "pyaes"
+optional = false
+python-versions = "*"
+version = "1.6.1"
+
+[[package]]
+category = "main"
 description = "Python style guide checker"
 name = "pycodestyle"
 optional = false
@@ -410,6 +446,14 @@ version = "223"
 
 [package.dependencies]
 pywin32 = ">=223"
+
+[[package]]
+category = "main"
+description = "Python Serial Port Extension"
+name = "pyserial"
+optional = false
+python-versions = "*"
+version = "3.4"
 
 [[package]]
 category = "main"
@@ -573,7 +617,7 @@ idna = ">=2.0"
 multidict = ">=4.0"
 
 [metadata]
-content-hash = "2228d664e49d5cd97701614e3e6a0332369e25c6a2f3cfb96f6b7deb26431e71"
+content-hash = "2ac49c4e3c998f24f34657c686decf45778172e147201f0e2c48c7a173294df5"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -735,9 +779,16 @@ docker = [
     {file = "docker-4.2.0-py2.py3-none-any.whl", hash = "sha256:1c2ddb7a047b2599d1faec00889561316c674f7099427b9c51e8cb804114b553"},
     {file = "docker-4.2.0.tar.gz", hash = "sha256:ddae66620ab5f4bce769f64bcd7934f880c8abe6aa50986298db56735d0f722e"},
 ]
+ecdsa = [
+    {file = "ecdsa-0.16.0-py2.py3-none-any.whl", hash = "sha256:ca359c971594dceebf334f3d623dae43163ab161c7d09f28cae70a86df26eb7a"},
+    {file = "ecdsa-0.16.0.tar.gz", hash = "sha256:494c6a853e9ed2e9be33d160b41d47afc50a6629b993d2b9c5ad7bb226add892"},
+]
 entrypoints = [
     {file = "entrypoints-0.3-py2.py3-none-any.whl", hash = "sha256:589f874b313739ad35be6e0cd7efde2a4e9b6fea91edcc34e58ecbb8dbe56d19"},
     {file = "entrypoints-0.3.tar.gz", hash = "sha256:c70dd71abe5a8c85e55e12c19bd91ccfeec11a6e99044204511f9ed547d48451"},
+]
+esptool = [
+    {file = "esptool-2.8.tar.gz", hash = "sha256:1e4288d9f00e55ba36809cc79c493643c623bfa036d7b019a0ebe396284bc317"},
 ]
 feedparser = [
     {file = "feedparser-5.2.1.tar.bz2", hash = "sha256:ce875495c90ebd74b179855449040003a1beb40cd13d5f037a0654251e260b02"},
@@ -846,6 +897,9 @@ psutil = [
     {file = "psutil-5.7.0-cp38-cp38-win_amd64.whl", hash = "sha256:d84029b190c8a66a946e28b4d3934d2ca1528ec94764b180f7d6ea57b0e75e26"},
     {file = "psutil-5.7.0.tar.gz", hash = "sha256:685ec16ca14d079455892f25bd124df26ff9137664af445563c1bd36629b5e0e"},
 ]
+pyaes = [
+    {file = "pyaes-1.6.1.tar.gz", hash = "sha256:02c1b1405c38d3c370b085fb952dd8bea3fadcee6411ad99f312cc129c536d8f"},
+]
 pycodestyle = [
     {file = "pycodestyle-2.5.0-py2.py3-none-any.whl", hash = "sha256:95a2219d12372f05704562a14ec30bc76b05a5b297b21a5dfe3f6fac3491ae56"},
     {file = "pycodestyle-2.5.0.tar.gz", hash = "sha256:e40a936c9a450ad81df37f549d676d127b1b66000a6c500caa2b085bc0ca976c"},
@@ -861,6 +915,10 @@ pyflakes = [
 pypiwin32 = [
     {file = "pypiwin32-223-py3-none-any.whl", hash = "sha256:67adf399debc1d5d14dffc1ab5acacb800da569754fafdc576b2a039485aa775"},
     {file = "pypiwin32-223.tar.gz", hash = "sha256:71be40c1fbd28594214ecaecb58e7aa8b708eabfa0125c8a109ebd51edbd776a"},
+]
+pyserial = [
+    {file = "pyserial-3.4-py2.py3-none-any.whl", hash = "sha256:e0770fadba80c31013896c7e6ef703f72e7834965954a78e71a3049488d4d7d8"},
+    {file = "pyserial-3.4.tar.gz", hash = "sha256:6e2d401fdee0eab996cf734e67773a0143b932772ca8b42451440cfed942c627"},
 ]
 python-dateutil = [
     {file = "python-dateutil-2.8.1.tar.gz", hash = "sha256:73ebfe9dbf22e832286dafa60473e4cd239f8592f699aa5adaf10050e6e1823c"},

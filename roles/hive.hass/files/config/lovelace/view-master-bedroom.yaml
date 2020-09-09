@@ -16,6 +16,7 @@ cards:
   - type: entities
     entities:
       - fan.master_bedroom
+      - switch.master_bedroom_vornado_fan
   - type: custom:group-card
     card:
       type: entities
