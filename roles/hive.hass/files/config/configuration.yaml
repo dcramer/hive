@@ -53,6 +53,7 @@ cloud:
         - media_player.office
         - media_player.kitchen
         - media_player.master_bedroom
+        - switch.master_bedroom_vornado_fan
       include_domains:
         - light
         - scene
