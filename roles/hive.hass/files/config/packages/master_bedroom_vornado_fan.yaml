@@ -2,7 +2,7 @@
 # sonoff s31 - autodiscovery disabled
 switch:
   - platform: mqtt
-    name: "Master Bedroom - Vornado Fan"
+    name: "Master Bedroom Vornado Fan"
     state_topic: "tele/master-bedroom-vornado-fan/STATE"
     value_template: "{{ value_json.POWER }}"
     command_topic: "cmnd/master-bedroom-vornado-fan/POWER"
@@ -15,7 +15,7 @@ switch:
     retain: false
 sensor:
   - platform: mqtt
-    name: "Master Bedroom - Vornado Fan - Voltage"
+    name: "Master Bedroom Vornado Fan - Voltage"
     state_topic: "tele/master-bedroom-vornado-fan/SENSOR"
     value_template: "{{ value_json['ENERGY'].Voltage }}"
     unit_of_measurement: "V"
@@ -24,7 +24,7 @@ sensor:
     payload_available: "Online"
     payload_not_available: "Offline"
   - platform: mqtt
-    name: "Master Bedroom - Vornado Fan - Current"
+    name: "Master Bedroom Vornado Fan - Current"
     state_topic: "tele/master-bedroom-vornado-fan/SENSOR"
     value_template: "{{ value_json['ENERGY'].Current | round(2) }}"
     unit_of_measurement: "A"
@@ -33,7 +33,7 @@ sensor:
     payload_available: "Online"
     payload_not_available: "Offline"
   - platform: mqtt
-    name: "Master Bedroom - Vornado Fan - Power"
+    name: "Master Bedroom Vornado Fan - Power"
     state_topic: "tele/master-bedroom-vornado-fan/SENSOR"
     value_template: "{{ value_json['ENERGY'].Power }}"
     unit_of_measurement: "W"
@@ -43,7 +43,7 @@ sensor:
     payload_not_available: "Offline"
     device_class: power
   - platform: mqtt
-    name: "Master Bedroom - Vornado Fan - Power Factor"
+    name: "Master Bedroom Vornado Fan - Power Factor"
     state_topic: "tele/master-bedroom-vornado-fan/SENSOR"
     value_template: "{{ value_json['ENERGY'].Factor }}"
     availability_topic: "tele/master-bedroom-vornado-fan/LWT"
@@ -51,7 +51,7 @@ sensor:
     payload_available: "Online"
     payload_not_available: "Offline"
   - platform: mqtt
-    name: "Master Bedroom - Vornado Fan - Energy Today"
+    name: "Master Bedroom Vornado Fan - Energy Today"
     state_topic: "tele/master-bedroom-vornado-fan/SENSOR"
     value_template: "{{ value_json['ENERGY'].Today }}"
     unit_of_measurement: "kWh"
@@ -60,7 +60,7 @@ sensor:
     payload_available: "Online"
     payload_not_available: "Offline"
   - platform: mqtt
-    name: "Master Bedroom - Vornado Fan - Energy Yesterday"
+    name: "Master Bedroom Vornado Fan - Energy Yesterday"
     state_topic: "tele/master-bedroom-vornado-fan/SENSOR"
     value_template: "{{ value_json['ENERGY'].Yesterday }}"
     unit_of_measurement: "kWh"
@@ -69,7 +69,7 @@ sensor:
     payload_available: "Online"
     payload_not_available: "Offline"
   - platform: mqtt
-    name: "Master Bedroom - Vornado Fan - Energy Total"
+    name: "Master Bedroom Vornado Fan - Energy Total"
     state_topic: "tele/master-bedroom-vornado-fan/SENSOR"
     value_template: "{{ value_json['ENERGY'].Total }}"
     unit_of_measurement: "kWh"
@@ -80,6 +80,6 @@ sensor:
 
 input_boolean:
   master_bedroom_vornado_fan:
-    name: "Master Bedroom - Vornado Fan"
+    name: "Master Bedroom Vornado Fan"
     initial: off
     icon: mdi:fan

@@ -110,10 +110,7 @@ cloud:
       light.guest_bedroom_hallway_lights:
         room: Hallway
       light.garage_bottom_of_stairs:
-        room: Entryway
-      light.garage_bottom_of_stairs:
-        room: Entryway
-
+        room: Entrance
 
 zwave:
   # usb_path: /dev/ttyACM0

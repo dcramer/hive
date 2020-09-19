@@ -76,6 +76,7 @@ cards:
       include:
         - entity_id: scene.bedtime
         - entity_id: scene.dim_hallway
+        - entity_id: scene.movie_time
 
   - type: vertical-stack
     cards:

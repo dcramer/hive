@@ -139,15 +139,85 @@ zwave.z_stick:
 zwave.home_energy_meter:
   friendly_name: "Home Energy Meter"
 sensor.home_energy_meter_power_total:
-  friendly_name: "Home Power - Total"
+  friendly_name: "Home Power Total"
   icon: mdi:flash
 sensor.home_energy_meter_power_clamp1:
-  friendly_name: "Home Power - Clamp 1"
+  friendly_name: "Home Power Clamp 1"
   icon: mdi:flash
 sensor.home_energy_meter_power_clamp2:
-  friendly_name: "Home Power - Clamp 2"
+  friendly_name: "Home Power Clamp 2"
   icon: mdi:flash
 
 switch.pi_hole:
   friendly_name: "Pi Hole"
   icon: mdi:pi-hole
+
+light.master_bedroom_bedroom_center_cans:
+  friendly_name: "Master Bedroom Main"
+
+light.master_bedroom_bedroom_side_cans:
+  friendly_name: "Master Bedroom Side"
+
+light.master_bedroom_bedroom_sitting_cans:
+  friendly_name: "Master Bedroom Sitting"
+
+light.master_bedroom_master_bed_hallway_cans:
+  friendly_name: "Master Bedroom Hallway"
+
+light.guest_bedroom_guest_bedroom_cans:
+  friendly_name: "Guest Bedroom Cans"
+
+light.guest_bedroom_guest_bedroom_wall:
+  friendly_name: "Guest Bedroom Wall"
+
+light.guest_bedroom_guest_center_light:
+  friendly_name: "Guest Bedroom Main"
+
+light.guest_bedroom_office_fire_place_cans:
+  friendly_name: "Office Fire Place"
+
+light.guest_bedroom_office_room_center_light:
+  friendly_name: "Office Ceiling Fan"
+
+light.guest_bedroom_office_room_wall_cans:
+  friendly_name: "Office Wall"
+
+light.back_stairs_kitchen_cans:
+  friendly_name: "Kitchen Main"
+
+light.guest_bedroom_dining_room_cans:
+  friendly_name: "Dining Room Cans"
+
+light.guest_bedroom_dining_room_center:
+  friendly_name: "Dining Room Main"
+
+light.guest_bedroom_hallway_lights:
+  friendly_name: "Hallway"
+
+# TBD
+light.garage_bottom_of_stairs:
+  friendly_name: "Front Stairs"
+
+light.garage_entry_can:
+  friendly_name: "Front Door Main"
+
+light.garage_exterior_sconces:
+  friendly_name: "Front Door Exterior"
+
+light.media_room_garage_hall:
+  friendly_name: "Media Room Hallway"
+
+light.media_room_media_room_cans:
+  friendly_name: "Media Room Main"
+
+light.media_room_exterior_sconces:
+  friendly_name: "Backyard Main"
+
+light.media_room_back_yard_landscape:
+  friendly_name: "Backyard Landscape"
+
+light.back_stairs_top_of_back_stairs:
+  friendly_name: "Back Stairs Main"
+
+light.back_stairs_back_stairs_cans:
+  friendly_name: "Back Stairs Cans"

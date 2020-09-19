@@ -653,9 +653,9 @@
     mqtt_port: 1883
 
     cameras:
-      backyard:
-        host: 192.168.1.163
-        stream: rtsp://192.168.1.7:7447/gr2Wt6uAsAZU4Lmn
+      # backyard:
+      #   host: 192.168.1.163
+      #   stream: rtsp://192.168.1.7:7447/gr2Wt6uAsAZU4Lmn
 
       garage:
         host: 192.168.1.16
