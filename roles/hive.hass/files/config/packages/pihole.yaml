@@ -2,7 +2,6 @@ pi_hole:
   - host: !secret pi_hole_host
     api_key: !secret pi_hole_api_key
 
-
 binary_sensor:
   - platform: command_line
     command: "curl -s http://192.168.1.86/admin/index.php | grep 'color:' | grep 'status' | cut -d ':' -f 2 | cut -d '>' -f 3 | cut -d '<' -f 1 | sed -e 's/^[[:space:]]*//'"

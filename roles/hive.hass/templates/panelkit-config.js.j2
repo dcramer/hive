@@ -28,7 +28,7 @@ window.CONFIG = {
           type: TILE.ALARM,
           entityId: "alarm_control_panel.home",
         },
-{
+        {
           type: TILE.INPUT_SELECT,
           entityId: "input_select.house_mode",
           icon: "target",
@@ -37,6 +37,14 @@ window.CONFIG = {
           type: TILE.SWITCH,
           entityId: "switch.pi_hole",
           icon: "pi-hole",
+        },
+        {
+          type: TILE.SCENE,
+          entityId: "scene.bedtime",
+        },
+        {
+          type: TILE.SCENE,
+          entityId: "scene.dim_hallway",
         },
       ],
     },
@@ -117,11 +125,6 @@ window.CONFIG = {
           width: 4,
           type: TILE.CAMERA,
           entityId: "camera.garage",
-        },
-        {
-          width: 4,
-          type: TILE.CAMERA,
-          entityId: "camera.backyard",
         },
       ],
     },

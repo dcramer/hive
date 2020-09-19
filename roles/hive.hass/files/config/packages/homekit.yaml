@@ -1,7 +1,7 @@
 ---
 homekit:
   auto_start: false
-  # advertise_ip: 192.168.1.25
+  advertise_ip: 192.168.1.25
   port: !secret homekit_port
   filter:
     include_domains:
@@ -15,7 +15,10 @@ homekit:
       feature_list:
         - feature: play_pause
         - feature: toggle_mute
-
+    media_player.kitchen:
+      feature_list:
+        - feature: play_pause
+        - feature: toggle_mute
 automation:
   - alias: "Start HomeKit"
     trigger:

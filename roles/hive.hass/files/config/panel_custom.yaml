@@ -1,5 +1,0 @@
-- name: floorplan
-  sidebar_title: Floor Plan
-  sidebar_icon: mdi:floor-plan
-  url_path: floorplan
-  config: !include floorplan.yaml

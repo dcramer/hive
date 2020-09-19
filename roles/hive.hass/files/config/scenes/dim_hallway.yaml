@@ -1,0 +1,8 @@
+name: Dim Hallway
+entities:
+  light.master_bedroom_master_bed_hallway_cans:
+    state: on
+    brightness: 18
+  light.guest_bedroom_hallway_lights:
+    state: on
+    brightness: 18

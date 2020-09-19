@@ -75,6 +75,7 @@ cards:
     filter:
       include:
         - entity_id: scene.bedtime
+        - entity_id: scene.dim_hallway
 
   - type: vertical-stack
     cards:

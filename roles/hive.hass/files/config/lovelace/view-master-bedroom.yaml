@@ -15,7 +15,7 @@ cards:
   #   hours_to_show: 48
   - type: entities
     entities:
-      - fan.master_bedroom
+      # - fan.master_bedroom
       - switch.master_bedroom_vornado_fan
   - type: custom:group-card
     card:

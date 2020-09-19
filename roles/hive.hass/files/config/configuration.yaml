@@ -5,12 +5,11 @@ homeassistant:
   latitude: !secret lat
   longitude: !secret lng
   elevation: 92
-  temperature_unit: F
   time_zone: America/Los_Angeles
   unit_system: imperial
   packages: !include_dir_named packages/
   customize: !include customize.yaml
-  whitelist_external_dirs:
+  allowlist_external_dirs:
     - /downloads
 
 group: !include groups.yaml
@@ -40,7 +39,6 @@ cloud:
   google_actions:
     filter:
       include_entities:
-        - fan.master_bedroom
         # - lock.garage_storage_deadbolt
         - camera.garage
         - cover.garage_door
@@ -57,6 +55,7 @@ cloud:
       include_domains:
         - light
         - scene
+        - fan
         # - fan
         # - lock
         # - camera
@@ -79,8 +78,8 @@ cloud:
         room: Garage
       media_player.garage:
         room: Garage
-      fan.master_bedroom:
-        room: Master Bedroom
+      # fan.master_bedroom:
+      #   room: Master Bedroom
       light.master_bedroom_bedroom_center_cans:
         room: Master Bedroom
       light.master_bedroom_bedroom_side_cans:
@@ -127,8 +126,9 @@ zwave:
   network_key: "0x50, 0x78, 0x13, 0x63, 0x55, 0x17, 0x65, 0xAB, 0xC9, 0x54, 0x9C, 0xDB, 0x1B, 0xED, 0x0F, 0x86"
 
 zha:
-  radio_type: ezsp
-  usb_path: /dev/ttyUSB1
+  # configured in UI now
+  # radio_type: ezsp
+  # usb_path: /dev/ttyUSB1
   database_path: /config/zigbee.db
 
 # zigbee:
@@ -181,8 +181,6 @@ influxdb:
   database: hass
 
 # image_processing: !include image_processing.yaml
-
-panel_custom: !include panel_custom.yaml
 
 binary_sensor: !include binary_sensors.yaml
 
@@ -259,6 +257,7 @@ sonos:
       - 192.168.1.59
       - 192.168.1.132
       - 192.168.1.139
+      - 192.168.1.179 # arc
 
 # appdaemon:
 

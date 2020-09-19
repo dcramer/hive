@@ -42,32 +42,31 @@ automation:
           #   photo:
           #     - url: http://localhost:5500/<camera_name>/person/best.jpg
           #       caption: A person was detected.
-
-sensor:
-  # - platform: rest
-  #   name: Frigate Debug
-  #   resource: http://192.168.1.25:5500/debug/stats
-  #   scan_interval: 5
-  #   json_attributes:
-  #     - coral
-  #   value_template: "OK"
-  - platform: template
-    sensors:
-      # back_fps:
-      #   value_template: '{{ states.sensor.frigate_debug.attributes["back"]["fps"] }}'
-      #   unit_of_measurement: "FPS"
-      # back_skipped_fps:
-      #   value_template: '{{ states.sensor.frigate_debug.attributes["back"]["skipped_fps"] }}'
-      #   unit_of_measurement: "FPS"
-      # back_detection_fps:
-      #   value_template: '{{ states.sensor.frigate_debug.attributes["back"]["detection_fps"] }}'
-      #   unit_of_measurement: "FPS"
-      frigate_coral_fps:
-        value_template: '{{ states.sensor.frigate_debug.attributes["coral"]["fps"] }}'
-        unit_of_measurement: "fps"
-      frigate_coral_inference_speed:
-        value_template: '{{ states.sensor.frigate_debug.attributes["coral"]["inference_speed"] }}'
-        unit_of_measurement: "ms"
-      frigate_coral_detection_queue:
-        value_template: '{{ states.sensor.frigate_debug.attributes["coral"]["detection_queue"] }}'
-        unit_of_measurement: "frames"
+# sensor:
+#   - platform: rest
+#     name: Frigate Debug
+#     resource: http://192.168.1.25:5500/debug/stats
+#     scan_interval: 5
+#     json_attributes:
+#       - coral
+#     value_template: "OK"
+#   - platform: template
+#     sensors:
+#       # back_fps:
+#       #   value_template: '{{ states.sensor.frigate_debug.attributes["back"]["fps"] }}'
+#       #   unit_of_measurement: "FPS"
+#       # back_skipped_fps:
+#       #   value_template: '{{ states.sensor.frigate_debug.attributes["back"]["skipped_fps"] }}'
+#       #   unit_of_measurement: "FPS"
+#       # back_detection_fps:
+#       #   value_template: '{{ states.sensor.frigate_debug.attributes["back"]["detection_fps"] }}'
+#       #   unit_of_measurement: "FPS"
+#       frigate_coral_fps:
+#         value_template: '{{ states.sensor.frigate_debug.attributes["coral"]["fps"] }}'
+#         unit_of_measurement: "fps"
+#       frigate_coral_inference_speed:
+#         value_template: '{{ states.sensor.frigate_debug.attributes["coral"]["inference_speed"] }}'
+#         unit_of_measurement: "ms"
+#       frigate_coral_detection_queue:
+#         value_template: '{{ states.sensor.frigate_debug.attributes["coral"]["detection_queue"] }}'
+#         unit_of_measurement: "frames"

@@ -76,8 +76,8 @@ sensor.recology_compost:
   icon: mdi:food-apple
 zone.sentry_sfo:
   entity_picture: /local/images/sentry.png
-fan.master_bedroom:
-  friendly_name: "Dyson Fan"
+# fan.master_bedroom:
+#   friendly_name: "Dyson Fan"
 
 zwave.garage_storage_deadbolt:
   friendly_name: "Garage Storage Deadbolt"
