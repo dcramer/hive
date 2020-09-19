@@ -13,6 +13,7 @@
   docker_container:
     name: mariadb
     image: linuxserver/mariadb
+    network_mode: host
     pull: true
     volumes:
       - /docker/mariadb:/config
@@ -24,10 +25,9 @@
       PGID: "{{ hive_gid | string }}"
       MYSQL_ROOT_PASSWORD: "{{ mariadb_root_password }}"
     restart_policy: unless-stopped
-
-- name: Add mariadb to network
-  docker_network:
-    name: hive
-    connected:
-      - mariadb
-    appends: yes
+# - name: Add mariadb to network
+#   docker_network:
+#     name: hive
+#     connected:
+#       - mariadb
+#     appends: yes

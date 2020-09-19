@@ -45,17 +45,12 @@ cloud:
         - input_boolean.dryer
         - input_boolean.washer
         - switch.pi_hole
-        # TODO(dcramer): for some reason this doesnt actually work for
-        # the sonos devices
-        - media_player.garage
-        - media_player.office
-        - media_player.kitchen
-        - media_player.master_bedroom
         - switch.master_bedroom_vornado_fan
       include_domains:
         - light
         - scene
         - fan
+        - media_player
         # - fan
         # - lock
         # - camera
@@ -147,9 +142,6 @@ plex:
   port: !secret plex_webui_port
   token: !secret plex_token
 
-ecobee:
-  api_key: !secret ecobee_key
-
 geofency:
 
 speedtestdotnet:
@@ -175,10 +167,10 @@ cover:
     username: !secret myq_username
     password: !secret myq_password
 
-influxdb:
-  host: influxdb
-  port: !secret influxdb_port
-  database: hass
+# influxdb:
+#   host: influxdb
+#   port: !secret influxdb_port
+#   database: hass
 
 # image_processing: !include image_processing.yaml
 

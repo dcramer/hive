@@ -1,0 +1,9 @@
+wake_on_lan:
+
+samsungtv:
+  - name: Media Room TV
+    host: 192.168.1.194
+    turn_on_action:
+      - service: wake_on_lan.send_magic_packet
+        data:
+          mac: "00:c3:f4:6f:8e:d6"

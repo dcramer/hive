@@ -84,6 +84,7 @@
     name: homeassistant
     image: "homeassistant/home-assistant:0.114.3"
     pull: true
+    network_mode: host
     hostname: homeassistant
     restart_policy: unless-stopped
     devices:
@@ -112,10 +113,9 @@
       TZ: "{{ timezone }}"
       PUID: "{{ hive_uid | string }}"
       PGID: "{{ hive_gid | string }}"
-
-- name: Add homeassistant to network
-  docker_network:
-    name: hive
-    connected:
-      - homeassistant
-    appends: yes
+# - name: Add homeassistant to network
+#   docker_network:
+#     name: hive
+#     connected:
+#       - homeassistant
+#     appends: yes
