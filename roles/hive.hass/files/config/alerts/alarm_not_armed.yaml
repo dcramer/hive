@@ -3,8 +3,9 @@ done_message: '{{now().strftime("%H:%M:%S %Y-%m-%d")}}: Alarm condition has been
 entity_id: binary_sensor.disarmed_and_away
 state: "on"
 repeat:
-- 1
-- 10
+  - 1
+  - 10
+  - 60
 skip_first: true
 can_acknowledge: true
 notifiers:

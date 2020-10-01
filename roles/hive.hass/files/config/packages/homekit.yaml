@@ -8,18 +8,22 @@ homekit:
       - alarm_control_panel
       - climate
       - camera
+      - cover
     exclude_entity_globs:
       # - light.all_*
       - camera.*_person
       - light.guest_bedroom_hallway_lights
       - light.all_lights
+      - media_player.*_tv
     include_entities:
       - media_player.office
       - media_player.kitchen
       - media_player.media_room
-      - media_player.media_room_tv
       - switch.pi_hole
       - switch.master_bedroom_vornado_fan
+      - scene.bedtime
+      - scene.movie_time
+      - scene.dim_hallway
     include_entity_globs:
       - light.*lights
   entity_config:
