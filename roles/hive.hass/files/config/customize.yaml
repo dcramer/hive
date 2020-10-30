@@ -198,6 +198,9 @@ light.guest_bedroom_hallway_lights:
 light.garage_bottom_of_stairs:
   friendly_name: "Front Stairs"
 
+light.guest_bedroom_front_staircase_decorative:
+  friendly_name: "Front Stairs Decorative"
+
 light.garage_entry_can:
   friendly_name: "Front Door Main"
 
@@ -221,3 +224,9 @@ light.back_stairs_top_of_back_stairs:
 
 light.back_stairs_back_stairs_cans:
   friendly_name: "Back Stairs Cans"
+
+light.guest_bedroom_back_staircase_decorative:
+  friendly_name: "Back Stairs Decorative"
+
+light.guest_bedroom_office_room_fan:
+  friendly_name: "Office Fan"

@@ -11,12 +11,21 @@ entities:
   light.guest_bedroom_office_fire_place_cans: off
   light.guest_bedroom_office_room_center_light: off
   light.guest_bedroom_office_room_wall_cans: off
-  light.back_stairs_kitchen_cans: off
   light.guest_bedroom_dining_room_cans: off
   light.guest_bedroom_dining_room_center: off
   light.guest_bedroom_hallway_lights: off
-  light.garage_bottom_of_stairs: off
+  light.guest_bedroom_back_staircase_decorative: off
+  light.guest_bedroom_front_staircase_decorative: off
+  light.back_stairs_kitchen_cans: off
+  light.back_stairs_back_stairs_cans: off
+  light.back_stairs_top_of_back_stair: off
+  light.garage_exterior_sconces: off
   light.garage_entry_can: off
+  light.garage_bottom_of_stairs: off
+  light.media_room_back_yard_landscape: off
+  light.media_room_media_exterior_sconces: off
+  light.media_room_garage_hall: off
+  light.media_room_media_room_cans: off
   media_player.media_room:
     state: on
     volume_level: 0.85

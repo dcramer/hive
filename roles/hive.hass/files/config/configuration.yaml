@@ -97,6 +97,8 @@ cloud:
         room: Office
       light.guest_bedroom_office_room_wall_cans:
         room: Office
+      light.guest_bedroom_office_room_fan:
+        room: Office
       media_player.office:
         room: Office
       light.back_stairs_kitchen_cans:
