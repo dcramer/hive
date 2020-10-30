@@ -21,7 +21,7 @@
 - name: frigate Docker Container
   docker_container:
     name: frigate
-    image: blakeblackshear/frigate:stable
+    image: blakeblackshear/frigate:0.7.1
     pull: true
     restart_policy: unless-stopped
     shm_size: 1g
