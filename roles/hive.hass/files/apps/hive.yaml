@@ -32,8 +32,8 @@ power_usage_washer:
   entity_id: sensor.washer_power
   delay: 3
   input_boolean: input_boolean.washer
-  notify:
-    - telegram_household
+  telegram:
+    - !secret telegram_group_id_home
   sonos:
     - media_player.office
     - media_player.kitchen
@@ -46,8 +46,8 @@ power_usage_dryer:
   entity_id: sensor.dryer_power
   delay: 3
   input_boolean: input_boolean.dryer
-  notify:
-    - telegram_household
+  telegram:
+    - !secret telegram_group_id_home
   sonos:
     - media_player.office
     - media_player.kitchen

@@ -5,6 +5,7 @@ class PowerUsageAlert(AlertApp):
     EMPTY_NEW_VALUES = frozenset([None, "", "unavailable"])
 
     def initialize(self):
+        self.telegram_list = self.args.get("telegram") or []
         self.notify_list = self.args.get("notify") or []
         self.sonos_list = self.args.get("sonos") or []
         self.sonos_volume = float(self.args.get("sonos_volume") or 0.5)
@@ -47,4 +48,8 @@ class PowerUsageAlert(AlertApp):
                 volume=self.sonos_volume,
                 message=message,
                 delay="00:00:05",
+            )
+        for target in self.telegram_list:
+            self.call_service(
+                "telegram_bot/send_message", target=target, message=message,
             )
