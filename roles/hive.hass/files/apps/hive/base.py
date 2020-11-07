@@ -162,9 +162,9 @@ class AlertApp(hass.Hass):
             self.repeat_idx = max(self.repeat_idx + 1, len(self.repeat) - 1)
             self.last_active_at = now
             self.last_value = new
-            self.did_alert = (
-                not self.skip_first or self.last_active_at > self.first_active_at
-            )
+            # self.did_alert = (
+            #     not self.skip_first or self.last_active_at > self.first_active_at
+            # )
             if self.input_boolean is not None:
                 self.set_state(
                     self.input_boolean, state="on", attributes=self._get_attributes(),
