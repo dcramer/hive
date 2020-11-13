@@ -241,15 +241,6 @@ hacs:
 #     client_id: !secret spotify_client_id
 #     client_secret: !secret spotify_client_secret
 
-sonos:
-  media_player:
-    hosts:
-      - 192.168.1.58
-      - 192.168.1.59
-      - 192.168.1.132
-      - 192.168.1.139
-      - 192.168.1.179 # arc
-
 # appdaemon:
 
 # hadashboard:

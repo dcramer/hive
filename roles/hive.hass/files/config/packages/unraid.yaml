@@ -3,7 +3,7 @@
 sensor:
   - platform: rest
     name: Unraid
-    resource: "http://192.168.1.73/plugins/jsonapi/api.php?file=shares.ini"
+    resource: "http://tower/plugins/jsonapi/api.php?file=shares.ini"
     username: root
     password: !secret unraid_password
     json_attributes:
