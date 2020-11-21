@@ -1,3 +1,0 @@
----
-sentry:
-  dsn: !secret sentry_dsn
