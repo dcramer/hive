@@ -65,6 +65,8 @@ cloud:
         room: Garage
       camera.garage:
         room: Garage
+      camera.media_room:
+        room: Media Room
       cover.garage_door:
         room: Garage
       input_boolean.dryer:

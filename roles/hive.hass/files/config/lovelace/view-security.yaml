@@ -20,9 +20,9 @@ cards:
     camera_view: live
     show_name: false
     show_state: false
-  # - type: picture-entity
-  #   entity: camera.backyard
-  #   name: Backyard
-  #   camera_view: live
-  #   show_name: false
-  #   show_state: false
+  - type: picture-entity
+    entity: camera.media_room
+    name: Media Room
+    camera_view: live
+    show_name: false
+    show_state: false

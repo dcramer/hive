@@ -656,21 +656,21 @@
     mqtt_port: 1883
 
     cameras:
-      # backyard:
-      #   host: 192.168.1.163
-      #   stream: rtsp://192.168.1.7:7447/gr2Wt6uAsAZU4Lmn
-
       garage:
         host: 192.168.1.16
-        stream: rtsp://192.168.1.7:7447/CgzDPxc1O7YnJmIt
+        stream: rtsp://192.168.1.1:7447/CgzDPxc1O7YnJmIt
 
       front_door_exterior:
         host: 192.168.1.28
-        stream: rtsp://192.168.1.7:7447/YTeA3OtSTKo92DHm
+        stream: rtsp://192.168.1.1:7447/YTeA3OtSTKo92DHm
 
       garage_exterior:
         host: 192.168.1.27
-        stream: rtsp://192.168.1.7:7447/KyNbHb954GRCnH9E
+        stream: rtsp://192.168.1.1:7447/KyNbHb954GRCnH9E
+
+      media_room:
+        host: 192.168.1.200
+        stream: rtsp://192.168.1.1:7447/zmtVpM4jVbat0IF9
 
     anticaptcha_key: !vault |
       $ANSIBLE_VAULT;1.1;AES256
