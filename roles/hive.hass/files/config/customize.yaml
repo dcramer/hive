@@ -211,7 +211,19 @@ light.media_room_garage_hall:
   friendly_name: "Media Room Hallway"
 
 light.media_room_media_room_cans:
-  friendly_name: "Media Room Main"
+  friendly_name: "Media Room Cans"
+
+light.media_room_media_room_bike_area:
+  friendly_name: "Media Room Side"
+
+light.media_room_media_room_emergency_lt:
+  friendly_name: "Media Room Entry"
+
+light.media_room_seating_area:
+  friendly_name: "Media Room Seating"
+
+light.media_room_bar_ligh_undercabinet:
+  friendly_name: "Bar Lights"
 
 light.media_room_exterior_sconces:
   friendly_name: "Backyard Main"

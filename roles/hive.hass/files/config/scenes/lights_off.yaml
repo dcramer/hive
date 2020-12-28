@@ -16,7 +16,7 @@ entities:
   light.guest_bedroom_front_staircase_decorative: off
   light.back_stairs_kitchen_cans: off
   light.back_stairs_back_stairs_cans: off
-  light.back_stairs_top_of_back_stair: off
+  light.back_stairs_top_of_back_stairs: off
   light.garage_exterior_sconces: off
   light.garage_entry_can: off
   light.garage_bottom_of_stairs: off
@@ -24,3 +24,7 @@ entities:
   light.media_room_media_exterior_sconces: off
   light.media_room_garage_hall: off
   light.media_room_media_room_cans: off
+  light.media_room_bar_ligh_undercabinet: off
+  light.media_room_seating_area: off
+  light.media_room_media_room_emergency_lt: off
+  light.media_room_media_room_bike_area: off

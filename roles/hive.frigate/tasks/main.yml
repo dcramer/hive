@@ -21,7 +21,7 @@
 - name: frigate Docker Container
   docker_container:
     name: frigate
-    image: blakeblackshear/frigate:0.7.1
+    image: blakeblackshear/frigate:stable-amd64
     pull: true
     restart_policy: unless-stopped
     shm_size: 1g
@@ -30,10 +30,20 @@
       - /dev/bus/usb:/dev/bus/usb
       - "/docker/frigate:/config:ro"
       - "/etc/localtime:/etc/localtime:ro"
+      - type: tmpfs # 1GB of memory, reduces SSD/SD Card wear
+        target: /cache
+        tmpfs:
+          size: 100000000
     ports:
       - "{{ frigate_port }}:5000/tcp"
     env:
       FRIGATE_RTSP_PASSWORD: "{{ frigate_rtsp_password }}"
+    healthcheck:
+      test: ["CMD", "wget" , "-q", "-O-", "http://localhost:5000"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 3m
     # user: "{{ hive_uid }}"
 
 - name: Add frigate to network

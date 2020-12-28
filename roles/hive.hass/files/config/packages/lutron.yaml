@@ -9,7 +9,7 @@ light:
     entities:
       - light.back_stairs_kitchen_cans
       - light.back_stairs_back_stairs_cans
-      - light.back_stairs_top_of_back_stair
+      - light.back_stairs_top_of_back_stairs
       - light.master_bedroom_bedroom_center_cans
       - light.master_bedroom_bedroom_side_cans
       - light.master_bedroom_bedroom_sitting_cans
@@ -70,6 +70,13 @@ light:
       - light.media_room_garage_hall
       - light.media_room_media_room_cans
   - platform: group
+    name: Media Room Lights
+    entities:
+      - light.media_room_media_room_cans
+      - light.media_room_seating_area
+      - light.media_room_media_room_emergency_lt
+      - light.media_room_media_room_bike_area
+  - platform: group
     name: Front Door Lights
     entities:
       - light.garage_entry_can
@@ -80,45 +87,3 @@ light:
     entities:
       - light.media_room_back_yard_landscape
       - light.media_room_media_exterior_sconces
-
-group:
-  master_bedroom_lights:
-    name: Master Bedroom Lights
-    entities:
-      - light.master_bedroom_bedroom_center_cans
-      - light.master_bedroom_bedroom_side_cans
-      - light.master_bedroom_bedroom_sitting_cans
-      - light.master_bedroom_master_bed_hallway_cans
-  guest_bedroom_lights:
-    name: Guest Bedroom Lights
-    entities:
-      - light.guest_bedroom_guest_bedroom_cans
-      - light.guest_bedroom_guest_bedroom_wall
-  office_lights:
-    name: Office Lights
-    entities:
-      - light.guest_bedroom_office_fire_place_cans
-      - light.guest_bedroom_office_room_center_light
-      - light.guest_bedroom_office_room_wall_cans
-  kitchen_lights:
-    name: Kitchen Lights
-    entities:
-      - light.back_stairs_kitchen_cans
-  dining_room_lights:
-    name: Dining Room Lights
-    entities:
-      - light.guest_bedroom_dining_room_cans
-      - light.guest_bedroom_dining_room_center
-  hallway_lights:
-    name: Hallway Lights
-    entities:
-      - light.guest_bedroom_hallway_lights
-  entrance_lights:
-    name: Entrance Lights
-    entities:
-      - light.garage_bottom_of_stairs
-  front_door_lights:
-    name: Front Door Lights
-    entities:
-      - light.garage_entry_can
-      - light.garage_bottom_of_stairs

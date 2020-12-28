@@ -18,10 +18,10 @@ class BedsideButton(hass.Hass):
         getattr(self, f"{command}_press", lambda: None)()
 
     def single_press(self):
-        if self.get_state("group.master_bedroom_lights") == "off":
-            self.turn_on("group.master_bedroom_lights")
+        if self.get_state("light.master_bedroom_lights") == "off":
+            self.turn_on("light.master_bedroom_lights")
         else:
-            self.turn_off("group.master_bedroom_lights")
+            self.turn_off("light.master_bedroom_lights")
 
     def double_press(self):
         self.call_service("scene/turn_on", entity_id="scene.bedtime")

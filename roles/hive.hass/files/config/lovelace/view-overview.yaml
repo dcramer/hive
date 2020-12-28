@@ -49,8 +49,8 @@ cards:
   #   name: Public Transit
   #   show_header_toggle: false
 
-  # - type: alarm-panel
-  #   entity: alarm_control_panel.home
+  - type: alarm-panel
+    entity: alarm_control_panel.home
 
   # - type: custom:recology-card
   #   entity: sensor.recology
@@ -77,6 +77,7 @@ cards:
         - entity_id: scene.bedtime
         - entity_id: scene.dim_hallway
         - entity_id: scene.movie_time
+        - entity_id: scene.evening
 
   - type: vertical-stack
     cards:

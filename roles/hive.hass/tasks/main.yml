@@ -82,7 +82,7 @@
 - name: homeassistant Docker Container
   docker_container:
     name: homeassistant
-    image: "homeassistant/home-assistant:0.118.2"
+    image: "homeassistant/home-assistant:2020.12.1"
     pull: true
     network_mode: host
     hostname: homeassistant

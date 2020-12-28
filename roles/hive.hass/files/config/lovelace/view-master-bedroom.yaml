@@ -22,7 +22,7 @@ cards:
       type: entities
       title: "Lights"
       show_header_toggle: true
-    group: group.master_bedroom_lights
+    group: light.master_bedroom_lights
 
   - type: entities
     entities:
