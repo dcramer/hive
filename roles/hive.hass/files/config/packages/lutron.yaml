@@ -37,18 +37,15 @@ light:
       - light.guest_bedroom_hallway_lights
       - light.guest_bedroom_front_staircase_decorative
   - platform: group
-    name: Entrance Lights
-    entities:
-      - light.garage_bottom_of_stairs
-  - platform: group
     name: Media Room Lights
     entities:
       - light.media_room_media_room_cans
       - light.media_room_seating_area
-      - light.media_room_media_room_emergency_lt
+      - light.garage_media_room_emergency
       - light.media_room_media_room_bike_area
       - light.media_room_garage_hall
       - light.media_room_bar_ligh_undercabinet
+      - light.back_stairs_top_of_back_stairs
   - platform: group
     name: Front Door Lights
     entities:
@@ -56,11 +53,8 @@ light:
       - light.garage_bottom_of_stairs
       - light.garage_exterior_scoce
       - light.garage_garage_door_led
-  - platform: group
-    name: Back Yard Lights
-    entities:
-      - light.media_room_back_yard_landscape
-      - light.media_room_media_exterior_sconces
+
+  # Exterior light groups
   - platform: group
     name: Exterior Lights
     entities:
@@ -70,3 +64,12 @@ light:
       - light.garage_bottom_of_stairs
       - light.garage_exterior_scoce
       - light.garage_garage_door_led
+  - platform: group
+    name: Entrance Lights
+    entities:
+      - light.garage_bottom_of_stairs
+  - platform: group
+    name: Back Yard Lights
+    entities:
+      - light.media_room_back_yard_landscape
+      - light.media_room_media_exterior_sconces

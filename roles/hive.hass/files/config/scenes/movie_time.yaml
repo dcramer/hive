@@ -9,7 +9,7 @@ entities:
     state: on
     brightness: 18
   light.media_room_seating_area: off
-  light.media_room_media_room_emergency_lt: off
+  light.garage_media_room_emergency: off
   light.media_room_media_room_bike_area:
     state: on
     brightness: 18

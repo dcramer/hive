@@ -205,7 +205,7 @@ light.garage_entry_can:
   friendly_name: "Front Door Main"
 
 light.garage_exterior_scoce:
-  friendly_name: "Front Door Scone"
+  friendly_name: "Front Door Sconce"
 
 light.garage_garage_door_led:
   friendly_name: "Garage Door"
@@ -219,7 +219,7 @@ light.media_room_media_room_cans:
 light.media_room_media_room_bike_area:
   friendly_name: "Media Room Side"
 
-light.media_room_media_room_emergency_lt:
+light.garage_media_room_emergency:
   friendly_name: "Media Room Entry"
 
 light.media_room_seating_area:
