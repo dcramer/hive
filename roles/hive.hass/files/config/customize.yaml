@@ -204,8 +204,11 @@ light.guest_bedroom_front_staircase_decorative:
 light.garage_entry_can:
   friendly_name: "Front Door Main"
 
-light.garage_exterior_sconces:
-  friendly_name: "Front Door Exterior"
+light.garage_exterior_scoce:
+  friendly_name: "Front Door Scone"
+
+light.garage_garage_door_led:
+  friendly_name: "Garage Door"
 
 light.media_room_garage_hall:
   friendly_name: "Media Room Hallway"
@@ -226,7 +229,7 @@ light.media_room_bar_ligh_undercabinet:
   friendly_name: "Bar Lights"
 
 light.media_room_exterior_sconces:
-  friendly_name: "Backyard Main"
+  friendly_name: "Backyard Sconces"
 
 light.media_room_back_yard_landscape:
   friendly_name: "Backyard Landscape"

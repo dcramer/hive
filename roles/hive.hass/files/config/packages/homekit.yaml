@@ -5,7 +5,7 @@ homekit:
   port: !secret homekit_port
   filter:
     include_domains:
-      - alarm_control_panel
+      # - alarm_control_panel
       - climate
       - camera
       - cover
@@ -13,7 +13,6 @@ homekit:
       # - light.all_*
       - camera.*_person
       - light.guest_bedroom_hallway_lights
-      - light.all_lights
       - media_player.*_tv
     include_entities:
       - media_player.office

@@ -1,0 +1,46 @@
+---
+- name: create rust directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ hive_user }}"
+    group: "{{ hive_user }}"
+    mode: 0755
+  with_items:
+    - /docker/rust
+    - /docker/rust/data
+
+- name: rust Docker Container
+  docker_container:
+    name: rust
+    image: didstopia/rust-server
+    pull: true
+    restart_policy: unless-stopped
+    volumes:
+      - /docker/rust/data:/steamcmd/rust
+    ports:
+      - "28015:28015/udp"
+    env:
+      RUST_SERVER_STARTUP_ARGUMENTS: "-batchmode -load -nographics +server.secure 1"
+      # RUST_SERVER_IDENTITY (DEFAULT: "docker" - Mainly used for the name of the save directory)
+      RUST_SERVER_PORT: "28015"
+      RUST_SERVER_SEED: "535437"
+      RUST_SERVER_WORLDSIZE: "2700"
+      RUST_SERVER_NAME: "Santry"
+      RUST_SERVER_MAXPLAYERS: "50"
+      RUST_SERVER_DESCRIPTION: "Get Santry"
+      RUST_SERVER_URL: "https://sentry.io"
+      # RUST_SERVER_BANNER_URL (DEFAULT: "" - The publicly visible server banner image URL)
+      # RUST_SERVER_SAVE_INTERVAL (DEFAULT: "600" - Amount of seconds between automatic saves.)
+      # RUST_RCON_WEB (DEFAULT "1" - Set to 1 or 0 to enable or disable the web-based RCON server)
+      # RUST_RCON_PORT (DEFAULT: "28016" - RCON server port)
+      RUST_RCON_PASSWORD: "somethingsupersecure"
+      # RUST_RCON_PASSWORD (DEFAULT: "docker" - RCON server password, please change this!)
+      # RUST_APP_PORT (DEFAULT: "28082" - Rust+ companion app port)
+      # RUST_BRANCH (DEFAULT: Not set - Sets the branch argument to use, eg. set to "-beta prerelease" for the prerelease branch)
+      # RUST_UPDATE_CHECKING (DEFAULT: "0" - Set to 1 to enable fully automatic update checking, notifying players and restarting to install updates)
+      # RUST_UPDATE_BRANCH (DEFAULT: "public" - Set to match the branch that you want to use for updating, ie. "prerelease" or "public", but do not specify arguments like "-beta")
+      # RUST_START_MODE (DEFAULT: "0" - Determines if the server should update and then start (0), only update (1) or only start (2))
+      RUST_OXIDE_ENABLED: "1"
+      RUST_OXIDE_UPDATE_ON_BOOT: "1"
+    # user: "{{ hive_uid }}"

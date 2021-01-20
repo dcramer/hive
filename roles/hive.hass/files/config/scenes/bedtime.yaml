@@ -6,29 +6,15 @@ entities:
   light.master_bedroom_bedroom_center_cans: off
   light.master_bedroom_bedroom_sitting_cans: off
   light.master_bedroom_master_bed_hallway_cans: off
-  light.guest_bedroom_guest_bedroom_cans: off
-  light.guest_bedroom_guest_bedroom_wall: off
-  light.guest_bedroom_office_fire_place_cans: off
-  light.guest_bedroom_office_room_center_light: off
-  light.guest_bedroom_office_room_wall_cans: off
-  light.guest_bedroom_dining_room_cans: off
-  light.guest_bedroom_dining_room_center: off
-  light.guest_bedroom_hallway_lights: off
-  light.guest_bedroom_back_staircase_decorative: off
-  light.guest_bedroom_front_staircase_decorative: off
-  light.back_stairs_kitchen_cans: off
-  light.back_stairs_back_stairs_cans: off
-  light.back_stairs_top_of_back_stairs: off
-  light.garage_exterior_sconces: off
-  light.garage_bottom_of_stairs: off
-  light.garage_entry_can: off
-  light.media_room_back_yard_landscape: off
-  light.media_room_media_exterior_sconces: off
-  light.media_room_garage_hall: off
-  light.media_room_media_room_cans: off
-  light.media_room_bar_ligh_undercabinet: off
-  light.media_room_seating_area: off
-  light.media_room_media_room_emergency_lt: off
-  light.media_room_media_room_bike_area: off
+  light.exterior_lights: off
+  light.guest_bedroom_lights: off
+  light.office_lights: off
+  light.dining_room_lights: off
+  light.kitchen_lights: off
+  light.media_room_lights: off
+  light.garage_lights: off
+  light.hallway_lights: off
   media_player.office: paused
   media_player.kitchen: paused
+  media_player.media_room: paused
+  media_player.garage: paused

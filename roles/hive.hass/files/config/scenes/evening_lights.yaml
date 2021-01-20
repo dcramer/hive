@@ -1,0 +1,5 @@
+name: Evening Lights
+entities:
+  light.guest_bedroom_dining_room_center: on
+  light.back_stairs_top_of_back_stairs: on
+  light.guest_bedroom_front_staircase_decorative: on

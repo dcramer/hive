@@ -1,15 +1,15 @@
 ---
 # https://community.home-assistant.io/t/unraid-json-api/158652
-sensor:
-  - platform: rest
-    name: Unraid
-    resource: "http://tower/plugins/jsonapi/api.php?file=shares.ini"
-    username: root
-    password: !secret unraid_password
-    json_attributes:
-      - media
-    authentication: basic
-    value_template: '{{ value_json["media"]["free"] }}'
-    headers:
-      User-Agent: Home Assistant
-      Content-Type: application/json
+# sensor:
+#   - platform: rest
+#     name: Unraid
+#     resource: "http://tower/plugins/jsonapi/api.php?file=shares.ini"
+#     username: root
+#     password: !secret unraid_password
+#     json_attributes:
+#       - media
+#     authentication: basic
+#     value_template: '{{ value_json["media"]["free"] }}'
+#     headers:
+#       User-Agent: Home Assistant
+#       Content-Type: application/json

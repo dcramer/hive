@@ -6,12 +6,12 @@ window.CONFIG = {
   sentryDsn: "https://42f4d8d4e0d24b5782c90b907454dd01@o172566.ingest.sentry.io/5242607",
   events: [
     {
-      entityId: "binary_sensor.motion_front_door_exterior",
+      entityId: "binary_sensor.motion_doorbell",
       state: "on",
       modal: {
         type: MODAL.DOOR_CONTROL,
-        camera: "camera.front_door_exterior",
-        title: "Front Door",
+        camera: "camera.doorbell",
+        title: "Doorbell",
       },
     },
   ],
@@ -37,18 +37,6 @@ window.CONFIG = {
           type: TILE.SWITCH,
           entityId: "switch.pi_hole",
           icon: "pi-hole",
-        },
-        {
-          type: TILE.SCENE,
-          entityId: "scene.bedtime",
-        },
-        {
-          type: TILE.SCENE,
-          entityId: "scene.dim_hallway",
-        },
-        {
-          type: TILE.SCENE,
-          entityId: "scene.movie_time",
         },
       ],
     },
@@ -103,6 +91,12 @@ window.CONFIG = {
           type: TILE.LIGHT,
           entityId: "light.entrance_lights",
           title: "Entryway",
+        },
+        {
+          height: 0.5,
+          type: TILE.LIGHT,
+          entityId: "light.media_room_lights",
+          title: "Media Room",
         },
         {
           height: 0.5,

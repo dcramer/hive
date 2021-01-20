@@ -1,0 +1,3 @@
+name: Morning Lights
+entities:
+  light.exterior_lights: off

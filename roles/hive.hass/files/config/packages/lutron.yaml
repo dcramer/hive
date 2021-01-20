@@ -5,31 +5,6 @@ lutron:
 
 light:
   - platform: group
-    name: All Lights
-    entities:
-      - light.back_stairs_kitchen_cans
-      - light.back_stairs_back_stairs_cans
-      - light.back_stairs_top_of_back_stairs
-      - light.master_bedroom_bedroom_center_cans
-      - light.master_bedroom_bedroom_side_cans
-      - light.master_bedroom_bedroom_sitting_cans
-      - light.master_bedroom_master_bed_hallway_cans
-      - light.guest_bedroom_guest_bedroom_cans
-      - light.guest_bedroom_guest_bedroom_wall
-      - light.guest_bedroom_office_fire_place_cans
-      - light.guest_bedroom_office_room_center_light
-      - light.guest_bedroom_office_room_wall_cans
-      - light.guest_bedroom_dining_room_cans
-      - light.guest_bedroom_dining_room_center
-      - light.guest_bedroom_hallway_lights
-      - light.garage_exterior_sconces
-      - light.garage_bottom_of_stairs
-      - light.garage_entry_can
-      - light.media_room_back_yard_landscape
-      - light.media_room_media_exterior_sconces
-      - light.media_room_garage_hall
-      - light.media_room_media_room_cans
-  - platform: group
     name: Master Bedroom Lights
     entities:
       - light.master_bedroom_bedroom_center_cans
@@ -60,6 +35,7 @@ light:
     name: Hallway Lights
     entities:
       - light.guest_bedroom_hallway_lights
+      - light.guest_bedroom_front_staircase_decorative
   - platform: group
     name: Entrance Lights
     entities:
@@ -67,23 +43,30 @@ light:
   - platform: group
     name: Media Room Lights
     entities:
-      - light.media_room_garage_hall
-      - light.media_room_media_room_cans
-  - platform: group
-    name: Media Room Lights
-    entities:
       - light.media_room_media_room_cans
       - light.media_room_seating_area
       - light.media_room_media_room_emergency_lt
       - light.media_room_media_room_bike_area
+      - light.media_room_garage_hall
+      - light.media_room_bar_ligh_undercabinet
   - platform: group
     name: Front Door Lights
     entities:
       - light.garage_entry_can
       - light.garage_bottom_of_stairs
-      - light.garage_exterior_sconces
+      - light.garage_exterior_scoce
+      - light.garage_garage_door_led
   - platform: group
     name: Back Yard Lights
     entities:
       - light.media_room_back_yard_landscape
       - light.media_room_media_exterior_sconces
+  - platform: group
+    name: Exterior Lights
+    entities:
+      - light.media_room_back_yard_landscape
+      - light.media_room_media_exterior_sconces
+      - light.garage_entry_can
+      - light.garage_bottom_of_stairs
+      - light.garage_exterior_scoce
+      - light.garage_garage_door_led

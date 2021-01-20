@@ -1,6 +1,6 @@
 ---
 - name: restart homeassistant
-  shell: docker restart homeassistant
+  shell: docker restart homeassistant appdaemon
 
 - name: restart appdaemon
   shell: docker restart appdaemon

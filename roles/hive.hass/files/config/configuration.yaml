@@ -202,13 +202,13 @@ device_tracker:
     username: !secret tile_username
     password: !secret tile_password
 
-dyson:
-  username: !secret dyson_username
-  password: !secret dyson_password
-  language: US
-  devices:
-    - device_id: !secret dyson_fan_id
-      device_ip: !secret dyson_fan_host
+# dyson:
+#   username: !secret dyson_username
+#   password: !secret dyson_password
+#   language: US
+#   devices:
+#     - device_id: !secret dyson_fan_id
+#       device_ip: !secret dyson_fan_host
 
 input_text:
   recology_api_url:
