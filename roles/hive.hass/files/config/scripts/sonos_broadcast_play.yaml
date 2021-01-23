@@ -1,0 +1,22 @@
+alias: "Sonos Play all speakers script"
+sequence:
+  - service: sonos.snapshot
+    data_template:
+      entity_id: "{{ entity_id }}"
+  - service: sonos.join
+    data_template:
+      master: "{{ entity_id }}"
+      entity_id: all
+  - service: media_player.volume_set
+    data_template:
+      entity_id: "{{ entity_id }}"
+      volume_level: "{{ volume }}"
+  - service: media_player.play_media
+    data_template:
+      entity_id: "{{ entity_id }}"
+      media_content_id: "{{ media_content_id }}"
+      media_content_type: "music"
+  - delay: "{{ delay }}"
+  - service: sonos.restore
+    data_template:
+      entity_id: "{{ entity_id }}"
