@@ -1,0 +1,9 @@
+alias: "Telegram bot to close the garage door"
+trigger:
+  platform: event
+  event_type: telegram_command
+  event_data:
+    command: "/closeGarage"
+action:
+  - service: cover.close_cover
+    entity_id: cover.garage_door

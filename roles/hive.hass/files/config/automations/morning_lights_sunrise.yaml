@@ -1,0 +1,9 @@
+alias: "Morning lights sunrise"
+initial_state: true
+trigger:
+  platform: sun
+  event: sunrise
+  offset: "+00:45:00"
+action:
+  service: scene.turn_on
+  entity_id: scene.morning_lights

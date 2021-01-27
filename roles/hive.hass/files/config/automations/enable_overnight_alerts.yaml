@@ -1,0 +1,9 @@
+alias: "Enable overnight alerts"
+initial_state: true
+trigger:
+  - platform: state
+    entity_id: binary_sensor.is_overnight
+    to: "on"
+action:
+  - service: homeassistant.turn_on
+    entity_id: alert.garage_motion_late_night

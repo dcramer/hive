@@ -1,0 +1,9 @@
+alias: "Telegram bot to ack the garage door being open"
+trigger:
+  platform: event
+  event_type: telegram_command
+  event_data:
+    command: "/ackGarage"
+action:
+  - service: alert.turn_off
+    entity_id: alert.garage_door_open

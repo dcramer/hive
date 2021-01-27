@@ -1,0 +1,8 @@
+alias: "Evening lights automatic off"
+initial_state: true
+trigger:
+  platform: time
+  at: "00:30:00"
+action:
+  service: light.turn_off
+  entity_id: light.exterior_lights

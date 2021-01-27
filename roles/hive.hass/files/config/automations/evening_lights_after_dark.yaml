@@ -1,0 +1,9 @@
+alias: "Evening lights after dark"
+initial_state: true
+trigger:
+  platform: sun
+  event: sunset
+  offset: "+00:30:00"
+action:
+  service: light.turn_on
+  entity_id: light.garage_entry_can

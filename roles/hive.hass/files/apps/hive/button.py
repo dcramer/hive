@@ -27,4 +27,4 @@ class BedsideButton(hass.Hass):
         self.call_service("scene/turn_on", entity_id="scene.bedtime")
 
     def hold_press(self):
-        self.call_service("scene/turn_on", entity_id="scene.lights_off")
+        self.call_service("scene/turn_on", entity_id="scene.lights_out")

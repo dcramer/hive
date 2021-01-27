@@ -34,7 +34,6 @@ power_usage_washer:
   input_boolean: input_boolean.washer
   telegram:
     - !secret telegram_group_id_home
-  sonos_entity_id: media_player.office
   done_message: "The wash machine has finished"
 
 power_usage_dryer:
@@ -46,7 +45,6 @@ power_usage_dryer:
   input_boolean: input_boolean.dryer
   telegram:
     - !secret telegram_group_id_home
-  sonos_entity_id: media_player.office
   done_message: "The dryer has finished"
 
 garage_motion_overnight:

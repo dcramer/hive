@@ -1,0 +1,12 @@
+alias: "Doorbell Chime"
+initial_state: true
+trigger:
+  platform: state
+  entity_id: binary_sensor.doorbell_doorbell
+  to: 'on'
+action:
+  service: script.sonos_broadcast_play
+  data:
+    entity_id: media_player.office
+    volume: 0.5
+    media_content_id: http://192.168.1.25:8123/local/audio/doorbell.mp3

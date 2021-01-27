@@ -7,8 +7,6 @@ class PowerUsageAlert(AlertApp):
     def initialize(self):
         self.telegram_list = self.args.get("telegram") or []
         self.notify_list = self.args.get("notify") or []
-        self.sonos_entity_id = self.args.get("sonos_entity_id")
-        self.sonos_volume = float(self.args.get("sonos_volume") or 0.5)
         self.threshold = int(self.args.get("threshold") or 2)
         try:
             self.message = self.args.get("message")
@@ -40,13 +38,9 @@ class PowerUsageAlert(AlertApp):
             self.log(f"Notifying notify.{notify_name}")
             self.notify(message, name=notify_name)
 
-        self.log(f"Notifying via broadcast to {self.sonos_entity_id}")
+        self.log(f"Notifying via script.alexa_announced")
         self.call_service(
-            "script/sonos_broadcast_say",
-            entity_id=self.sonos_entity_id,
-            volume=self.sonos_volume,
-            message=message,
-            delay="00:00:05",
+            "script/alexa_announce", message=message, delay="00:00:05",
         )
         for target in self.telegram_list:
             self.call_service(

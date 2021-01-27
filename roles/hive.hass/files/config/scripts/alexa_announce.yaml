@@ -1,0 +1,12 @@
+alias: "Media Player all speakers script"
+sequence:
+  - service: notify.alexa_media
+    data_template:
+      data:
+        type: announce
+      message: "{{ message }}"
+      target:
+        - media_player.echo_dot_kitchen
+        - media_player.echo_dot_office
+        - media_player.echo_dot_media_room
+        - media_player.echo_dot_master_bedroom

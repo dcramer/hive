@@ -1,0 +1,9 @@
+alias: "Evening lights sunset"
+initial_state: true
+trigger:
+  platform: sun
+  event: sunset
+  offset: "-00:45:00"
+action:
+  service: scene.turn_on
+  entity_id: scene.evening_lights

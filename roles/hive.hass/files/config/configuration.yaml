@@ -13,7 +13,7 @@ homeassistant:
     - /downloads
 
 group: !include groups.yaml
-automation: !include automations.yaml
+automation: !include_dir_list automations/
 script: !include_dir_named scripts/
 frontend: !include frontend.yaml
 http: !include http.yaml
@@ -52,8 +52,20 @@ cloud:
         - media_player
         # - lock
         # - camera
-      # exclude_entities:
-      #   - lock.2018_jeep_wrangler_lock
+      exclude_entities:
+        # remove all light groups as it confuses Alexa
+        - light.master_bedroom_lights
+        - light.exterior_lights
+        - light.entrance_lights
+        - light.front_door_lights
+        - light.back_yard_lights
+        - light.guest_bedroom_lights
+        - light.office_lights
+        - light.dining_room_lights
+        - light.kitchen_lights
+        - light.media_room_lights
+        - light.garage_lights
+        - light.hallway_lights
   google_actions:
     filter:
       include_entities:

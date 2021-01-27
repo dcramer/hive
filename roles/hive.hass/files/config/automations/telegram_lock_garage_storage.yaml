@@ -1,0 +1,9 @@
+alias: "Telegram bot to lock the garage storage"
+trigger:
+  platform: event
+  event_type: telegram_command
+  event_data:
+    command: "/lockStorage"
+action:
+  - service: lock.lock
+    entity_id: lock.garage_storage_deadbolt

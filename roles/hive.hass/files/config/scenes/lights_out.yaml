@@ -1,4 +1,4 @@
-name: Lights Off
+name: Lights Out
 entities:
   light.master_bedroom_lights: off
   light.exterior_lights: off

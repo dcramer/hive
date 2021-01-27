@@ -51,8 +51,8 @@ light:
     entities:
       - light.garage_entry_can
       - light.garage_bottom_of_stairs
-      - light.garage_exterior_scoce
-      - light.garage_garage_door_led
+      # - light.garage_exterior_scoce
+      # - light.garage_garage_door_led
 
   # Exterior light groups
   - platform: group

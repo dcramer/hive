@@ -1,0 +1,10 @@
+alias: "Sync Tasmota states on start-up - autodiscovery"
+initial_state: true
+trigger:
+  platform: homeassistant
+  event: start
+action:
+  - service: mqtt.publish
+    data:
+      topic: "cmnd/tasmotas/state"
+      payload: ""
