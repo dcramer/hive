@@ -2,7 +2,7 @@ alias: "Sonos TTS all speakers script"
 sequence:
   - service: sonos.snapshot
     data_template:
-      entity_id: "{{ entity_id }}"
+      entity_id: all
   - service: sonos.join
     data_template:
       master: "{{ entity_id }}"
@@ -18,4 +18,4 @@ sequence:
   - delay: "{{ delay }}"
   - service: sonos.restore
     data_template:
-      entity_id: "{{ entity_id }}"
+      entity_id: all
