@@ -1,7 +1,6 @@
 name: Lights Out
 entities:
   light.master_bedroom_lights: off
-  light.exterior_lights: off
   light.guest_bedroom_lights: off
   light.office_lights: off
   light.dining_room_lights: off

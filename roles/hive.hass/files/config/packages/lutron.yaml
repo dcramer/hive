@@ -4,6 +4,13 @@ lutron:
   password: !secret lutron_password
 
 light:
+  - platform: switch
+    name: Garage Main
+    entity_id: switch.garage_garage_lights
+  - platform: switch
+    name: Garage Flourescent
+    entity_id: switch.garage_garage_fluorecnet
+
   - platform: group
     name: Master Bedroom Lights
     entities:
@@ -53,6 +60,18 @@ light:
       - light.garage_bottom_of_stairs
       # - light.garage_exterior_scoce
       # - light.garage_garage_door_led
+
+  - platform: group
+    name: Garage Lights
+    entities:
+      - light.garage_fluorescent
+      - light.garage_main
+
+  - platform: group
+    name: Garage Lights
+    entities:
+      - light.garage_fluorescent
+      - light.garage_main
 
   # Exterior light groups
   - platform: group

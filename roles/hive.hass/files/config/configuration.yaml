@@ -45,6 +45,21 @@ cloud:
         - input_boolean.washer
         - switch.pi_hole
         - switch.master_bedroom_vornado_fan
+      exclude_entities:
+        # remove all light groups as it confuses Alexa
+        - light.all_lights
+        - light.master_bedroom_lights
+        - light.guest_bedroom_lights
+        - light.hallway_lights
+        - light.office_lights
+        - light.media_room_lights
+        - light.garage_lights
+        - light.exterior_lights
+        - light.dining_room_lights
+        - light.kitchen_lights
+        - light.entrance_lights
+        - light.front_door_lights
+        - light.back_yard_lights
       include_domains:
         - light
         - scene
@@ -52,20 +67,11 @@ cloud:
         - media_player
         # - lock
         # - camera
-      exclude_entities:
-        # remove all light groups as it confuses Alexa
-        - light.master_bedroom_lights
-        - light.exterior_lights
-        - light.entrance_lights
-        - light.front_door_lights
-        - light.back_yard_lights
-        - light.guest_bedroom_lights
-        - light.office_lights
-        - light.dining_room_lights
-        - light.kitchen_lights
-        - light.media_room_lights
-        - light.garage_lights
-        - light.hallway_lights
+    entity_config:
+      switch.master_bedroom_vornado_fan:
+        display_categories: FAN
+      light.guest_bedroom_office_room_fan:
+        display_categories: FAN
   google_actions:
     filter:
       include_entities:

@@ -245,3 +245,9 @@ light.guest_bedroom_back_staircase_decorative:
 
 light.guest_bedroom_office_room_fan:
   friendly_name: "Office Fan"
+
+switch.garage_garage_fluorecnet:
+  friendly_name: "Garage Flourescent"
+
+switch.garage_garage_lights:
+  friendly_name: "Garage Main"
