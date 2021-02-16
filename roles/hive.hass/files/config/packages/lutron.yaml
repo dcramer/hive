@@ -3,6 +3,47 @@ lutron:
   username: !secret lutron_username
   password: !secret lutron_password
 
+fan:
+  - platform: template
+    fans:
+      office_fan:
+        friendly_name: "Office Fan"
+        value_template: "{{ states('light.guest_bedroom_office_room_fan') }}"
+        # speed_template: >
+        #   {% if (state_attr('light.dining_room_fan_level', 'brightness') // 85) == 1 %}
+        #     {{'Low'}}
+        #   {% endif %}
+        #   {% if (state_attr('light.dining_room_fan_level', 'brightness') // 85) == 2 %}
+        #     {{'Medium'}}
+        #   {% endif %}
+        #   {% if (state_attr('light.dining_room_fan_level', 'brightness') // 85) == 3 %}
+        #     {{'High'}}
+        #   {% endif %}
+        turn_on:
+          service: homeassistant.turn_on
+          entity_id: light.guest_bedroom_office_room_fan
+        turn_off:
+          service: homeassistant.turn_off
+          entity_id: light.guest_bedroom_office_room_fan
+        # set_speed:
+        #   service: light.turn_on
+        #   entity_id: light.dining_room_fan_level
+        #   data_template:
+        #     brightness: >
+        #       {% if speed == 'Low' %}
+        #         {{'85'}}
+        #       {% endif %}
+        #       {% if speed == 'Medium' %}
+        #         {{'170'}}
+        #       {% endif %}
+        #       {% if speed == 'High' %}
+        #         {{'255'}}
+        #       {% endif %}
+        # speeds:
+        #   - 'Low'
+        #   - 'Medium'
+        #   - 'High'
+
 light:
   - platform: switch
     name: Garage Main
@@ -10,7 +51,6 @@ light:
   - platform: switch
     name: Garage Flourescent
     entity_id: switch.garage_garage_fluorecnet
-
   - platform: group
     name: Master Bedroom Lights
     entities:

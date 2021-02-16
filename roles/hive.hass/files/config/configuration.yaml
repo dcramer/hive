@@ -60,6 +60,8 @@ cloud:
         - light.entrance_lights
         - light.front_door_lights
         - light.back_yard_lights
+        # this is remapped as a fan
+        - light.guest_bedroom_office_room_fan
       include_domains:
         - light
         - scene
