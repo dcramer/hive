@@ -3,10 +3,8 @@ sequence:
   - service: notify.alexa_media
     data_template:
       data:
-        type: announce
+        type: tts
       message: "{{ message }}"
       target:
-        - media_player.echo_dot_kitchen
-        - media_player.echo_dot_office
-        - media_player.echo_dot_media_room
-        - media_player.echo_dot_master_bedroom
+        - media_player.echo_flex_dining_room
+        - media_player.echo_flex_master_bedroom
