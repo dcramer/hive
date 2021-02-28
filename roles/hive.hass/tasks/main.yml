@@ -32,6 +32,7 @@
     - secrets.yaml
   notify: restart homeassistant
 
+# TODO(dcramer): need to remove various things like scripts/scenes which no longer exist
 - name: copy configuration
   copy:
     src: "config/"

@@ -43,6 +43,10 @@ cloud:
         - cover.garage_door
         - input_boolean.dryer
         - input_boolean.washer
+        - scene.bedtime
+        - scene.lights_out
+        - scene.movie_time
+        - script.turntable
         - switch.pi_hole
         - switch.master_bedroom_vornado_fan
       exclude_entities:
@@ -64,7 +68,6 @@ cloud:
         - light.guest_bedroom_office_room_fan
       include_domains:
         - light
-        - scene
         - fan
         - media_player
         # - lock
@@ -83,9 +86,9 @@ cloud:
         - input_boolean.washer
         - switch.pi_hole
         - switch.master_bedroom_vornado_fan
+        - script.turntable
       include_domains:
         - light
-        - scene
         - fan
         - media_player
         # - fan

@@ -1,0 +1,13 @@
+alias: "Turntable"
+sequence:
+  - service: media_player.select_source
+    data:
+      entity_id: media_player.office_turntable
+      source: Line-in
+  - service: sonos.join
+    data_template:
+      master: media_player.office_turntable
+      entity_id: media_player.office
+  - service: media_player.media_play
+    data:
+      entity_id: media_player.office_turntable
