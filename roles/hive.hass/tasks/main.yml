@@ -80,6 +80,10 @@
   tags:
     - panelkit
 
+# - import_tasks: homebridge.yml
+#   tags:
+#     - homebridge
+
 - name: homeassistant Docker Container
   docker_container:
     name: homeassistant

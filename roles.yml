@@ -655,6 +655,8 @@
     mqtt_host: 192.168.1.25
     mqtt_port: 1883
 
+    homebridge_port: 8581
+
     cameras:
       garage:
         host: 192.168.1.16

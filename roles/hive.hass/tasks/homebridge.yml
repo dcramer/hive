@@ -1,0 +1,30 @@
+---
+- name: create homebridge directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ hive_user }}"
+    group: "{{ hive_user }}"
+    mode: 0755
+  with_items:
+    - /docker/homebridge/
+
+- name: homebridge Docker Container
+  docker_container:
+    name: homebridge
+    image: oznu/homebridge:latest
+    pull: true
+    network_mode: host
+    env:
+      TZ: "{{ timezone }}"
+      PUID: "{{ hive_uid | string }}"
+      PGID: "{{ hive_gid | string }}"
+      HOMEBRIDGE_CONFIG_UI: "1"
+      HOMEBRIDGE_CONFIG_UI_PORT: "{{ homebridge_port | string }}"
+    restart_policy: unless-stopped
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /docker/homebridge:/homebridge
+      - /docker/shared:/shared
+    ports:
+      - "{{ homebridge_port }}:{{ homebridge_port }}/tcp"

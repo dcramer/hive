@@ -9,3 +9,6 @@
   service:
     name: avahi-daemon
     state: restarted
+
+- name: restart homebridge
+  shell: docker restart homebridge
