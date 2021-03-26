@@ -66,6 +66,7 @@ cloud:
         - light.back_yard_lights
         # this is remapped as a fan
         - light.guest_bedroom_office_room_fan
+        - light.back_stairs_lights
       include_domains:
         - light
         - fan

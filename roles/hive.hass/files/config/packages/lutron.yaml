@@ -92,7 +92,12 @@ light:
       - light.media_room_media_room_bike_area
       - light.media_room_garage_hall
       - light.media_room_bar_ligh_undercabinet
+  - platform: group
+    name: Back Stairs Lights
+    entities:
       - light.back_stairs_top_of_back_stairs
+      - light.back_stairs_back_stairs_cans
+      - light.guest_bedroom_back_staircase_decorative
   - platform: group
     name: Front Door Lights
     entities:

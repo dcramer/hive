@@ -8,3 +8,4 @@ entities:
   light.media_room_lights: off
   light.garage_lights: off
   light.hallway_lights: off
+  light.back_stairs_lights: off
