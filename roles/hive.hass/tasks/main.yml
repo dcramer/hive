@@ -87,7 +87,7 @@
 - name: homeassistant Docker Container
   docker_container:
     name: homeassistant
-    image: "homeassistant/home-assistant:2021.1.5"
+    image: "homeassistant/home-assistant:2021.3.4"
     pull: true
     network_mode: host
     hostname: homeassistant
