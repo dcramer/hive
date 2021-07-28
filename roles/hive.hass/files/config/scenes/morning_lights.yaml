@@ -1,3 +1,6 @@
 name: Morning Lights
 entities:
   light.exterior_lights: off
+  light.guest_bedroom_dining_room_center: off
+  light.back_stairs_top_of_back_stairs: off
+  light.guest_bedroom_front_staircase_decorative: off

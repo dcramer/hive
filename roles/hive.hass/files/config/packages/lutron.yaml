@@ -105,19 +105,11 @@ light:
       - light.garage_bottom_of_stairs
       # - light.garage_exterior_scoce
       # - light.garage_garage_door_led
-
   - platform: group
     name: Garage Lights
     entities:
       - light.garage_fluorescent
       - light.garage_main
-
-  - platform: group
-    name: Garage Lights
-    entities:
-      - light.garage_fluorescent
-      - light.garage_main
-
   # Exterior light groups
   - platform: group
     name: Exterior Lights
@@ -125,7 +117,6 @@ light:
       - light.media_room_back_yard_landscape
       - light.media_room_media_exterior_sconces
       - light.garage_entry_can
-      - light.garage_bottom_of_stairs
       - light.garage_exterior_scoce
       - light.garage_garage_door_led
   - platform: group
