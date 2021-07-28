@@ -198,11 +198,6 @@ tts:
     cache_dir: /tts-cache
     time_memory: 300
 
-cover:
-  - platform: myq
-    username: !secret myq_username
-    password: !secret myq_password
-
 # influxdb:
 #   host: influxdb
 #   port: !secret influxdb_port
