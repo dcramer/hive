@@ -1,0 +1,4 @@
+name: Couch Time
+entities:
+  light.guest_bedroom_office_fire_place_cans: on
+  light.guest_bedroom_office_room_wall_cans: off

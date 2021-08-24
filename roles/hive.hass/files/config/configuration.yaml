@@ -46,6 +46,8 @@ cloud:
         - scene.bedtime
         - scene.lights_out
         - scene.movie_time
+        - scene.evening_lights
+        - scene.couch_time
         - script.turntable
         - switch.pi_hole
         - switch.master_bedroom_vornado_fan
@@ -186,11 +188,6 @@ plex:
 
 geofency:
 
-speedtestdotnet:
-  monitored_conditions:
-    - download
-    - upload
-
 tts:
   - platform: google_translate
     service_name: google_say
@@ -306,3 +303,11 @@ input_boolean:
     name: "Garage Door"
     initial: off
     icon: mdi:garage
+  dryer:
+    name: "Dryer"
+    initial: off
+    icon: mdi:tumble-dryer
+  washer:
+    name: "Washer"
+    initial: off
+    icon: mdi:washing-machine

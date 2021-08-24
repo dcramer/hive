@@ -69,6 +69,7 @@ light:
       - light.guest_bedroom_office_fire_place_cans
       - light.guest_bedroom_office_room_center_light
       - light.guest_bedroom_office_room_wall_cans
+      - light.office_lamp
   - platform: group
     name: Kitchen Lights
     entities:
