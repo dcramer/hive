@@ -159,17 +159,6 @@ cloud:
       light.garage_bottom_of_stairs:
         room: Entrance
 
-zwave:
-  # usb_path: /dev/ttyACM0
-  usb_path: /dev/ttyUSB0
-  network_key: "0x50, 0x78, 0x13, 0x63, 0x55, 0x17, 0x65, 0xAB, 0xC9, 0x54, 0x9C, 0xDB, 0x1B, 0xED, 0x0F, 0x86"
-
-zha:
-  # configured in UI now
-  # radio_type: ezsp
-  # usb_path: /dev/ttyUSB1
-  database_path: /config/zigbee.db
-
 # zigbee:
 #   device: /dev/ttyUSB2
 
