@@ -46,6 +46,9 @@ fan:
 
 light:
   - platform: switch
+    name: Office Lamp
+    entity_id: switch.office_lamp
+  - platform: switch
     name: Garage Main
     entity_id: switch.garage_garage_lights
   - platform: switch
