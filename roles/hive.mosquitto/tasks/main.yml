@@ -17,18 +17,30 @@
   copy:
     src: "mosquitto.conf"
     dest: "/docker/mqtt/config/mosquitto.conf"
+    mode: 0644
+    owner: "{{ hive_user }}"
+    group: "{{ hive_user }}"
+  notify: restart mosquitto
+
+- name: copy auth configuration
+  copy:
+    src: "auth.conf"
+    dest: "/docker/mqtt/config/auth.conf"
+    mode: 0644
+    owner: "{{ hive_user }}"
+    group: "{{ hive_user }}"
   notify: restart mosquitto
 
 - name: mosquitto Docker Container
   docker_container:
     name: mosquitto
-    image: toke/mosquitto
+    image: eclipse-mosquitto
     pull: true
     restart_policy: unless-stopped
     volumes:
-      - /docker/mqtt/config:/mqtt/config:ro
-      - /docker/mqtt/log:/mqtt/log
-      - /docker/mqtt/data/:/mqtt/data/
+      - /docker/mqtt/config:/mosquitto/config
+      - /docker/mqtt/log:/mosquitto/log/
+      - /docker/mqtt/data:/mosquitto/data/
     ports:
       - "1883:1883/tcp"
       - "9001:9001/tcp"
