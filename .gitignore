@@ -1,9 +1,16 @@
+# pdm
 __pypackages__/
+.pdm.toml
 
+# ansible
 roles.retry
 ansible-passwd
-.venv
+
+# trash
 .DS_Store
+
+# npm
 node_modules
 
+# git submodule
 roles/hive.media/
