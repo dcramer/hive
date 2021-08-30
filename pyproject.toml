@@ -1,25 +1,35 @@
-[tool.poetry]
+[tool.pdm]
+includes = []
+
+[build-system]
+requires = ["pdm-pep517"]
+build-backend = "pdm.pep517.api"
+
+[project]
+# PEP 621 project metadata
+# See https://www.python.org/dev/peps/pep-0621/
+authors = [
+    {name = "David Cramer", email = "dcramer@gmail.com"},
+]
+dynamic = ["classifiers"]
+license = {text = "Apache-2.0"}
+requires-python = ">=3.7,<4.0"
+dependencies = [
+    "ansible<3.0.0,>=2.9.2",
+    "jinja2<3.0.0,>=2.10.1",
+    "PyYAML<6.0,>=5.1",
+    "cryptography<3.0,>=2.8",
+    "MarkupSafe<2.0.0,>=1.1.1",
+    "cffi<2.0.0,>=1.13.2",
+    "six<2.0.0,>=1.13.0",
+    "docker<5.0.0,>=4.1.0",
+    "black<20.0,>=19.10b0",
+    "flake8<4.0.0,>=3.7.9",
+    "appdaemon<5.0.0,>=4.0.3",
+    "esptool<3.0,>=2.8",
+]
 name = "hive"
 version = "0.1.0"
 description = ""
-authors = ["David Cramer <dcramer@gmail.com>"]
-license = "Apache-2.0"
 
-[tool.poetry.dependencies]
-python = "^3.7"
-ansible = "^2.9.2"
-jinja2 = "^2.10.1"
-PyYAML = "^5.1"
-cryptography = "^2.8"
-MarkupSafe = "^1.1.1"
-cffi = "^1.13.2"
-six = "^1.13.0"
-docker = "^4.1.0"
-black = "^19.10b0"
-flake8 = "^3.7.9"
-appdaemon = "^4.0.3"
-esptool = "^2.8"
-
-[build-system]
-requires = ["poetry>=1.0.0"]
-build-backend = "poetry.masonry.api"
+[project.urls]

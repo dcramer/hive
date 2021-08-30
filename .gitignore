@@ -1,3 +1,5 @@
+__pypackages__/
+
 roles.retry
 ansible-passwd
 .venv

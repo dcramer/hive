@@ -17,7 +17,7 @@
     "dist": true,
     "kubernetes/zeus/dist/**": true,
     "**/webpack-stats.json": true,
-    "**/__pycache__": true,
+    "**/__pycache__": true
   },
   "files.trimTrailingWhitespace": false,
   "files.trimFinalNewlines": false,
@@ -70,5 +70,6 @@
     "*.yaml": "home-assistant"
   },
   "vscode-home-assistant.hostUrl": "http://rex:8123",
-  "vscode-home-assistant.ignoreCertificates": true
+  "vscode-home-assistant.ignoreCertificates": true,
+  "restructuredtext.languageServer.disabled": true
 }
