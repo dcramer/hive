@@ -8,7 +8,7 @@ setup-git:
 	cd .git/hooks && ln -sf ../../hooks/* ./
 
 install-requirements:
-	poetry install
+	pdm install
 	ansible-galaxy install -r requirements.yml
 
 all:
