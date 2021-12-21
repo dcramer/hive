@@ -1,0 +1,7 @@
+#!/usr/bin/env python
+
+import pylutron
+
+rra2 = pylutron.Lutron("192.168.0.56", sys.argv[1], sys.arv[2])
+rra2.load_xml_db()
+rra2.connect()

@@ -27,6 +27,7 @@ dependencies = [
     "flake8<4.0.0,>=3.7.9",
     "appdaemon<5.0.0,>=4.0.3",
     "esptool<3.0,>=2.8",
+    "pylutron~=0.2",
 ]
 name = "hive"
 version = "0.1.0"
