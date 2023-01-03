@@ -4,8 +4,8 @@ repos:
     rev: 19.10b0
     hooks:
       - id: black
-        language_version: python3.7
-  - repo: git://github.com/pre-commit/pre-commit-hooks
+        language_version: python3.9
+  - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v2.0.0
     hooks:
       - id: check-case-conflict
@@ -19,10 +19,10 @@ repos:
         args: ["--remove"]
       - id: trailing-whitespace
       - id: debug-statements
-        language_version: python3.7
+        language_version: python3.9
       - id: flake8
-        language_version: python3.7
-  - repo: git://github.com/getsentry/pre-commit-hooks
+        language_version: python3.9
+  - repo: https://github.com/getsentry/pre-commit-hooks
     rev: f3237d2d65af81d435c49dee3593dc8f03d23c2d
     hooks:
       - id: prettier
