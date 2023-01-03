@@ -17,7 +17,7 @@
     state: present
   with_file:
     - dcramer.key.pub
-    - dcramer-windows.key.pub
+    - dcramer-shared.key.pub
 
 - name: Allow dcramer passwordless sudo
   lineinfile:

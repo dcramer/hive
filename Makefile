@@ -1,7 +1,7 @@
 develop: setup-git install-requirements
 
 setup-git:
-	pip install "pre-commit>=1.12.0,<1.13.0"
+	pip install "pre-commit>=2.21.0,<2.22.0"
 	pre-commit install
 	git config branch.autosetuprebase always
 	git config --bool flake8.strict true
@@ -9,37 +9,37 @@ setup-git:
 
 install-requirements:
 	pdm install
-	ansible-galaxy install -r requirements.yml
+	pdm run ansible-galaxy install -r requirements.yml
 
 all:
-	ansible-playbook roles.yml
+	pdm run ansible-playbook roles.yml
 
 rex:
-	ansible-playbook roles.yml -l rex
+	pdm run ansible-playbook roles.yml -l rex
 
 tower:
-	ansible-playbook roles.yml -l tower
+	pdm run ansible-playbook roles.yml -l tower
 
 hass:
-	ansible-playbook roles.yml -l rex -t hass
+	pdm run ansible-playbook roles.yml -l rex -t hass
 
 hass-ui:
-	ansible-playbook roles.yml -l rex -t hass-ui -t tileboard
+	pdm run ansible-playbook roles.yml -l rex -t hass-ui -t tileboard
 
 appd:
-	ansible-playbook roles.yml -l rex -t appdaemon
+	pdm run ansible-playbook roles.yml -l rex -t appdaemon
 
 es:
-	ansible-playbook roles.yml -l rex -t es
+	pdm run ansible-playbook roles.yml -l rex -t es
 
 docker:
-	ansible-playbook roles.yml -l rex -t docker
+	pdm run ansible-playbook roles.yml -l rex -t docker
 
 dst:
-	ansible-playbook roles.yml -l rex -t dst
+	pdm run ansible-playbook roles.yml -l rex -t dst
 
 frigate:
-	ansible-playbook roles.yml -l rex -t frigate
+	pdm run ansible-playbook roles.yml -l rex -t frigate
 
 test:
 	python roles/hive.hass/files/apps/hive/base.py
