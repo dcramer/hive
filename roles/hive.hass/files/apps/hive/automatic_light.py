@@ -13,7 +13,7 @@ class AutomaticLight(AlertApp):
     def should_trigger(self, old, new):
         # dont run if any lights are already manually controlled
         # TODO(dcramer): we can improve this so it only turns on the uncontrolled light
-        if any(self.get_state(l) == "on" for l in self.lights):
+        if any(self.get_state(light) == "on" for light in self.lights):
             return False
 
         if not self.now_is_between("sunset - 00:45:00", "sunrise + 00:45:00"):

@@ -200,7 +200,7 @@ class AlarmManager(hass.Hass):
             self.cancel_timer(self._activation_handle)
             self._activation_handle = None
             if self.get_state(self.alarm) == "disarmed":
-                self.log(f"automatic arming cancelled")
+                self.log("automatic arming cancelled")
                 self._send_message(
                     message="Automatic arming has been cancelled",
                     target_list=[chat_id],
@@ -230,7 +230,8 @@ class AlarmManager(hass.Hass):
                 )
             else:
                 self._send_message(
-                    message="System is not armed", target_list=[chat_id],
+                    message="System is not armed",
+                    target_list=[chat_id],
                 )
 
         elif command == "/armHome":

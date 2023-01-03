@@ -38,11 +38,15 @@ class PowerUsageAlert(AlertApp):
             self.log(f"Notifying notify.{notify_name}")
             self.notify(message, name=notify_name)
 
-        self.log(f"Notifying via script.alexa_announced")
+        self.log("Notifying via script.alexa_announced")
         self.call_service(
-            "script/alexa_announce", message=message, delay="00:00:05",
+            "script/alexa_announce",
+            message=message,
+            delay="00:00:05",
         )
         for target in self.telegram_list:
             self.call_service(
-                "telegram_bot/send_message", target=target, message=message,
+                "telegram_bot/send_message",
+                target=target,
+                message=message,
             )

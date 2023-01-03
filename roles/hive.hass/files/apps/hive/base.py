@@ -167,9 +167,16 @@ class AlertApp(hass.Hass):
             # )
             if self.input_boolean is not None:
                 self.set_state(
-                    self.input_boolean, state="on", attributes=self._get_attributes(),
+                    self.input_boolean,
+                    state="on",
+                    attributes=self._get_attributes(),
                 )
-            self.log("{} is: {} - active [repeat]".format(self.entity_id, new,))
+            self.log(
+                "{} is: {} - active [repeat]".format(
+                    self.entity_id,
+                    new,
+                )
+            )
             self.did_alert = True
             self.on_activate(old, new)
 
@@ -185,10 +192,17 @@ class AlertApp(hass.Hass):
             self.alert_id = uuid1().hex
             self.first_active_at = self.last_active_at = now
             self.repeat_idx = 0
-            self.log("{} is: {} - active".format(self.entity_id, new,))
+            self.log(
+                "{} is: {} - active".format(
+                    self.entity_id,
+                    new,
+                )
+            )
             if self.input_boolean is not None:
                 self.set_state(
-                    self.input_boolean, state="on", attributes=self._get_attributes(),
+                    self.input_boolean,
+                    state="on",
+                    attributes=self._get_attributes(),
                 )
             if not self.skip_first:
                 self.did_alert = True
@@ -257,7 +271,7 @@ class AlertApp(hass.Hass):
             return
         assert event_id == "telegram_command"
         if self.active and payload_event["command"] == self.ack_command:
-            self.log(f"alert acked")
+            self.log("alert acked")
             self._cancel_timers()
 
 
