@@ -35,9 +35,9 @@
         - pia
     - hive.filebot
     - hive.monitor
-    - role: hive.boinc
-      tags:
-        - boinc
+    # - role: hive.boinc
+    #   tags:
+    #     - boinc
     - role: hive.media
       tags:
         - media
