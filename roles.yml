@@ -27,19 +27,6 @@
       tags:
         - registry
         - docker
-    - role: hive.elasticsearch
-      tags:
-        - es
-    - role: hive.kibana
-      tags:
-        - es
-        - kibana
-    - role: hive.filebeat
-      tags:
-        - es
-        - kibana
-        - filebeat
-    - dj-wasabi.telegraf
     - role: hive.nas
       tags:
         - nas
@@ -273,45 +260,6 @@
       3936393264613136320a346634333039613238346233653863323130346166646563323965346237
       36653762356164326533663038306165366535393335373266343539303637656331363434663537
       3833636536663737333737313963363263333839633637646138
-
-    grafana_datasources:
-      - name: Telegraf
-        type: influxdb
-        access: proxy
-        url: "http://influxdb:{{ influxdb_port }}"
-        # user: telegraf
-        # secureJsonData:
-        #   password: telegraf
-        database: telegraf
-        isDefault: true
-        version: 1
-        editable: false
-      - name: Home Assistant
-        type: influxdb
-        access: proxy
-        url: "http://influxdb:{{ influxdb_port }}"
-        # user: telegraf
-        # secureJsonData:
-        #   password: telegraf
-        database: hass
-        version: 1
-        editable: false
-      # - name: Home Assistant
-      #   type: mysql
-      #   url: "mariadb:{{ mariadb_port }}"
-      #   user: root
-      #   secureJsonData:
-      #     password: "{{ mariadb_root_password }}"
-      #   database: hass
-      #   version: 1
-      #   editable: false
-
-    telegraf_agent_output:
-      - type: influxdb
-        config:
-          - urls = ["http://localhost:{{ influxdb_port }}"]
-          - database = "telegraf"
-    telegraf_agent_version: 1.15.3
 
     # glhf every remembering this - couldnt get the device to work anyways
     gocontrol_serial: "81300714"
